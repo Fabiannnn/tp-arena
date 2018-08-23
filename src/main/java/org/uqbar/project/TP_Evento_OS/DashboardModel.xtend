@@ -8,5 +8,8 @@ import org.uqbar.commons.model.annotations.Dependencies
 @Accessors
 @Observable
 class DashboardModel {
-	
+	int cantEventos =5
+	def getCantidadEventos(){
+		cantEventos
+	}
 }
