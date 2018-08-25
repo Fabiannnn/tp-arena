@@ -4,7 +4,7 @@ import org.uqbar.arena.Application
 
 class EventosApp  extends Application{
 	override protected createMainWindow() {
-		new DashboardView(this)		
+		new DashboardView2(this)		
 	}
 	
 	def static void main(String[] args) {

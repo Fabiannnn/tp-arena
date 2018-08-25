@@ -18,13 +18,13 @@ import org.uqbar.arena.widgets.List
 
 class DashboardView extends SimpleWindow<DashboardModel> {
 	new(WindowOwner owner) {
+
 		super(owner, new DashboardModel)
-	title = "Evento OS -algo3"
+		title = "Evento OS -algo3"
 
 	}
 
-	override createFormPanel(Panel mainPanel) {
-
+	override createMainTemplate(Panel mainPanel) { // MainTemplate
 		mainPanel.layout = new HorizontalLayout
 		val PanelIzquierdo = new Panel(mainPanel)
 
@@ -36,7 +36,7 @@ class DashboardView extends SimpleWindow<DashboardModel> {
 		crearPanelDeLocaciones(PanelIzquierdo)
 
 		val PanelDerecho = new Panel(mainPanel)
-			PanelIzquierdo.width = 500
+		PanelIzquierdo.width = 500
 		crearPanelDeUsuarios(PanelDerecho)
 		crearPanelDeServicios(PanelDerecho)
 
@@ -77,9 +77,8 @@ class DashboardView extends SimpleWindow<DashboardModel> {
 				fontSize = 18
 			]
 			new List(it) => [
-//				items <=> "clientes"
-//				value <=> "clienteSeleccionado"
-				width =450
+
+				width = 450
 				height = 220
 			]
 			new Button(it) => [
@@ -98,7 +97,7 @@ class DashboardView extends SimpleWindow<DashboardModel> {
 			new List(it) => [
 //				items <=> "clientes"
 //				value <=> "clienteSeleccionado"
-				width =450
+				width = 450
 				height = 220
 			]
 			new Button(it) => [
@@ -109,22 +108,26 @@ class DashboardView extends SimpleWindow<DashboardModel> {
 	}
 
 	def crearPanelEstadistica(Panel mainPanel) {
-			new Label(mainPanel) => [
-				text = "Estadísticas"
-				fontSize = 18
-				width = 450
-			]
+		new Label(mainPanel) => [
+			text = "Estadísticas"
+			fontSize = 18
+			width = 450
+		]
 		new Panel(mainPanel) => [
-			
-		
-			// val panelInferior = new Panel(mainPanel)
+
 			it.layout = new ColumnLayout(2)
 			new Label(it).text = "Cantidad total de Eventos"
 			new NumericField(it).value <=> "cantEventos"
+			new NumericField(it).value <=> "locacion.prueba"
+			new NumericField(it).value <=> "locacion.prueba2"
 		]
 	}
 
 	override protected addActions(Panel actionsPanel) {
 	}
 
+	override protected createFormPanel(Panel mainPanel) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		//repite titulo del formulario
+	}
 }
