@@ -14,7 +14,8 @@ class LabeledTextBox extends AbstractLabeledWidget {
 	
 	override LabeledTextBox setWidth(int ancho){
 		textBox.width = ancho
-		this 
+		this
+	 
 	}
 	
 	override createWidget(AbstractLabeledWidget widget) {

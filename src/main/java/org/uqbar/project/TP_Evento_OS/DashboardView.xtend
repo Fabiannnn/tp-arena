@@ -62,7 +62,7 @@ class DashboardView extends SimpleWindow<DashboardModel> {
 //			new TextBox(it).value <=> "nombreCliente"
 //			
 //			new Label(it).text = "Apellido"
-//			new TextBox(it).value <=> "apellidoCliente"
+//			new TextBox(it).value => "apellidoCliente"
 			new Button(it) => [
 				caption = "Gestion De Servicios"
 				onClick[] // | modelObject.crearCliente		

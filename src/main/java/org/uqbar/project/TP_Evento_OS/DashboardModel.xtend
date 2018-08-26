@@ -4,15 +4,20 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.annotations.Observable
 import org.uqbar.commons.model.annotations.Dependencies
 import eventos.Locacion
+import repositorio.RepositorioLocaciones
+import datosPrueba.DatosPruebaBootstrap
+import org.uqbar.commons.applicationContext.ApplicationContext
 
 @Accessors
 @Observable
 class DashboardModel {
 	int cantEventos =5
-	Locacion locacion = new Locacion()
+
 def getEventosTotales(){
-	15
+	repoLocaciones.elementos.size()
 }
+	
+	
 def getEventosUltimoMes(){
 	16
 }
@@ -28,4 +33,7 @@ def getEntradasVendidas(){
 def getInvitacionesEnviadas(){
 	20
 }
+def getRepoLocaciones() {
+		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+	}
 }

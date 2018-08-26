@@ -14,12 +14,16 @@ import eventos.Usuario
 import eventos.Locacion
 import View.LabeledTextBox
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.uqbar.arena.widgets.NumericField
+import org.uqbar.arena.widgets.TextBox
+
+import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
 @Accessors
 class DashboardView2 extends SimpleWindow<DashboardModel> {
 
-	new(WindowOwner owner) {
-		super(owner, new DashboardModel)
+	new(WindowOwner owner, DashboardModel model) {
+		super(owner, model)
 		title = "Evento OS "
 
 	}
@@ -46,8 +50,13 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 	}
 	def crearPanelEstadistica(Panel PanelEstadisticas) {
 
-		new Label(PanelEstadisticas) => [text = "Estadísticas:" fontSize = 14]
-		new LabeledTextBox(PanelEstadisticas).setText("Cantidad total de eventos:").bindValueToProperty(
+		new Label(PanelEstadisticas) => [text = "Estadísticas:" fontSize = 12
+			alignLeft
+			
+		]
+//		new Label(PanelEstadisticas).text="Cantidad total de eventos:"
+//		new TextBox(PanelEstadisticas).bindValueToProperty("eventosTotales")
+		new LabeledTextBox(PanelEstadisticas).setText("Eventos Totales:").bindValueToProperty(
 			"eventosTotales")
 		new LabeledTextBox(PanelEstadisticas).setText("Eventos último mes:").bindValueToProperty(
 			"eventosUltimoMes")
@@ -60,36 +69,40 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 		new LabeledTextBox(PanelEstadisticas).setText("Invitaciones enviadas:").bindValueToProperty(
 			"invitacionesEnviadas")
 	}
-	def crearPanelDeServicios(Panel panelDeServicios) { // mainPanel o owner
-//		new Label(panelDeServicios) => [text = "Últimos Servicios" fontSize = 14]
-//		new Label(panelDeServicios) => [
-//			it.text = "Últimos Servicios:"
-//			it.fontSize = 14
-//		]
-//
-//		val tablaDeServicios = new Table<Servicio>(panelDeServicios, Servicio) => [] // items => "" value => ""
-//		new Column(tablaDeServicios) => [
+	
+		def crearPanelDeLocaciones(Panel PanelDeLocaciones) {
+		// new Titulo(panelDeLocaciones, "Locaciones más polulares:" 12)	
+		new Label(PanelDeLocaciones) => [
+			it.text = "Últimos Servicios:"
+			it.fontSize = 14
+		]
+//		val tablaDeLocaciones = new Table<Locacion>(PanelDeLocaciones, Locacion) => [] // items <=> "" 	value <=> ""
+//		new Column(tablaDeLocaciones) => [
 //			title = "Nombre"
-//		// bindContentsToProperty("Nombre").transformer = [|new ]
+//		// bindContentsToProperty("Nombre").transformer = [| new  ] 
 //		]
-//		new Column(tablaDeServicios) => [
-//			title = "Tarifa"
-//			// bindContentsToProperty("Tarifa").transformer = [ | ] 	]
-//			new Button(panelDeServicios) => [
-//				caption = "Gestión de Servicios"
-//				width = 100
-//			// onClick [ | new gestionDeServiciosView().open ]    
-//			]
+//		new Column(tablaDeLocaciones) => [
+//			title = "Capacidad"
+//		// bindContentsToProperty("Capacidad").transformer = [ | ] 	
 //		]
-	}
+//		new Column(tablaDeLocaciones) => [
+//			title = "Apellido"
+//		// bindContentsToProperty("Apellido").transformer = [ | ] 	
+//		]
+		new Button(PanelDeLocaciones) => [
+			caption = "Gestión de Locaciones"
+			width = 100
+		// onClick [ | new gestionDeLocacionesView().open ]    
+		]
 
-	def crearPanelDeUsuarios(Panel PanelDeUsuarios) {
-		// new Titulo(panelDeServicios, "Usuarios más activos:" 12)	
-//		new Label(PanelDeUsuarios) => [text = "Usuarios más activos:" fontSize = 14]
-//		new Label(PanelDeUsuarios) => [
-//			it.text = "Últimos Servicios:"
-//			it.fontSize = 14
-//		]
+	}
+		def crearPanelDeUsuarios(Panel PanelDeUsuarios) {
+//		 new Titulo(panelDeServicios, "Usuarios más activos:" 12)	
+
+		new Label(PanelDeUsuarios) => [
+			it.text = "Últimos Servicios:"
+			it.fontSize = 14
+		]
 //
 //		val tablaDeUsuarios = new Table<Usuario>(PanelDeUsuarios, Usuario) => [] // items <=> "" 	value <=> ""
 //		new Column(tablaDeUsuarios) => [
@@ -104,39 +117,36 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 //			title = "Apellido"
 //		// bindContentsToProperty("Apellido").transformer = [ | ] 
 //		]
-//		new Button(PanelDeUsuarios) => [
-//			caption = "Gestión de Usuarios"
-//			width = 100
-//		// onClick [ | new gestionDeUsuariosView ().open ]  
-//		]
+		new Button(PanelDeUsuarios) => [
+			caption = "Gestión de Usuarios"
+			width = 100
+		// onClick [ | new gestionDeUsuariosView ().open ]  
+		]
 	}
+	def crearPanelDeServicios(Panel panelDeServicios) { // mainPanel o owner
+//		new Label(panelDeServicios) => [text = "Últimos Servicios" fontSize = 14]
+		new Label(panelDeServicios) => [
+			it.text = "Últimos Servicios:"
+			it.fontSize = 14
+		]
 
-	def crearPanelDeLocaciones(Panel PanelDeLocaciones) {
-//		// new Titulo(panelDeLocaciones, "Locaciones más polulares:" 12)	
-//		new Label(PanelDeLocaciones) => [
-//			it.text = "Últimos Servicios:"
-//			it.fontSize = 14
-//		]
-//		val tablaDeLocaciones = new Table<Locacion>(PanelDeLocaciones, Locacion) => [] // items <=> "" 	value <=> ""
-//		new Column(tablaDeLocaciones) => [
+//		val tablaDeServicios = new Table<Servicio>(panelDeServicios, Servicio) => [] // items => "" value => ""
+//		new Column(tablaDeServicios) => [
 //			title = "Nombre"
-//		// bindContentsToProperty("Nombre").transformer = [| new  ] 
+//		// bindContentsToProperty("Nombre").transformer = [|new ]
 //		]
-//		new Column(tablaDeLocaciones) => [
-//			title = "Capacidad"
-//		// bindContentsToProperty("Capacidad").transformer = [ | ] 	
-//		]
-//		new Column(tablaDeLocaciones) => [
-//			title = "Apellido"
-//		// bindContentsToProperty("Apellido").transformer = [ | ] 	
-//		]
-//		new Button(PanelDeLocaciones) => [
-//			caption = "Gestión de Locaciones"
-//			width = 100
-//		// onClick [ | new gestionDeLocacionesView().open ]    
-//		]
-
+//		new Column(tablaDeServicios) => [
+//			title = "Tarifa"
+//			// bindContentsToProperty("Tarifa").transformer = [ | ] 	]
+		new Button(panelDeServicios) => [
+			caption = "Gestión de Servicios"
+			width = 100
+		// onClick [ | new gestionDeServiciosView().open ]    
+		]
+		
 	}
+
+
 
 
 
