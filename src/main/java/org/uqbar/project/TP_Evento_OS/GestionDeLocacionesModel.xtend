@@ -1,7 +1,7 @@
 package org.uqbar.project.TP_Evento_OS
 
 import org.eclipse.xtend.lib.annotations.Accessors
-import java.util.Observable
+
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import org.uqbar.commons.model.annotations.Dependencies
@@ -18,10 +18,11 @@ import java.util.Collection
 import eventos.Evento
 import java.time.LocalDateTime
 import java.time.Period
+import org.uqbar.commons.model.annotations.Observable
 
 
 @Accessors
-
+@Observable
 class GestionDeLocacionesModel {
 	int pruebaDiez=10
 	def getGestionDeLocaciones(){
