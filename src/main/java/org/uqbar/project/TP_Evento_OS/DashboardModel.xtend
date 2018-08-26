@@ -21,45 +21,51 @@ import java.time.Period
 @Observable
 class DashboardModel {
 
-	int cantEventos =5
+	int cantEventos = 5
 
-def getEventosTotales(){
-		repoUsuarios.elementos.fold(0.0) [ acum,user | acum + user.eventosOrganizados.size() ]
-}
-	
-	
-def getEventosUltimoMes(){
-	repoUsuarios.elementos.fold(0.0)[acum, user | acum + eventosOrganizadosUltimoMes(user)]
-}
-	
+	def getEventosTotales() {
+		repoUsuarios.elementos.fold(0.0)[acum, user|acum + user.eventosOrganizados.size()]
+	}
+
+	def getEventosUltimoMes() {
+		repoUsuarios.elementos.fold(0.0)[acum, user|acum + eventosOrganizadosUltimoMes(user)]
+	}
+
 	def eventosOrganizadosUltimoMes(Usuario usuario) {
-		usuario.eventosOrganizados.filter[ evento| fechaInicioUltimoMes(evento)].size
+		usuario.eventosOrganizados.filter[evento|fechaInicioUltimoMes(evento)].size
 	}
-	
+
 	def fechaInicioUltimoMes(Evento evento) {
-		(evento.fechaDeInicio > LocalDateTime.now().plus(Period.ofDays(-30))) &&(evento.fechaDeInicio < LocalDateTime.now)
+		(evento.fechaDeInicio > LocalDateTime.now().plus(Period.ofDays(-30))) && (evento.fechaDeInicio <
+			LocalDateTime.now)
 	}
-	
-def getEventosExitosos(){
-	17
-}
-def getEventosFracasados(){
-	18
-}
-def getEntradasVendidas(){
-			repoUsuarios.elementos.fold(0.0) [ acum,elemento | acum + elemento.entradaComprada.size() ]
-}
-def getInvitacionesEnviadas(){
 
-		repoUsuarios.elementos.fold(0.0) [ acum,elemento | acum + elemento.invitaciones.size() ]
+	def getEventosExitosos() {
+		17
+	}
 
-}
-def getRepoLocaciones() {
+	def getEventosFracasados() {
+		18
+	}
+
+	def getEntradasVendidas() {
+		repoUsuarios.elementos.fold(0.0)[acum, elemento|acum + elemento.entradaComprada.size()]
+	}
+
+	def getInvitacionesEnviadas() {
+
+		repoUsuarios.elementos.fold(0.0)[acum, elemento|acum + elemento.invitaciones.size()]
+
+	}
+
+	def getRepositorioLocaciones() {
 		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 	}
+
 	def getRepoUsuarios() {
 		ApplicationContext.instance.getSingleton(typeof(Usuario)) as RepositorioUsuarios
 	}
+
 	def getRepoServicios() {
 		ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepositorioServicios
 	}
