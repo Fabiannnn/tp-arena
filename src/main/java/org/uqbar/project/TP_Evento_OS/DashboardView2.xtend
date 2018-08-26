@@ -50,24 +50,27 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 	}
 	def crearPanelEstadistica(Panel PanelEstadisticas) {
 
-		new Label(PanelEstadisticas) => [text = "Estadísticas:" fontSize = 12
+		new Label(PanelEstadisticas) => [
+			text = "Estadísticas:" 
+			fontSize = 12
 			alignLeft
 			
 		]
+		
 //		new Label(PanelEstadisticas).text="Cantidad total de eventos:"
 //		new TextBox(PanelEstadisticas).bindValueToProperty("eventosTotales")
-		new LabeledTextBox(PanelEstadisticas).setText("Eventos Totales:").bindValueToProperty(
-			"eventosTotales")
+		new LabeledTextBox(PanelEstadisticas).setText("Eventos Totales:").bindValueToProperty("eventosTotales").width=20
+
 		new LabeledTextBox(PanelEstadisticas).setText("Eventos último mes:").bindValueToProperty(
-			"eventosUltimoMes")
+			"eventosUltimoMes").width=20
 		new LabeledTextBox(PanelEstadisticas).setText("Evento exitosos:").bindValueToProperty(
-			"eventosExitosos")
+			"eventosExitosos").width=20
 		new LabeledTextBox(PanelEstadisticas).setText("Eventos fracasados:").bindValueToProperty(
-			"eventosFracasados")
+			"eventosFracasados").width=20
 		new LabeledTextBox(PanelEstadisticas).setText("Entradas vendidas:").bindValueToProperty(
-			"entradasVendidas")
+			"entradasVendidas").width=20
 		new LabeledTextBox(PanelEstadisticas).setText("Invitaciones enviadas:").bindValueToProperty(
-			"invitacionesEnviadas")
+			"invitacionesEnviadas").width=20
 	}
 	
 		def crearPanelDeLocaciones(Panel PanelDeLocaciones) {

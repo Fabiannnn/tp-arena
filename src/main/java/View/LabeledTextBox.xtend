@@ -20,11 +20,13 @@ class LabeledTextBox extends AbstractLabeledWidget {
 	
 	override createWidget(AbstractLabeledWidget widget) {
 		textBox = new TextBox(this)
+	textBox.alignLeft
 		this
 	}
 	
 	override bindValueToProperty(String property) {
 		textBox.bindValueToProperty(property)
+
 		this
 	}
 	

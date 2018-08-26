@@ -1,6 +1,5 @@
 package datosPrueba
 
-
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Period
@@ -18,44 +17,22 @@ import eventos.EventoAbierto
 import eventos.Entrada
 import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
 import org.uqbar.commons.applicationContext.ApplicationContext
+import servicios.Servicio
+import eventos.Invitacion
 
 @Accessors
- class DatosPruebaBootstrap extends CollectionBasedBootstrap{
- 	
- 	
- 		new() {
-		ApplicationContext.instance.configureSingleton(typeof(Locacion), new RepositorioLocaciones)
+class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 
+	new() {
+		ApplicationContext.instance.configureSingleton(typeof(Locacion), new RepositorioLocaciones)
+		ApplicationContext.instance.configureSingleton(typeof(Usuario), new RepositorioUsuarios)
+		ApplicationContext.instance.configureSingleton(typeof(Servicio), new RepositorioServicios)
 	}
-	
-	override run(){
-//	EventoCerrado reunionGrande
-//	EventoCerrado reunionChica
-//	EventoCerrado otroEvento
-//	Locacion salon_SM
-//	Locacion salon_2
-//	Locacion salon_3
-//	Locacion salon_Incompleto
-//	Usuario usuario1
-//	Usuario usuario2
-//	Usuario usuario3
-//	UsuarioFree usuarioFree
-//	Usuario unUsuario
-//	EventoCerrado primerEvento
-//	EventoCerrado segundoEvento
-//	EventoCerrado tercerEvento
-//	EventoCerrado cuartoEvento
-//	EventoCerrado quintoEvento
-//	EventoCerrado eventoPrueba
-//	EventoAbierto reunionAbierta
-//	EventoAbierto cumple
-//	Entrada entradaPrueba
-//	int cantMaxDeEventos = 20
-//	int contador
-//}
-//	
-//	def void crearRepoLocacion() {
-val repoLocaciones  = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+
+	override run() {
+
+// datos para repositorio Locacion
+		val repoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 		val salon_SM = new Locacion => [
 			nombre = "San Martin"
 			punto = new Point(35, 45)
@@ -72,153 +49,193 @@ val repoLocaciones  = ApplicationContext.instance.getSingleton(typeof(Locacion))
 			superficie = 100
 		]
 
-		val salon_Incompleto = new Locacion => [
-			nombre = "San Martin incompleto"
-			superficie = 16
-		]
-
-
-			repoLocaciones.agregarElemento(salon_SM)
-			repoLocaciones.agregarElemento(salon_2)
+//		val salon_Incompleto = new Locacion => [
+//			nombre = "San Martin incompleto"
+//			superficie = 16
+//		]
+		repoLocaciones.agregarElemento(salon_SM)
+		repoLocaciones.agregarElemento(salon_2)
 		repoLocaciones.agregarElemento(salon_3)
 
+// datos para repositorio Usuario
+		val repoUsuarios = ApplicationContext.instance.getSingleton(typeof(Usuario)) as RepositorioUsuarios
 
-}
+		val usuario1 = new Usuario => [
+			nombreUsuario = "PrimerUsuario"
+			email = "mail1"
+			nombreApellido = "Pepe Argento"
+			fechaNacimiento = LocalDate.of(2002, 05, 15)
+			coordenadas = new Point(40, 50)
+		]
 
-//def void crearRepoUsuario(){
-//		usuario1 = new Usuario => [
-//			nombreUsuario = "PrimerUsuario"
-//			email = "mail1"
-//			nombreApellido = "Pepe Argento"
-//			fechaNacimiento = LocalDate.of(2002, 05, 15)
-//			coordenadas = new Point(40, 50)
-//		]
-//
-//		usuario2 = new Usuario => [
-//			nombreUsuario = "SegundoUsuario"
-//			email = "mail2"
-//			nombreApellido = "Mario Perez"
-//			fechaNacimiento = LocalDate.of(1900, 04, 02)
-//			coordenadas = new Point(45, 60)
-//		]
-//		usuario3 = new Usuario => [
+		val usuario2 = new Usuario => [
+			nombreUsuario = "SegundoUsuario"
+			email = "mail2"
+			nombreApellido = "Mario Perez"
+			fechaNacimiento = LocalDate.of(1900, 04, 02)
+			coordenadas = new Point(45, 60)
+		]
+		val unUsuario = new Usuario => [
+			nombreUsuario = "Usuario"
+			email = "mail2"
+			nombreApellido = "Mario Perez"
+			fechaNacimiento = LocalDate.of(2002, 05, 15)
+			coordenadas = new Point(40, 50)
+
+		]
+//	val	usuario3 = new Usuario => [
 //			email = "mail3"
 //			nombreApellido = "María Gomez"
 //			fechaNacimiento = LocalDate.of(1900, 04, 02)
 //			coordenadas = new Point(34, 45)
 //			esAntisocial = false
 //		]
-//		reunionAbierta = new EventoAbierto => [
-//			nombre = "Reunion Proyecto"
-//			organizador = usuario1
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
-//		]
-//		cumple = new EventoAbierto => [
-//			organizador = usuario1
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(25))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(26))
-//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(7))
-//			edadMinima = 17
-//			precioEntrada = 200
-//		]
-//		reunionChica = new EventoCerrado => [
-//			nombre = "Reunion Proyecto"
-//			organizador = usuario1
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-//			fechaLimiteConfirmacion = LocalDate.now()
-//			capacidadMaxima = 10
-//		]
-//		otroEvento = new EventoCerrado => [
-//			nombre = "Otra Reunion "
-//			organizador = usuario2
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(-1))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(1))
-//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(-2))
-//			capacidadMaxima = 50
-//		]
-//		reunionGrande = new EventoCerrado => [
-//			nombre = "Reunion++ "
-//			organizador = usuario1
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
-//			capacidadMaxima = 20
-//		]
-//		usuarioFree = new UsuarioFree()
-//		usuario1.setUsuarioFree()
-//
-//// mis variables para los tests
-//		unUsuario = new Usuario => [
-//			nombreUsuario = "Usuario"
-//			fechaNacimiento = LocalDate.of(2002, 05, 15)
-//			coordenadas = new Point(40, 50)
-//		]
-//		primerEvento = new EventoCerrado => [
-//			nombre = "Reunion Proyecto"
-//			organizador = unUsuario
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
-//			capacidadMaxima = 10
-//		]
-//		segundoEvento = new EventoCerrado => [
-//			nombre = "Reunion Proyecto"
-//			organizador = unUsuario
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
-//			capacidadMaxima = 10
-//		]
-//		tercerEvento = new EventoCerrado => [
-//			nombre = "Reunion Proyecto"
-//			organizador = unUsuario
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
-//			capacidadMaxima = 10
-//		]
-//		cuartoEvento = new EventoCerrado => [
-//			nombre = "Reunion Proyecto"
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(8))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(9))
-//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(7))
-//			capacidadMaxima = 50
-//		]
-//
-//		quintoEvento = new EventoCerrado => [
-//			nombre = "Reunion Proyecto"
-//			organizador = unUsuario
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
-//			capacidadMaxima = 10
-//		]
-//		eventoPrueba = new EventoCerrado => [
-//			nombre = "Reunion Proyecto"
-//			locacion = salon_SM
-//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(3))
-//			capacidadMaxima = 10
-//		]
-//		entradaPrueba = new Entrada(cumple, usuario1)
-//	}
+		val reunionAbierta = new EventoAbierto => [
+			nombre = "Reunion Proyecto"
+			organizador = usuario1
+			locacion = salon_SM
+			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
+			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
+			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+			edadMinima = 10
+			precioEntrada = 100
+		]
+		val cumple = new EventoAbierto => [
 
-	
-	
-	
-	
+			nombre = "Cumple"
+			organizador = usuario1
+			locacion = salon_2
+			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(25))
+			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(26))
+			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(7))
+			edadMinima = 10
+			precioEntrada = 200
+		]
+		val reunionChica = new EventoCerrado => [
+			nombre = "Reunion Proyecto"
+			organizador = usuario1
+			locacion = salon_SM
+			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
+			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
+			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+			capacidadMaxima = 10
+		]
+		val otroEvento = new EventoCerrado => [
+			nombre = "Otra Reunion "
+			organizador = usuario2
+			locacion = salon_SM
+			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(4))
+			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(5))
+			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+			capacidadMaxima = 50
+		]
+		val reunionGrande = new EventoCerrado => [
+			nombre = "Reunion++ "
+			organizador = usuario1
+			locacion = salon_SM
+			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
+			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
+			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+			capacidadMaxima = 20
+		]
+		val usuarioFree = new UsuarioFree()
+		usuario1.setUsuarioProfesional()
+		usuario2.setUsuarioAmateur()
+		unUsuario.setUsuarioProfesional()
+		val primerEvento = new EventoCerrado => [
+			nombre = "Reunion Proyecto"
+			organizador = unUsuario
+			locacion = salon_SM
+			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
+			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
+			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+			capacidadMaxima = 10
+		]
+		val segundoEvento = new EventoCerrado => [
+			nombre = "Reunion Proyecto"
+			organizador = unUsuario
+			locacion = salon_SM
+			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
+			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
+			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+			capacidadMaxima = 10
+		]
+		val tercerEvento = new EventoCerrado => [
+			nombre = "Reunion Proyecto"
+			organizador = unUsuario
+			locacion = salon_SM
+			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
+			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
+			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+			capacidadMaxima = 10
+		]
+		val cuartoEvento = new EventoCerrado => [
+			nombre = "Reunion Proyecto"
+			locacion = salon_SM
+						organizador = usuario1
+			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(8))
+			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(9))
+			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(7))
+			capacidadMaxima = 50
+		]
+
+		val quintoEvento = new EventoCerrado => [
+			nombre = "Reunion Proyecto"
+			organizador = unUsuario
+			locacion = salon_SM
+			organizador = usuario1
+			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(-4))
+			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(-3))
+			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(-5))
+			capacidadMaxima = 10
+		]
+
+		repoUsuarios.agregarElemento(usuario1)
+		repoUsuarios.agregarElemento(usuario2)
+		repoUsuarios.agregarElemento(unUsuario)
+		usuario1.organizarEventoAbierto(cumple)
+		usuario1.organizarEventoAbierto(reunionAbierta)
+		usuario2.organizarEventoCerrado(otroEvento)
+		unUsuario.organizarEventoCerrado(primerEvento)
+		usuario1.eventosOrganizados.add(quintoEvento)
+		unUsuario.organizarEventoCerrado(segundoEvento)
+		val repoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepositorioServicios
+		val servicioCatering = new Servicio => [
+			ubicacion = new Point(34.910067, 45) // distancia a reunion chica aproximada 10 km
+			descripcion = "Catering"
+			ubicacion = new Point(34.910067, 45)
+			costoFijo = 200
+			costoPorKm = 2
+			costoMinimo = 100
+			porcentajeCostoMinimo = 20
+		]
+
+		val servicioAnimacion = new Servicio => [
+			ubicacion = new Point(35, 45) // distancia a reunion chica 0
+			descripcion = "Animacion"
+			ubicacion = new Point(34.910067, 45)
+			costoFijo = 300
+			costoPorKm = 2
+			costoMinimo = 100
+			costoPorHora = 1
+			costoPorPersona = 400
+			porcentajeCostoMinimo = 20
+		]
+
+		servicioAnimacion.setTarifaPorHora
+		servicioCatering.setTarifaFija
+
+		repoServicios.agregarElemento(servicioAnimacion)
+		repoServicios.agregarElemento(servicioCatering)
+
+		val entradaPrueba = new Entrada(cumple, usuario2)
+		val entradaPrueba2 = new Entrada(cumple, unUsuario)
+
+		usuario2.comprarEntradaAUnEventoAbierto(cumple)
+		usuario2.comprarEntradaAUnEventoAbierto(reunionAbierta)
+		unUsuario.comprarEntradaAUnEventoAbierto(cumple)
+		usuario1.invitarAUnEventoCerrado(reunionChica, usuario2, 3)
+
+	}
+
 }

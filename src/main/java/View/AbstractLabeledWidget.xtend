@@ -17,7 +17,8 @@ abstract class AbstractLabeledWidget extends Panel {
 		super(container)
 		layout = new HorizontalLayout
 		label = new Label(this)
-		label.width = 150
+		label.width = 200
+		label.alignLeft
 		createWidget(this) 
 	}
 		
