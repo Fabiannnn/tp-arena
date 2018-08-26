@@ -9,8 +9,10 @@ import datosPrueba.DatosPruebaBootstrap
 import org.uqbar.commons.applicationContext.ApplicationContext
 import eventos.Usuario
 import servicios.Servicio
+import eventos.Locacion
 import repositorio.RepositorioUsuarios
 import repositorio.RepositorioServicios
+import repositorio.RepositorioLocaciones
 import java.util.ArrayList
 import java.util.Collection
 import eventos.Evento
@@ -58,7 +60,7 @@ class DashboardModel {
 
 	}
 
-	def getRepositorioLocaciones() {
+	def getRepoLocaciones() {
 		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 	}
 
@@ -68,5 +70,8 @@ class DashboardModel {
 
 	def getRepoServicios() {
 		ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepositorioServicios
+	}
+	def getElementosRepoLocaciones(){
+		getRepoLocaciones
 	}
 }

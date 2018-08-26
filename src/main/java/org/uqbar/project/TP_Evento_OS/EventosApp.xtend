@@ -2,11 +2,13 @@ package org.uqbar.project.TP_Evento_OS
 
 import org.uqbar.arena.Application
 import datosPrueba.DatosPruebaBootstrap
+import repositorio.RepositorioLocaciones
 
 class EventosApp  extends Application{
 	
 	new(DatosPruebaBootstrap bootstrap){
 		super(bootstrap)
+	
 	}
 	
 		def static void main(String[] args) {

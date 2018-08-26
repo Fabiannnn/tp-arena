@@ -5,27 +5,29 @@ import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.tables.Table
+import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import servicios.Servicio
-import org.uqbar.arena.widgets.tables.Column
+import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.widgets.Button
-import eventos.Usuario
-import eventos.Locacion
+import eventos.*
 import View.LabeledTextBox
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.widgets.NumericField
 import org.uqbar.arena.widgets.TextBox
-
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import org.uqbar.commons.applicationContext.ApplicationContext
 import repositorio.RepositorioLocaciones
 import java.awt.Color
+import java.util.List
+import java.util.Collection
+import repositorio.RepositorioUsuarios
+import repositorio.RepositorioServicios
 
 @Accessors
 class DashboardView2 extends SimpleWindow<DashboardModel> {
 
-Table tablaDeLocaciones
 	new(WindowOwner owner, DashboardModel model) {
 		super(owner, model)
 		title = "Evento OS "
@@ -68,32 +70,32 @@ Table tablaDeLocaciones
 		new Label(PanelColumnas) => [
 			value <=> "eventosTotales"
 		]
-		
+
 		new Label(PanelColumnas).setText("Eventos último mes:").alignLeft.width = 200
 		new Label(PanelColumnas) => [
 			value <=> "eventosUltimoMes"
 		]
-		
+
 		new Label(PanelColumnas).setText("Eventos exitosos:").alignLeft.width = 200
 		new Label(PanelColumnas) => [
 			value <=> "eventosExitosos"
 		]
-		
+
 		new Label(PanelColumnas).setText("Eventos fracasados:").alignLeft.width = 200
 		new Label(PanelColumnas) => [
 			value <=> "eventosFracasados"
 		]
-		
+
 		new Label(PanelColumnas).setText("Entradas vendidas:").alignLeft.width = 200
 		new Label(PanelColumnas) => [
 			value <=> "entradasVendidas"
 		]
-		
+
 		new Label(PanelColumnas).setText("Invitaciones enviadas:").alignLeft.width = 200
 		new Label(PanelColumnas) => [
 			value <=> "invitacionesEnviadas"
 		]
-		
+
 	}
 
 	def crearPanelDeLocaciones(Panel PanelDeLocaciones) {
@@ -102,37 +104,41 @@ Table tablaDeLocaciones
 			it.text = "Locaciones más polulares:"
 			it.fontSize = 14
 		]
-new Table<RepositorioLocaciones>(PanelDeLocaciones, typeof(RepositorioLocaciones)) => [
-//			numberVisibleRows(10)
-		//	items <=> "RepositorioLocaciones"
-	 
-		new Column(it) => [
-			title = "Nombre"
-	// bindContentsToProperty("RepositorioLocaciones.elementos.nombre")
+ new Table<RepositorioLocaciones>(PanelDeLocaciones, RepositorioLocaciones) => [
+			numberVisibleRows = 10
+			items <=> "repoLocaciones.elementos"
+
+//			new Column<RepositorioLocaciones>(it) => [
+//			title = "Nombre"
+//			fixedSize = 150
+//			bindContentsToProperty("elementos.nombre")
+//			]
+//			new Column<RepositorioLocaciones>(it) => [
+//				title = "Capacidad"
+//				fixedSize = 100
+//				bindContentsToProperty("capacidadMaxima")
+//			]
+
 		]
-		new Column(it) => [
-			title = "Capacidad"
-			fixedSize = 100
-		// bindContentsToProperty("RepositorioLocaciones.elementos.capacidadMaxima") 	
-		]
-		
-]
 		new Button(PanelDeLocaciones) => [
 			caption = "Gestión de Locaciones"
 			setWidth = 100
-		 onClick [ | new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open ]    
+			onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
 		]
 
 	}
 
-	def crearPanelDeUsuarios(Panel PanelDeUsuarios) {
+def crearPanelDeUsuarios(Panel PanelDeUsuarios) {
 //		 new Titulo(panelDeServicios, "Usuarios más activos:" 12)	
 		new Label(PanelDeUsuarios) => [
-			it.text = "Últimos Servicios:"
+			it.text = "Usuarios más activos:"
 			it.fontSize = 14
 		]
 //
-////		val tablaDeUsuarios = new Table<Usuario>(PanelDeUsuarios, Usuario) => [] // items <=> "" 	value <=> ""
+ new Table<RepositorioUsuarios>(PanelDeUsuarios, RepositorioUsuarios) => [
+			numberVisibleRows = 10
+			items <=> "repoUsuarios.elementos"
+			
 ////		new Column(tablaDeUsuarios) => [
 ////			title = "Username"
 ////		// bindContentsToProperty("Username ").transformer = [| new  ]
@@ -144,7 +150,7 @@ new Table<RepositorioLocaciones>(PanelDeLocaciones, typeof(RepositorioLocaciones
 ////		new Column(tablaDeUsuarios) => [
 ////			title = "Apellido"
 ////		// bindContentsToProperty("Apellido").transformer = [ | ] 
-////		]
+		]
 		new Button(PanelDeUsuarios) => [
 			caption = "Gestión de Usuarios"
 			width = 100
@@ -152,27 +158,25 @@ new Table<RepositorioLocaciones>(PanelDeLocaciones, typeof(RepositorioLocaciones
 		]
 	}
 
-	def crearPanelDeServicios(Panel panelDeServicios) { // mainPanel o owner
+	def crearPanelDeServicios(Panel PanelDeServicios) { // mainPanel o owner
 //		new Label(panelDeServicios) => [text = "Últimos Servicios" fontSize = 14]
-		new Label(panelDeServicios) => [
+		new Label(PanelDeServicios) => [
 			it.text = "Últimos Servicios:"
 			it.fontSize = 14
 		]
 
-//		val tablaDeServicios = new Table<Servicio>(panelDeServicios, Servicio) => [] // items => "" value => ""
-//		new Column(tablaDeServicios) => [
-//			title = "Nombre"
-//		// bindContentsToProperty("Nombre").transformer = [|new ]
-//		]
+ new Table<RepositorioServicios>(PanelDeServicios, RepositorioServicios) => [
+			numberVisibleRows = 10
+			items <=> "repoServicios.elementos"
 //		new Column(tablaDeServicios) => [
 //			title = "Tarifa"
 //			// bindContentsToProperty("Tarifa").transformer = [ | ] 	]
-		new Button(panelDeServicios) => [
+		new Button(PanelDeServicios) => [
 			caption = "Gestión de Servicios"
 			width = 100
 		// onClick [ | new gestionDeServiciosView().open ]    
 		]
-
+]
 	}
 
 }

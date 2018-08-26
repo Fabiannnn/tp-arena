@@ -32,7 +32,7 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 	override run() {
 
 // datos para repositorio Locacion
-		val RepositorioLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 		val salon_SM = new Locacion => [
 			nombre = "San Martin"
 			punto = new Point(35, 45)
@@ -53,9 +53,9 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 //			nombre = "San Martin incompleto"
 //			superficie = 16
 //		]
-		RepositorioLocaciones.agregarElemento(salon_SM)
-		RepositorioLocaciones.agregarElemento(salon_2)
-		RepositorioLocaciones.agregarElemento(salon_3)
+		RepoLocaciones.agregarElemento(salon_SM)
+		RepoLocaciones.agregarElemento(salon_2)
+		RepoLocaciones.agregarElemento(salon_3)
 
 // datos para repositorio Usuario
 		val repoUsuarios = ApplicationContext.instance.getSingleton(typeof(Usuario)) as RepositorioUsuarios
