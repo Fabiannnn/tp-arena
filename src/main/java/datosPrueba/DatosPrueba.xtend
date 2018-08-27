@@ -14,6 +14,7 @@ import eventos.Locacion
 import eventos.Usuario
 import eventos.UsuarioFree
 import eventos.EventoAbierto
+import eventos.Evento
 import eventos.Entrada
 import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
 import org.uqbar.commons.applicationContext.ApplicationContext
@@ -41,7 +42,8 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 		val salon_2 = new Locacion => [
 			nombre = "San Martin 2"
 			punto = new Point(35, 65)
-			superficie = 45
+			superficie = 4
+			
 		]
 		val salon_3 = new Locacion => [
 			nombre = "Sanse"
@@ -83,13 +85,13 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 			coordenadas = new Point(40, 50)
 
 		]
-//	val	usuario3 = new Usuario => [
-//			email = "mail3"
-//			nombreApellido = "María Gomez"
-//			fechaNacimiento = LocalDate.of(1900, 04, 02)
-//			coordenadas = new Point(34, 45)
-//			esAntisocial = false
-//		]
+	val	usuario3 = new Usuario => [
+			email = "mail3"
+			nombreApellido = "María Gomez"
+			fechaNacimiento = LocalDate.of(1900, 04, 02)
+			coordenadas = new Point(34, 45)
+			esAntisocial = false
+		]
 		val reunionAbierta = new EventoAbierto => [
 			nombre = "Reunion Proyecto"
 			organizador = usuario1
@@ -138,9 +140,9 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
 			capacidadMaxima = 20
 		]
-		val usuarioFree = new UsuarioFree()
 		usuario1.setUsuarioProfesional()
 		usuario2.setUsuarioAmateur()
+		usuario3.setUsuarioProfesional()
 		unUsuario.setUsuarioProfesional()
 		val primerEvento = new EventoCerrado => [
 			nombre = "Reunion Proyecto"
@@ -192,6 +194,7 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 
 		repoUsuarios.agregarElemento(usuario1)
 		repoUsuarios.agregarElemento(usuario2)
+		repoUsuarios.agregarElemento(usuario2)
 		repoUsuarios.agregarElemento(unUsuario)
 		usuario1.organizarEventoAbierto(cumple)
 		usuario1.organizarEventoAbierto(reunionAbierta)
@@ -228,13 +231,18 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 		repoServicios.agregarElemento(servicioAnimacion)
 		repoServicios.agregarElemento(servicioCatering)
 
-		val entradaPrueba = new Entrada(cumple, usuario2)
-		val entradaPrueba2 = new Entrada(cumple, unUsuario)
+//		val entradaPrueba = new Entrada(cumple, usuario2)
+//		val entradaPrueba2 = new Entrada(cumple, unUsuario)
+//		val entradaPrueba3 = new Entrada(cumple, usuario3)
 
 		usuario2.comprarEntradaAUnEventoAbierto(cumple)
 		usuario2.comprarEntradaAUnEventoAbierto(reunionAbierta)
 		unUsuario.comprarEntradaAUnEventoAbierto(cumple)
+		usuario3.comprarEntradaAUnEventoAbierto(cumple)
 		usuario1.invitarAUnEventoCerrado(reunionChica, usuario2, 3)
+		val unaInvitacion= new Invitacion(reunionChica, usuario2, 3)
+		usuario2.aceptarInvitacion(unaInvitacion,3)
+	
 
 	}
 

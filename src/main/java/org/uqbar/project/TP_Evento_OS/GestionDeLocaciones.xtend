@@ -25,40 +25,48 @@ class GestionDeLocaciones extends SimpleWindow<GestionDeLocacionesModel> {
 	}
 
 	override protected createMainTemplate(Panel mainPanel) {
+		
+		minHeight = 500
 
 		mainPanel.layout = new ColumnLayout(2)
+
 		val Panel PanelIzquierdo = new Panel(mainPanel)
-		// PanelIzquierdo.layout = new VerticalLayout
+	
 		crearTablaGestionLocaciones(PanelIzquierdo)
+		
 		val Panel PanelDerecho = new Panel(mainPanel)
+				PanelDerecho.width = 200
 		crearBotoneraGestionLocaciones(PanelDerecho)
 
 	}
 
-	def crearBotoneraGestionLocaciones(Panel panel) { // esto hay que refactorizarlo
+	def crearBotoneraGestionLocaciones(Panel panel) {
+		 // esto hay que refactorizarlo
+		 minWidth = 200
 		new Button(panel) => [
 			caption = "Editar"
-			setWidth = 100
+			setWidth = 150
 		// onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
 		]
 		new Button(panel) => [
 			caption = "Eliminar"
-			setWidth = 100
+			setWidth = 150
 		// onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
 		]
 		new Button(panel) => [
 			caption = "Nueva Locacion"
-			setWidth = 100
+			setWidth = 150
 		// onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
 		]
 		new Button(panel) => [
 			caption = "Update Masivo"
-			setWidth = 100
+			setWidth = 10
 		// onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
 		]
 	}
 
 	def crearTablaGestionLocaciones(Panel panel) {
+		minWidth = 300
 		new Label(panel).setText("Esto es una Prueba")
 		new Label(panel) => [
 			value <=> "pruebaDiez"
@@ -75,9 +83,8 @@ class GestionDeLocaciones extends SimpleWindow<GestionDeLocacionesModel> {
 
 	override protected addActions(Panel actionsPanel) {
 	}
-	
+
 	override protected createFormPanel(Panel mainPanel) {
-		
 	}
 
 }

@@ -16,14 +16,14 @@ import repositorio.RepositorioLocaciones
 import java.util.ArrayList
 import java.util.Collection
 import eventos.Evento
+import eventos.EventoAbierto
+import eventos.EventoCerrado
 import java.time.LocalDateTime
 import java.time.Period
 
 @Accessors
 @Observable
 class DashboardModel {
-
-	int cantEventos = 5
 
 	def getEventosTotales() {
 		repoUsuarios.elementos.fold(0.0)[acum, user|acum + user.eventosOrganizados.size()]
@@ -43,11 +43,21 @@ class DashboardModel {
 	}
 
 	def getEventosExitosos() {
-		17
+		
+			repoUsuarios.elementos.fold(0.0)[acum, user|acum + eventosOrganizadosExitosos(user)]
+	}
+
+	def eventosOrganizadosExitosos(Usuario usuario) {
+
+		usuario.eventosOrganizados.filter[evento| evento.esExitoso()].size()
 	}
 
 	def getEventosFracasados() {
-		18
+		repoUsuarios.elementos.fold(0.0)[acum, user|acum + eventosOrganizadosFracasos(user)]
+	}
+	
+	def eventosOrganizadosFracasos(Usuario usuario) {
+		usuario.eventosOrganizados.filter[evento|evento.esUnFracaso()].size()
 	}
 
 	def getEntradasVendidas() {
