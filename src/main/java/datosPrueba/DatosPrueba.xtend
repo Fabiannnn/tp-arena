@@ -42,8 +42,8 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 		val salon_2 = new Locacion => [
 			nombre = "San Martin 2"
 			punto = new Point(35, 65)
-			superficie = 4
-			
+			superficie = 2.5
+
 		]
 		val salon_3 = new Locacion => [
 			nombre = "Sanse"
@@ -85,13 +85,18 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 			coordenadas = new Point(40, 50)
 
 		]
-	val	usuario3 = new Usuario => [
+		val usuario3 = new Usuario => [
+			nombreUsuario = "Usuario3"
 			email = "mail3"
 			nombreApellido = "María Gomez"
 			fechaNacimiento = LocalDate.of(1900, 04, 02)
 			coordenadas = new Point(34, 45)
 			esAntisocial = false
 		]
+		usuario1.setUsuarioProfesional()
+		usuario2.setUsuarioProfesional()
+		usuario3.setUsuarioProfesional()
+		unUsuario.setUsuarioProfesional()
 		val reunionAbierta = new EventoAbierto => [
 			nombre = "Reunion Proyecto"
 			organizador = usuario1
@@ -140,10 +145,7 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
 			capacidadMaxima = 20
 		]
-		usuario1.setUsuarioProfesional()
-		usuario2.setUsuarioAmateur()
-		usuario3.setUsuarioProfesional()
-		unUsuario.setUsuarioProfesional()
+
 		val primerEvento = new EventoCerrado => [
 			nombre = "Reunion Proyecto"
 			organizador = unUsuario
@@ -174,7 +176,7 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 		val cuartoEvento = new EventoCerrado => [
 			nombre = "Reunion Proyecto"
 			locacion = salon_SM
-						organizador = usuario1
+			organizador = usuario1
 			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(8))
 			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(9))
 			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(7))
@@ -183,9 +185,8 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 
 		val quintoEvento = new EventoCerrado => [
 			nombre = "Reunion Proyecto"
-			organizador = unUsuario
-			locacion = salon_SM
 			organizador = usuario1
+			locacion = salon_SM
 			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(-4))
 			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(-3))
 			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(-5))
@@ -194,7 +195,7 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 
 		repoUsuarios.agregarElemento(usuario1)
 		repoUsuarios.agregarElemento(usuario2)
-		repoUsuarios.agregarElemento(usuario2)
+		repoUsuarios.agregarElemento(usuario3)
 		repoUsuarios.agregarElemento(unUsuario)
 		usuario1.organizarEventoAbierto(cumple)
 		usuario1.organizarEventoAbierto(reunionAbierta)
@@ -234,16 +235,14 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 //		val entradaPrueba = new Entrada(cumple, usuario2)
 //		val entradaPrueba2 = new Entrada(cumple, unUsuario)
 //		val entradaPrueba3 = new Entrada(cumple, usuario3)
-
 		usuario2.comprarEntradaAUnEventoAbierto(cumple)
 		usuario2.comprarEntradaAUnEventoAbierto(reunionAbierta)
 		unUsuario.comprarEntradaAUnEventoAbierto(cumple)
-		usuario3.comprarEntradaAUnEventoAbierto(cumple)
-		usuario1.invitarAUnEventoCerrado(reunionChica, usuario2, 3)
-		val unaInvitacion= new Invitacion(reunionChica, usuario2, 3)
-		usuario2.aceptarInvitacion(unaInvitacion,3)
-	
-
+//		usuario3.comprarEntradaAUnEventoAbierto(cumple)
+		usuario1.invitarAUnEventoCerrado(reunionChica, usuario2, 8)
+		val unaInvitacion = new Invitacion(otroEvento, usuario1, 8)
+		usuario1.aceptarInvitacion(unaInvitacion, 8)
+		
 	}
 
 }

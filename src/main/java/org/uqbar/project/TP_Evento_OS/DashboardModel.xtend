@@ -43,13 +43,13 @@ class DashboardModel {
 	}
 
 	def getEventosExitosos() {
-		
-			repoUsuarios.elementos.fold(0.0)[acum, user|acum + eventosOrganizadosExitosos(user)]
+
+		repoUsuarios.elementos.fold(0.0)[acum, user|acum + eventosOrganizadosExitosos(user)]
 	}
 
 	def eventosOrganizadosExitosos(Usuario usuario) {
 
-		usuario.eventosOrganizados.filter[evento| evento.esExitoso()].size()
+		usuario.eventosOrganizados.filter[evento| evento.esExitoso()].size
 	}
 
 	def getEventosFracasados() {
