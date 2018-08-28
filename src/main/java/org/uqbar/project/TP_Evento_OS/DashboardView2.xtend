@@ -1,29 +1,21 @@
 package org.uqbar.project.TP_Evento_OS
 
+import eventos.Locacion
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.VerticalLayout
+import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
-import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.widgets.tables.Column
+import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
-import servicios.Servicio
-import org.uqbar.arena.bindings.NotNullObservable
-import org.uqbar.arena.widgets.Button
-import eventos.*
-import View.LabeledTextBox
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.uqbar.arena.widgets.NumericField
-import org.uqbar.arena.widgets.TextBox
-import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import org.uqbar.commons.applicationContext.ApplicationContext
-import repositorio.RepositorioLocaciones
-import java.awt.Color
-import java.util.List
-import java.util.Collection
-import repositorio.RepositorioUsuarios
 import repositorio.RepositorioServicios
+import repositorio.RepositorioUsuarios
+
+import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import repositorio.RepositorioLocaciones
 
 @Accessors
 class DashboardView2 extends SimpleWindow<DashboardModel> {
@@ -104,27 +96,33 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 			it.text = "Locaciones más polulares:"
 			it.fontSize = 14
 		]
- new Table<RepositorioLocaciones>(PanelDeLocaciones, RepositorioLocaciones) => [
+ val table =new Table<Locacion>(PanelDeLocaciones, typeof(Locacion)) => [
 			numberVisibleRows = 10
-			items <=> "repoLocaciones.elementos"
+			items <=> "locacionesDelRepo"
 
-//			new Column<RepositorioLocaciones>(it) => [
-//			title = "Nombre"
-//			fixedSize = 150
-//			bindContentsToProperty("elementos.nombre")
-//			]
+			new Column<Locacion>(it) => [
+			title = "Nombre"
+			fixedSize = 250
+			bindContentsToProperty("nombre")
+			]
+			new Column<Locacion>(it) => [
+			title = "Capacidad"
+			fixedSize = 250
+			bindContentsToProperty("capacidadMaxima")
+			]
+			]
 //			new Column<RepositorioLocaciones>(it) => [
 //				title = "Capacidad"
 //				fixedSize = 100
 //				bindContentsToProperty("capacidadMaxima")
 //			]
 
-		]
-		new Button(PanelDeLocaciones) => [
-			caption = "Gestión de Locaciones"
-			setWidth = 100
-			onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
-		]
+//		]
+//		new Button(PanelDeLocaciones) => [
+//			caption = "Gestión de Locaciones"
+//			setWidth = 100
+//			onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
+//		]
 
 	}
 

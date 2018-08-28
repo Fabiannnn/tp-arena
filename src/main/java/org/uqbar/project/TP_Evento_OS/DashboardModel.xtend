@@ -69,7 +69,9 @@ class DashboardModel {
 		repoUsuarios.elementos.fold(0.0)[acum, elemento|acum + elemento.invitaciones.size()]
 
 	}
-
+def getLocacionesDelRepo(){
+	getRepoLocaciones.elementos
+}
 	def getRepoLocaciones() {
 		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 	}

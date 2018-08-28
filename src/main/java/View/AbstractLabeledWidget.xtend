@@ -7,6 +7,7 @@ import org.uqbar.arena.widgets.Container
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.Widget
+import org.uqbar.arena.layout.VerticalLayout
 
 @Accessors
 abstract class AbstractLabeledWidget extends Panel {
@@ -15,7 +16,7 @@ abstract class AbstractLabeledWidget extends Panel {
 	
 	new(Container container) {
 		super(container)
-		layout = new HorizontalLayout
+		layout = new VerticalLayout
 		label = new Label(this)
 		label.width = 200
 		label.alignLeft
