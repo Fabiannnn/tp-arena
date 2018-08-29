@@ -50,10 +50,9 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 	}
 
 	def crearPanelEstadistica(Panel PanelEstadisticas) {
-
 		new Label(PanelEstadisticas) => [
 			text = "Estadísticas:"
-			fontSize = 12
+			fontSize = 14
 			alignLeft
 
 		]
@@ -93,14 +92,13 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 	}
 
 	def crearPanelDeLocaciones(Panel PanelDeLocaciones) {
-		// new Titulo(panelDeLocaciones, "Locaciones más polulares:" 12)	
 		new Label(PanelDeLocaciones) => [
 			it.text = "Locaciones más polulares:"
 			it.fontSize = 14
 		]
 		val table = new Table<Locacion>(PanelDeLocaciones, typeof(Locacion)) => [
 			numberVisibleRows = 10
-			items <=> "locacionesDelRepo"
+			items <=> "locacionesPopulares"
 			new Column<Locacion>(it) => [
 				title = "Nombre"
 				fixedSize = 250
@@ -115,7 +113,7 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 		new Button(PanelDeLocaciones) => [
 			caption = "Gestión de Locaciones"
 			setWidth = 100
-			onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
+			onClick [|new GestionDeLocacionesView(owner, new GestionGeneralModel()).open]
 		]
 	}
 
@@ -128,7 +126,7 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 
 		val tablaUsuarios = new Table<Usuario>(PanelDeUsuarios, typeof(Usuario)) => [
 			numberVisibleRows = 10
-			items <=> "usuariosDelRepo"
+			items <=> "usuariosActivos"
 
 			new Column<Usuario>(it) => [
 				title = "Username"
@@ -144,7 +142,7 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 		new Button(PanelDeUsuarios) => [
 			caption = "Gestión de Usuarios"
 			width = 100
-		// onClick [ | new gestionDeUsuariosView ().open ]  
+		 onClick [ | new GestionDeUsuariosView(owner, new GestionGeneralModel()).open] 
 		]
 	}
 
@@ -156,7 +154,7 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 
 		val tablaServicios = new Table<Servicio>(PanelDeServicios, typeof(Servicio)) => [
 			numberVisibleRows = 10
-			items <=> "serviciosDelRepo"
+			items <=> "serviciosNuevos"
 			new Column<Servicio>(it) => [
 				title = "Nombre"
 				fixedSize = 250
@@ -164,49 +162,16 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 			]
 			new Column<Servicio>(it) => [
 				title = "Tarifa"
-				fixedSize =100
+				fixedSize = 100
 				bindContentsToProperty("costoFijo") // Falta Modelar
 			]
 		]
 		new Button(PanelDeServicios) => [
 			caption = "Gestión de Servicios"
 			width = 100
-		// onClick [ | new gestionDeServiciosView().open ]    
+		onClick [ | new GestionDeServiciosView(owner, new GestionGeneralModel()).open]  
 		]
 
 	}
 
 }
-// tablasPantallaPrincipal.crearTablaDeServicios(this)
-//class TablasDashboardView extends SimpleWindow<DashboardModel> {
-//
-//	static TablasDashboardView instance
-//
-//	static def getInstance() {
-//		if (instance === null) {
-//			instance = new TablasDashboardView
-//		}
-//		instance
-//	}
-//
-//	def crearTablaDeServicios(Panel mainPanel) {
-//		val tablaDeServicios = new Table<Servicios>(panelDeServicios, servicios) => [items <=> "" value <=> ""]
-//		new Column(tablaDeServicios) => [title = "Nombre" bindContentsToProperty("Nombre").transformer = [|new ]]
-//		new Column(tablaDeServicios) => [title = "Tarifa" bindContentsToProperty("Tarifa").transformer = [| ]]
-//	}
-//
-//	def crearTablaDeServicios(Panel mainPanel) {
-//		val tablaDeUsuarios = new Table<Usuarios>(panelDeUsuario, usuario) => [items <=> "" value <=> ""]
-//		new Column(tablaDeUsuarios) => [title = "Username" bindContentsToProperty("Username ").transformer = [|new ]]
-//		new Column(tablaDeUsuarios) => [title = "Nombre" bindContentsToProperty("Nombre").transformer = [| ]]
-//		new Column(tablaDeUsuarios) => [title = "Apellido" bindContentsToProperty("Apellido").transformer = [| ]]
-//	}
-//
-//	def crearTablaDeLocaciones(Panel mainPanel) {
-//
-//		val tablaDeLocaciones = new Table<Locaciones>(panelDeLocaciones, locaciones) => [items <=> "" value <=> ""]
-//		new Column(tablaDeLocaciones) => [title = "Nombre" bindContentsToProperty("Nombre").transformer = [|new ]]
-//		new Column(tablaDeLocaciones) => [title = "Capacidad" bindContentsToProperty("Capacidad").transformer = [| ]]
-//		new Column(tablaDeLocaciones) => [title = "Apellido" bindContentsToProperty("Apellido").transformer = [| ]]
-//	}
-//}

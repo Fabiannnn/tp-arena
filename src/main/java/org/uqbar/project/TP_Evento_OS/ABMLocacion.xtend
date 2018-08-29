@@ -4,15 +4,16 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.widgets.Panel
 import eventos.Locacion
+import org.uqbar.arena.aop.windows.TransactionalDialog
 
-class ABMLocacion  extends Dialog<GestionDeLocaciones>{
+class ABMLocacion  extends TransactionalDialog<GestionDeLocacionesModel>{
 	
-	new(WindowOwner owner, GestionDeLocaciones model) {
+	new(WindowOwner owner, GestionDeLocacionesModel model) {
 		super(owner, model)
 	}
 	
 	override protected createFormPanel(Panel mainPanel) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		
 	}
 	
 }

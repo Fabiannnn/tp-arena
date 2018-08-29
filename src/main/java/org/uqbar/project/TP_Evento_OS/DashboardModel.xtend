@@ -1,25 +1,17 @@
 package org.uqbar.project.TP_Evento_OS
 
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.uqbar.commons.model.annotations.Observable
-import org.uqbar.commons.model.annotations.Dependencies
-import eventos.Locacion
-import repositorio.RepositorioLocaciones
-import datosPrueba.DatosPruebaBootstrap
-import org.uqbar.commons.applicationContext.ApplicationContext
-import eventos.Usuario
-import servicios.Servicio
-import eventos.Locacion
-import repositorio.RepositorioUsuarios
-import repositorio.RepositorioServicios
-import repositorio.RepositorioLocaciones
-import java.util.ArrayList
-import java.util.Collection
 import eventos.Evento
-import eventos.EventoAbierto
-import eventos.EventoCerrado
+import eventos.Locacion
+import eventos.Usuario
 import java.time.LocalDateTime
 import java.time.Period
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.uqbar.commons.applicationContext.ApplicationContext
+import org.uqbar.commons.model.annotations.Observable
+import repositorio.RepositorioLocaciones
+import repositorio.RepositorioServicios
+import repositorio.RepositorioUsuarios
+import servicios.Servicio
 
 @Accessors
 @Observable
@@ -70,26 +62,24 @@ class DashboardModel {
 
 	}
 
-	def getLocacionesDelRepo() {
+	def getLocacionesPopulares() {//modelar comportamiento
 		getRepoLocaciones.elementos
 	}
 
-	def getUsuariosDelRepo() {
+	def getUsuariosActivos() {//modelar comportamiento
 		getRepoUsuarios.elementos
 	}
 
-	def getServiciosDelRepo() {
+	def getServiciosNuevos() {//modelar comportamiento
 		getRepoServicios.elementos
 	}
 
 	def getRepoLocaciones() {
 		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 	}
-
 	def getRepoUsuarios() {
 		ApplicationContext.instance.getSingleton(typeof(Usuario)) as RepositorioUsuarios
 	}
-
 	def getRepoServicios() {
 		ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepositorioServicios
 	}
