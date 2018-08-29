@@ -51,13 +51,15 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 			superficie = 100
 		]
 
-//		val salon_Incompleto = new Locacion => [
-//			nombre = "San Martin incompleto"
-//			superficie = 16
-//		]
+		val salon_Completo = new Locacion => [
+			nombre = "San Martin Completo"
+			punto = new Point(35, 65)
+			superficie = 16
+		]
 		RepoLocaciones.agregarElemento(salon_SM)
 		RepoLocaciones.agregarElemento(salon_2)
 		RepoLocaciones.agregarElemento(salon_3)
+		RepoLocaciones.agregarElemento(salon_Completo)
 
 // datos para repositorio Usuario
 		val repoUsuarios = ApplicationContext.instance.getSingleton(typeof(Usuario)) as RepositorioUsuarios
@@ -242,7 +244,7 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 		usuario1.invitarAUnEventoCerrado(reunionChica, usuario2, 8)
 		val unaInvitacion = new Invitacion(otroEvento, usuario1, 8)
 		usuario1.aceptarInvitacion(unaInvitacion, 8)
-		
+
 	}
 
 }

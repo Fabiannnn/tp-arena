@@ -16,6 +16,8 @@ import repositorio.RepositorioUsuarios
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import repositorio.RepositorioLocaciones
+import eventos.Usuario
+import servicios.Servicio
 
 @Accessors
 class DashboardView2 extends SimpleWindow<DashboardModel> {
@@ -96,58 +98,48 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 			it.text = "Locaciones más polulares:"
 			it.fontSize = 14
 		]
- val table =new Table<Locacion>(PanelDeLocaciones, typeof(Locacion)) => [
+		val table = new Table<Locacion>(PanelDeLocaciones, typeof(Locacion)) => [
 			numberVisibleRows = 10
 			items <=> "locacionesDelRepo"
-
 			new Column<Locacion>(it) => [
-			title = "Nombre"
-			fixedSize = 250
-			bindContentsToProperty("nombre")
+				title = "Nombre"
+				fixedSize = 250
+				bindContentsToProperty("nombre")
 			]
 			new Column<Locacion>(it) => [
-			title = "Capacidad"
-			fixedSize = 250
-			bindContentsToProperty("capacidadMaxima")
+				title = "Capacidad"
+				fixedSize = 100
+				bindContentsToProperty("capacidadMaxima")
 			]
-			]
-//			new Column<RepositorioLocaciones>(it) => [
-//				title = "Capacidad"
-//				fixedSize = 100
-//				bindContentsToProperty("capacidadMaxima")
-//			]
-
-//		]
-//		new Button(PanelDeLocaciones) => [
-//			caption = "Gestión de Locaciones"
-//			setWidth = 100
-//			onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
-//		]
-
+		]
+		new Button(PanelDeLocaciones) => [
+			caption = "Gestión de Locaciones"
+			setWidth = 100
+			onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
+		]
 	}
 
-def crearPanelDeUsuarios(Panel PanelDeUsuarios) {
-//		 new Titulo(panelDeServicios, "Usuarios más activos:" 12)	
+	def crearPanelDeUsuarios(Panel PanelDeUsuarios) {
 		new Label(PanelDeUsuarios) => [
 			it.text = "Usuarios más activos:"
 			it.fontSize = 14
+			it.alignLeft
 		]
-//
- new Table<RepositorioUsuarios>(PanelDeUsuarios, RepositorioUsuarios) => [
+
+		val tablaUsuarios = new Table<Usuario>(PanelDeUsuarios, typeof(Usuario)) => [
 			numberVisibleRows = 10
-			items <=> "repoUsuarios.elementos"
-			
-////		new Column(tablaDeUsuarios) => [
-////			title = "Username"
-////		// bindContentsToProperty("Username ").transformer = [| new  ]
-////		]
-////		new Column(tablaDeUsuarios) => [
-////			title = "Npmbre"
-////		// bindContentsToProperty("Nombre").transformer = [ | ] 	
-////		]
-////		new Column(tablaDeUsuarios) => [
-////			title = "Apellido"
-////		// bindContentsToProperty("Apellido").transformer = [ | ] 
+			items <=> "usuariosDelRepo"
+
+			new Column<Usuario>(it) => [
+				title = "Username"
+				fixedSize = 100
+				bindContentsToProperty("nombreUsuario")
+			]
+			new Column<Usuario>(it) => [
+				title = "Nombre y Apellido"
+				fixedSize = 250
+				bindContentsToProperty("nombreApellido")
+			]
 		]
 		new Button(PanelDeUsuarios) => [
 			caption = "Gestión de Usuarios"
@@ -156,25 +148,32 @@ def crearPanelDeUsuarios(Panel PanelDeUsuarios) {
 		]
 	}
 
-	def crearPanelDeServicios(Panel PanelDeServicios) { // mainPanel o owner
-//		new Label(panelDeServicios) => [text = "Últimos Servicios" fontSize = 14]
+	def crearPanelDeServicios(Panel PanelDeServicios) {
 		new Label(PanelDeServicios) => [
 			it.text = "Últimos Servicios:"
 			it.fontSize = 14
 		]
 
- new Table<RepositorioServicios>(PanelDeServicios, RepositorioServicios) => [
+		val tablaServicios = new Table<Servicio>(PanelDeServicios, typeof(Servicio)) => [
 			numberVisibleRows = 10
-			items <=> "repoServicios.elementos"
-//		new Column(tablaDeServicios) => [
-//			title = "Tarifa"
-//			// bindContentsToProperty("Tarifa").transformer = [ | ] 	]
+			items <=> "serviciosDelRepo"
+			new Column<Servicio>(it) => [
+				title = "Nombre"
+				fixedSize = 250
+				bindContentsToProperty("descripcion")
+			]
+			new Column<Servicio>(it) => [
+				title = "Tarifa"
+				fixedSize =100
+				bindContentsToProperty("costoFijo") // Falta Modelar
+			]
+		]
 		new Button(PanelDeServicios) => [
 			caption = "Gestión de Servicios"
 			width = 100
 		// onClick [ | new gestionDeServiciosView().open ]    
 		]
-]
+
 	}
 
 }

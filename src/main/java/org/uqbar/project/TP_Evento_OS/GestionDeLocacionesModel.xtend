@@ -1,30 +1,19 @@
 package org.uqbar.project.TP_Evento_OS
 
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.uqbar.commons.model.annotations.Dependencies
+import eventos.Entidad
 import eventos.Locacion
-import repositorio.RepositorioLocaciones
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.applicationContext.ApplicationContext
-import eventos.Usuario
-import servicios.Servicio
-import repositorio.RepositorioUsuarios
-import repositorio.RepositorioServicios
-import java.util.ArrayList
-import java.util.Collection
-import eventos.Evento
-import java.time.LocalDateTime
-import java.time.Period
 import org.uqbar.commons.model.annotations.Observable
-import org.uqbar.project.TP_Evento_OS.DashboardModel
-import com.eclipsesource.json.JsonObject
-import jsons.JsonLocacion
+import repositorio.Repositorio
+import org.uqbar.commons.model.utils.ObservableUtils
 
 @Accessors
 @Observable
 class GestionDeLocacionesModel extends DashboardModel {
 //	String jsonText
 //	JsonLocacion jsonLocacion
-
+Entidad locacionSeleccionada
 	int pruebaDiez = 10
 
 	def getGestionDeLocaciones() {
@@ -34,7 +23,11 @@ class GestionDeLocacionesModel extends DashboardModel {
 	def getRepositorioLocacionesTamanio() {
 		"problemas"
 	}
-
+	def getEliminarSeleccion() {
+		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as Repositorio
+		RepoLocaciones.delete(locacionSeleccionada)
+		ObservableUtils.firePropertyChanged(this, "locacionesDelRepo") 
+	}
 //	def getActualizar() {
 //		jsonLocacion.deserializarJson('''[
 //		   {

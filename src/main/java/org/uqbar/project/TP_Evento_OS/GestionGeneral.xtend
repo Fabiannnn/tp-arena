@@ -15,6 +15,7 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.layout.HorizontalLayout
+import eventos.Locacion
 
 @Accessors
 abstract class GestionGeneral extends Dialog<GestionDeLocacionesModel> {
@@ -35,7 +36,7 @@ abstract class GestionGeneral extends Dialog<GestionDeLocacionesModel> {
 
 		val Panel PanelDerecho = new Panel(form)
 		// PanelDerecho.width = 200
-		crearBotoneraGestionLocaciones(PanelDerecho)
+		crearBotoneraGestion(PanelDerecho)
 
 	}
 
@@ -43,32 +44,42 @@ abstract class GestionGeneral extends Dialog<GestionDeLocacionesModel> {
 
 	def protected crearTablaGestion(Panel panel) {}
 
-	def crearBotoneraGestionLocaciones(Panel panel) {
+	def crearBotoneraGestion(Panel panel) {
 		var actionsPanel = new Panel(panel)
 		actionsPanel.layout = new VerticalLayout
 
-		new Button(actionsPanel) => [
+		val edicion = new Button(actionsPanel) => [
 			caption = "Editar"
 			setWidth = 150
-		// onClick [|this.openDialog(ABMLocacion.editarLocacion(model.LocacionSeleccionada))]
+
 		]
+
 		new Button(actionsPanel) => [
 			caption = "Eliminar"
 			setWidth = 150
-		// onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
+		 onClick [|modelObject.eliminarSeleccion]
+		 
 		]
 		new Button(actionsPanel) => [
 			caption = "Nueva Locacion"
 			setWidth = 150
+			
 		// onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
 		]
 		new Button(actionsPanel) => [
 			caption = "Update Masivo"
 			setWidth = 10
-	//		onClick [|new GestionDeLocacionesModel().actualizar]
+		// onClick [|new GestionDeLocacionesModel().actualizar]
 		]
 	}
+	
 
+	
+//	abstract def void bindValueToProperty(Button boton, String property) {
+//		boton.bindValueToProperty(property)
+//
+//		this
+//	}
 }
 
 class GestionDeLocaciones extends GestionGeneral {
@@ -81,23 +92,35 @@ class GestionDeLocaciones extends GestionGeneral {
 	override protected crearTablaGestion(Panel panel) {
 		minWidth = 300
 		this.describeResultadosGrid(
-			new Table<RepositorioLocaciones>(panel, RepositorioLocaciones) => [
+			new Table<Locacion>(panel, typeof(Locacion)) => [
 				numberVisibleRows = 10
-				items <=> "repoLocaciones.elementos"
-			// value<=>"locacionSeleccionada"
+				items <=> "locacionesDelRepo"
+			 value<=>"locacionSeleccionada"
 			]
 		)
 	}
 
-	def describeResultadosGrid(Table<RepositorioLocaciones> table) {
-//		new Column<RepositorioLocaciones>(table)=>[
-////			title = "Nombre"
-////			fixedSize=250
-////			bindContentsToProperty("repoLocaciones.elementos.nombre")
-//		]
+	def describeResultadosGrid(Table<Locacion> table) {
+		new Column<Locacion>(table) => [
+			title = "Nombre"
+			fixedSize = 150
+			bindContentsToProperty("nombre")
+		]
+		new Column<Locacion>(table) => [
+			title = "Superficie"
+			fixedSize = 150
+			bindContentsToProperty("superficie")
+		]
+		new Column<Locacion>(table) => [
+			title = "Coordenadas"
+			fixedSize = 150
+			bindContentsToProperty("punto")
+		]
+	}
+	
+	override addFormPanel(Panel panel) {
+
 	}
 
-	override addFormPanel(Panel panel) {
-	}
 
 }

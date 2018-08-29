@@ -49,13 +49,13 @@ class DashboardModel {
 
 	def eventosOrganizadosExitosos(Usuario usuario) {
 
-		usuario.eventosOrganizados.filter[evento| evento.esExitoso()].size
+		usuario.eventosOrganizados.filter[evento|evento.esExitoso()].size
 	}
 
 	def getEventosFracasados() {
 		repoUsuarios.elementos.fold(0.0)[acum, user|acum + eventosOrganizadosFracasos(user)]
 	}
-	
+
 	def eventosOrganizadosFracasos(Usuario usuario) {
 		usuario.eventosOrganizados.filter[evento|evento.esUnFracaso()].size()
 	}
@@ -69,9 +69,19 @@ class DashboardModel {
 		repoUsuarios.elementos.fold(0.0)[acum, elemento|acum + elemento.invitaciones.size()]
 
 	}
-def getLocacionesDelRepo(){
-	getRepoLocaciones.elementos
-}
+
+	def getLocacionesDelRepo() {
+		getRepoLocaciones.elementos
+	}
+
+	def getUsuariosDelRepo() {
+		getRepoUsuarios.elementos
+	}
+
+	def getServiciosDelRepo() {
+		getRepoServicios.elementos
+	}
+
 	def getRepoLocaciones() {
 		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 	}
@@ -83,7 +93,8 @@ def getLocacionesDelRepo(){
 	def getRepoServicios() {
 		ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepositorioServicios
 	}
-	def getElementosRepoLocaciones(){
+
+	def getElementosRepoLocaciones() {
 		getRepoLocaciones
 	}
 }
