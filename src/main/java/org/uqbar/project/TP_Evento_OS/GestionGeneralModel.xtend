@@ -20,41 +20,27 @@ class GestionGeneralModel {
 //	JsonLocacion jsonLocacion
 	Entidad entidadSeleccionada
 
-	def getRepositorioLocacionesTamanio() {
-		"problemas"
-	}
-
 	def getEliminarSeleccion() {
+		this.getEliminarSeleccionDelRepositorio(entidadSeleccionada)
+	}
+
+	def dispatch getEliminarSeleccionDelRepositorio(Locacion seleccion) {
 		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as Repositorio
-		val RepoUsuarios = ApplicationContext.instance.getSingleton(typeof(Usuario)) as Repositorio
-		val RepoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as Repositorio
-
-		if (entidadSeleccionada.class == Locacion) {
-			borrarLocacion(RepoLocaciones)
-		}
-		if (entidadSeleccionada.class == Usuario) {
-			borrarUsuario(RepoUsuarios)
-		} else {
-			borrarServicio(RepoServicios)
-		}
-
-	}
-	
-	protected def void borrarServicio(Repositorio RepoServicios) {
-		RepoServicios.delete(entidadSeleccionada)
-		ObservableUtils.firePropertyChanged(this, "serviciosDelRepo")
-	}
-	
-	protected def void borrarUsuario(Repositorio RepoUsuarios) {
-		RepoUsuarios.delete(entidadSeleccionada)
-		ObservableUtils.firePropertyChanged(this, "usuariosDelRepo")
-	}
-	
-	protected def void borrarLocacion(Repositorio RepoLocaciones) {
-		RepoLocaciones.delete(entidadSeleccionada)
+		RepoLocaciones.delete(seleccion)
 		ObservableUtils.firePropertyChanged(this, "locacionesDelRepo")
 	}
 
+	def dispatch getEliminarSeleccionDelRepositorio(Usuario seleccion) {
+		val RepoUsuarios = ApplicationContext.instance.getSingleton(typeof(Usuario)) as Repositorio
+		RepoUsuarios.delete(seleccion)
+		ObservableUtils.firePropertyChanged(this, "usuariosDelRepo")
+	}
+
+	def dispatch getEliminarSeleccionDelRepositorio(Servicio seleccion) {
+		val RepoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as Repositorio
+		RepoServicios.delete(seleccion)
+		ObservableUtils.firePropertyChanged(this, "serviciosDelRepo")
+	}
 	def getLocacionesDelRepo() {
 		getRepoLocaciones.elementos
 	}

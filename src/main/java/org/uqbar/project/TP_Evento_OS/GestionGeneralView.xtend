@@ -46,7 +46,7 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 		var actionsPanel = new Panel(panel)
 		actionsPanel.layout = new VerticalLayout
 
-		val edicion = new Button(actionsPanel) => [
+		new Button(actionsPanel) => [
 			caption = "Editar"
 			setWidth = 150
 
@@ -55,8 +55,7 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 		new Button(actionsPanel) => [
 			caption = "Eliminar"
 			setWidth = 150
-			onClick [|modelObject.eliminarSeleccion]
-
+			onClick [| modelObject.getEliminarSeleccion()]
 		]
 		new Button(actionsPanel) => [
 			caption = "Nueva Locacion"
