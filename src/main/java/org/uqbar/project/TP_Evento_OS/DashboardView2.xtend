@@ -50,6 +50,7 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 	}
 
 	def crearPanelEstadistica(Panel PanelEstadisticas) {
+		
 		new Label(PanelEstadisticas) => [
 			text = "Estadísticas:"
 			fontSize = 14

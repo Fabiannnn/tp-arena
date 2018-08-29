@@ -62,7 +62,7 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 			caption = "Nueva Locacion"
 			setWidth = 150
 
-		// onClick [|new GestionDeLocaciones(owner, new GestionDeLocacionesModel()).open]
+		 onClick [|new ABL_base(owner, new ABMLocacion()).open]
 		]
 		new Button(actionsPanel) => [
 			caption = "Update Masivo"
@@ -147,11 +147,11 @@ class GestionDeUsuariosView extends GestionGeneralView {
 //			fixedSize = 150
 //			bindContentsToProperty("superficie")
 //		]
-//		new Column<Locacion>(table) => [
-//			title = "Coordenadas"
-//			fixedSize = 150
-//			bindContentsToProperty("punto")
-//		]
+		new Column<Usuario>(table) => [
+			title = "Mail"
+			fixedSize = 150
+			bindContentsToProperty("email")
+		]
 	}
 	
 	
@@ -182,19 +182,19 @@ class GestionDeUsuariosView extends GestionGeneralView {
 	def describeResultadosGrid(Table<Servicio> table) {
 		new Column<Servicio>(table) => [
 			title = "Nombre"
-			fixedSize = 150
+			fixedSize = 200
 			bindContentsToProperty("descripcion")
 		]
-//		new Column<Locacion>(table) => [
-//			title = "Superficie"
-//			fixedSize = 150
-//			bindContentsToProperty("superficie")
-//		]
-//		new Column<Locacion>(table) => [
-//			title = "Coordenadas"
-//			fixedSize = 150
-//			bindContentsToProperty("punto")
-//		]
+		new Column<Servicio>(table) => [
+			title = "TipoTarifa"
+			fixedSize = 100
+			bindContentsToProperty("descripcion")//falta metodo
+		]
+		new Column<Servicio>(table) => [
+			title = "Ubicacion"
+			fixedSize = 150
+			bindContentsToProperty("ubicacion")
+		]
 	}
 	
 	override addFormPanel(Panel panel) {

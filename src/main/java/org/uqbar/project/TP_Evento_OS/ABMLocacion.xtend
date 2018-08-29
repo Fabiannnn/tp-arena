@@ -5,15 +5,13 @@ import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.widgets.Panel
 import eventos.Locacion
 import org.uqbar.arena.aop.windows.TransactionalDialog
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.uqbar.commons.model.annotations.Observable
 
-class ABMLocacion  extends TransactionalDialog<GestionDeLocacionesModel>{
+@Accessors
+@Observable
+class ABMLocacion  {
 	
-	new(WindowOwner owner, GestionDeLocacionesModel model) {
-		super(owner, model)
-	}
-	
-	override protected createFormPanel(Panel mainPanel) {
-		
-	}
-	
+
+
 }

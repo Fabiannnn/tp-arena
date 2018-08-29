@@ -28,6 +28,7 @@ class GestionGeneralModel {
 		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as Repositorio
 		val RepoUsuarios = ApplicationContext.instance.getSingleton(typeof(Usuario)) as Repositorio
 		val RepoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as Repositorio
+
 		if (entidadSeleccionada.class == Locacion) {
 			borrarLocacion(RepoLocaciones)
 		}
