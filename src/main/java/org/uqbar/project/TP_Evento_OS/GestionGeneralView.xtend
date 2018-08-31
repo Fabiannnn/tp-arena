@@ -14,77 +14,77 @@ import org.uqbar.arena.windows.WindowOwner
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import eventos.Usuario
 import servicios.Servicio
+import org.uqbar.arena.bindings.NotNullObservable
+
 
 @Accessors
 abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 
 	new(WindowOwner owner, GestionGeneralModel model) {
-
 		super(owner, model)
 		this.delegate.errorViewer = this
-
 	}
 
 	override protected createFormPanel(Panel mainPanel) {
-
 		val form = new Panel(mainPanel)
 		form.layout = new ColumnLayout(2)
 		val Panel PanelIzquierdo = new Panel(form)
+		PanelIzquierdo.width=700
 		crearTablaGestion(PanelIzquierdo)
-
 		val Panel PanelDerecho = new Panel(form)
-		// PanelDerecho.width = 200
+		 PanelDerecho.width = 700
 		crearBotoneraGestion(PanelDerecho)
-
 	}
 
 	abstract def void addFormPanel(Panel panel)
 
 	def protected crearTablaGestion(Panel panel) {}
 
-	def crearBotoneraGestion(Panel panel) {
+	def void crearBotoneraGestion(Panel panel) {
 		var actionsPanel = new Panel(panel)
 		actionsPanel.layout = new VerticalLayout
-
-		new Button(actionsPanel) => [
+		var edit = new Button(actionsPanel) => [
 			caption = "Editar"
 			setWidth = 150
-
+//			onClick [|  modelObject.editarSeleccion("entidadSeleccionada") ]
 		]
 
-		new Button(actionsPanel) => [
+		var eliminar = new Button(actionsPanel) => [
 			caption = "Eliminar"
 			setWidth = 150
-			onClick [| modelObject.getEliminarSeleccion()]
-		]
-		new Button(actionsPanel) => [
-			caption = "Nueva Locacion"
+				onClick [|modelObject.getEliminarSeleccion()]
+		]		
+		var agregar = new Button(actionsPanel) => [
+			caption = "Agregar"
 			setWidth = 150
-
-		 onClick [|new ABL_base(owner, new ABMLocacion()).open]
+			onClick [|new ABL_base(owner, new ABMLocacion()).open]
 		]
-		new Button(actionsPanel) => [
+		var actualizar=new Button(actionsPanel) => [
 			caption = "Update Masivo"
 			setWidth = 10
-		// onClick [|new GestionDeLocacionesModel().actualizar]
+			onClick [|modelObject.getActualizar()]
 		]
+		/*Deshabilitado de Botones hasta tener elemento seleccionado */
+		var seleccionTabla = new NotNullObservable("entidadSeleccionada")
+		edit.bindEnabled(seleccionTabla)
+		eliminar.bindEnabled(seleccionTabla)
+//		
+//		agregar.bindVisible(seleccionTabla)
+//		actualizar.bindVisible(seleccionTabla)
 	}
-
-//	abstract def void bindValueToProperty(Button boton, String property) {
-//		boton.bindValueToProperty(property)
-//
-//		this
-//	}
 }
 
 class GestionDeLocacionesView extends GestionGeneralView {
-
+	
 	new(WindowOwner owner, GestionGeneralModel model) {
 		super(owner, model)
 		title = "Evento OS - Gestion Locaciones"
 	}
-
-	override protected crearTablaGestion(Panel panel) {
+	
+	override addFormPanel(Panel panel) {
+		
+	}
+override protected crearTablaGestion(Panel panel) {
 		minWidth = 300
 		this.describeResultadosGrid(
 			new Table<Locacion>(panel, typeof(Locacion)) => [
@@ -95,33 +95,72 @@ class GestionDeLocacionesView extends GestionGeneralView {
 		)
 	}
 
-	def describeResultadosGrid(Table<Locacion> table) {
+	def protected describeResultadosGrid(Table<Locacion> table) {
 		new Column<Locacion>(table) => [
 			title = "Nombre"
-			fixedSize = 150
+		//	fixedSize = 150
 			bindContentsToProperty("nombre")
 		]
 		new Column<Locacion>(table) => [
 			title = "Superficie"
-			fixedSize = 150
+			//fixedSize = 150
 			bindContentsToProperty("superficie")
 		]
 		new Column<Locacion>(table) => [
-			title = "Coordenadas"
-			fixedSize = 150
+			title = "Ubicacion"
+		//	fixedSize = 150
 			bindContentsToProperty("punto")
 		]
 	}
-
+//	def void EditarSeleccion(Locacion seleccion) { //  TODO falta Modelar
+//		var ventanaEdicion =  new ABL_base(owner, new ABMLocacion())
+//		ABMLocacion.editarEntidad(seleccion)
+//	}
+	
+}
+class GestionDeServiciosView extends GestionGeneralView {
+	
+	new(WindowOwner owner, GestionGeneralModel model) {
+		super(owner, model)
+		title = "Evento OS - Gestion Servicios"
+	}
+	
 	override addFormPanel(Panel panel) {
+		
+	}
+override protected crearTablaGestion(Panel panel) {
+		minWidth = 300
+		this.describeResultadosGrid(
+			new Table<Servicio>(panel, typeof(Servicio)) => [
+				numberVisibleRows = 10
+				items <=> "serviciosDelRepo"
+				value <=> "entidadSeleccionada"
+			]
+		)
 	}
 
+	def protected describeResultadosGrid(Table<Servicio> table) {
+		new Column<Servicio>(table) => [
+			title = "Nombre"
+			fixedSize = 150
+			bindContentsToProperty("descripcion")
+		]
+		new Column<Servicio>(table) => [
+			title = "Ubicacion"
+			//fixedSize = 100
+			bindContentsToProperty("ubicacion")
+		]
+	}
+	
 }
+
 class GestionDeUsuariosView extends GestionGeneralView {
 
 	new(WindowOwner owner, GestionGeneralModel model) {
 		super(owner, model)
 		title = "Evento OS - Gestion Usuarios"
+	}
+	override addFormPanel(Panel panel) {
 	}
 
 	override protected crearTablaGestion(Panel panel) {
@@ -134,68 +173,20 @@ class GestionDeUsuariosView extends GestionGeneralView {
 			]
 		)
 	}
-	
-	def describeResultadosGrid(Table<Usuario> table) {
+
+	def protected describeResultadosGrid(Table<Usuario> table) {
 		new Column<Usuario>(table) => [
 			title = "Nombre"
 			fixedSize = 150
 			bindContentsToProperty("nombreApellido")
 		]
-//		new Column<Locacion>(table) => [
-//			title = "Superficie"
-//			fixedSize = 150
-//			bindContentsToProperty("superficie")
-//		]
 		new Column<Usuario>(table) => [
 			title = "Mail"
 			fixedSize = 150
 			bindContentsToProperty("email")
 		]
 	}
-	
-	
-	
-	override addFormPanel(Panel panel) {
-	
-	}
-	
-	}
-	class GestionDeServiciosView extends GestionGeneralView {
 
-	new(WindowOwner owner, GestionGeneralModel model) {
-		super(owner, model)
-		title = "Evento OS - Gestion Servicios"
-	}
 
-	override protected crearTablaGestion(Panel panel) {
-		minWidth = 300
-		this.describeResultadosGrid(
-			new Table<Servicio>(panel, typeof(Servicio)) => [
-				numberVisibleRows = 10
-				items <=> "serviciosDelRepo"
-				value <=> "entidadSeleccionada"
-			]
-		)
-	}
-	
-	def describeResultadosGrid(Table<Servicio> table) {
-		new Column<Servicio>(table) => [
-			title = "Nombre"
-			fixedSize = 200
-			bindContentsToProperty("descripcion")
-		]
-		new Column<Servicio>(table) => [
-			title = "TipoTarifa"
-			fixedSize = 100
-			bindContentsToProperty("descripcion")//falta metodo
-		]
-		new Column<Servicio>(table) => [
-			title = "Ubicacion"
-			fixedSize = 150
-			bindContentsToProperty("ubicacion")
-		]
-	}
-	
-	override addFormPanel(Panel panel) {
-	
-	}}
+}
+

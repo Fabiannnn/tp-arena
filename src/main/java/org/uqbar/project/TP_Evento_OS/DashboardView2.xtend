@@ -170,6 +170,7 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 		new Button(PanelDeServicios) => [
 			caption = "Gestión de Servicios"
 			width = 100
+				
 		onClick [ | new GestionDeServiciosView(owner, new GestionGeneralModel()).open]  
 		]
 

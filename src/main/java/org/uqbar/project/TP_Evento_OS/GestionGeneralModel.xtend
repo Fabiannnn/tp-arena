@@ -12,6 +12,7 @@ import repositorio.RepositorioLocaciones
 import repositorio.RepositorioServicios
 import repositorio.RepositorioUsuarios
 import servicios.Servicio
+import org.uqbar.commons.model.IModel
 
 @Accessors
 @Observable
@@ -64,6 +65,25 @@ class GestionGeneralModel {
 	def getRepoServicios() {
 		ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepositorioServicios
 	}
+	
+	def getActualizar() { //  TODO falta Modelar
+		
+	}
+	
+//def dispatch editarSeleccion(Locacion Seleccion){
+//	new ABL_Locacion(owner, new ABMLocacion()).open
+//	ABL_Locacion.setLocacionSeleccionada()
+//}
+//
+//def dispatch editarSeleccion(Usuario Seleccion){
+//	new ABL_Locacion(owner, new ABMLocacion()).open
+//	//ABL_Locacion.setLocacionSeleccionada()
+//}	
+	def setLocacionSeleccionada(ABL_Locacion locacion, Locacion locacion2) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	
 
 }
 //	def getActualizar() {

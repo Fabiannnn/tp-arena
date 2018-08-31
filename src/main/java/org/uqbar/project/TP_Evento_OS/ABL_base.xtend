@@ -5,8 +5,13 @@ import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.Button
+import View.LabeledTextBox
+import org.uqbar.arena.widgets.Label
+import org.uqbar.arena.widgets.TextBox
+import eventos.Entidad
+import eventos.Locacion
 
-class ABL_base extends TransactionalDialog<ABMLocacion> {
+class ABL_base extends TransactionalDialog<ABMLocacion> {//abstract 
 	
 	new(WindowOwner owner, ABMLocacion model) {
 		super(owner, model)
@@ -29,16 +34,37 @@ class ABL_base extends TransactionalDialog<ABMLocacion> {
 			width = 100
 		// onClick [ | new GestionDeUsuariosView(owner, new GestionGeneralModel()).open] 
 		]
-
 	}
 	
-	def crearPanelEntidad(Panel panel) {
-
+	def crearPanelEntidad(Panel panelEntidad) {
 	}
 	
 	override protected createFormPanel(Panel mainPanel) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+
 	}
+	
+
 
 	
+}
+class ABL_Locacion extends ABL_base{
+	Locacion locacionSeleccionada
+	
+	new(WindowOwner owner, ABMLocacion model) {
+		super(owner, model)
+	}
+	
+		override crearPanelEntidad(Panel panelEntidad) {
+		var locacionesEditPanel = new Panel(panelEntidad)
+	//	new LabeledTextBox(panel,"Nombre", "nombre",14)
+			
+	
+		
+		new LabeledTextBox(locacionesEditPanel)
+			.setText("Nombre:")
+			.bindValueToProperty("nombreModelo")
+	}
+	def setLocacionSeleccionada(Locacion seleccion){
+		locacionSeleccionada =seleccion
+	}
 }
