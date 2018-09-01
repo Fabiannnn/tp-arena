@@ -1,7 +1,11 @@
 package org.uqbar.project.TP_Evento_OS
 
 import eventos.Locacion
+import eventos.Usuario
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Button
@@ -10,12 +14,17 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
+import servicios.Servicio
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import eventos.Usuario
-import servicios.Servicio
-import org.uqbar.arena.bindings.NotNullObservable
-
+import transformer.TipoDeUsuarioTransformer
+import org.uqbar.arena.bindings.PropertyAdapter
+import eventos.TipoDeUsuario
+import eventos.UsuarioProfesional
+import java.util.Date
+import transformer.LocalDateTransformer
+import java.time.format.DateTimeFormatter
+import javax.swing.text.DateFormatter
 
 @Accessors
 abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
@@ -29,10 +38,10 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 		val form = new Panel(mainPanel)
 		form.layout = new ColumnLayout(2)
 		val Panel PanelIzquierdo = new Panel(form)
-		PanelIzquierdo.width=700
+		PanelIzquierdo.width = 700
 		crearTablaGestion(PanelIzquierdo)
 		val Panel PanelDerecho = new Panel(form)
-		 PanelDerecho.width = 700
+		PanelDerecho.width = 700
 		crearBotoneraGestion(PanelDerecho)
 	}
 
@@ -52,14 +61,14 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 		var eliminar = new Button(actionsPanel) => [
 			caption = "Eliminar"
 			setWidth = 150
-				onClick [|modelObject.getEliminarSeleccion()]
-		]		
+			onClick [|modelObject.getEliminarSeleccion()]
+		]
 		var agregar = new Button(actionsPanel) => [
 			caption = "Agregar"
 			setWidth = 150
 			onClick [|new ABL_base(owner, new ABMLocacion()).open]
 		]
-		var actualizar=new Button(actionsPanel) => [
+		var actualizar = new Button(actionsPanel) => [
 			caption = "Update Masivo"
 			setWidth = 10
 			onClick [|modelObject.getActualizar()]
@@ -75,16 +84,16 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 }
 
 class GestionDeLocacionesView extends GestionGeneralView {
-	
+
 	new(WindowOwner owner, GestionGeneralModel model) {
 		super(owner, model)
 		title = "Evento OS - Gestion Locaciones"
 	}
-	
+
 	override addFormPanel(Panel panel) {
-		
 	}
-override protected crearTablaGestion(Panel panel) {
+
+	override protected crearTablaGestion(Panel panel) {
 		minWidth = 300
 		this.describeResultadosGrid(
 			new Table<Locacion>(panel, typeof(Locacion)) => [
@@ -98,17 +107,17 @@ override protected crearTablaGestion(Panel panel) {
 	def protected describeResultadosGrid(Table<Locacion> table) {
 		new Column<Locacion>(table) => [
 			title = "Nombre"
-		//	fixedSize = 150
+			// fixedSize = 150
 			bindContentsToProperty("nombre")
 		]
 		new Column<Locacion>(table) => [
 			title = "Superficie"
-			//fixedSize = 150
+			// fixedSize = 150
 			bindContentsToProperty("superficie")
 		]
 		new Column<Locacion>(table) => [
 			title = "Ubicacion"
-		//	fixedSize = 150
+			fixedSize = 150
 			bindContentsToProperty("punto")
 		]
 	}
@@ -116,19 +125,19 @@ override protected crearTablaGestion(Panel panel) {
 //		var ventanaEdicion =  new ABL_base(owner, new ABMLocacion())
 //		ABMLocacion.editarEntidad(seleccion)
 //	}
-	
 }
+
 class GestionDeServiciosView extends GestionGeneralView {
-	
+
 	new(WindowOwner owner, GestionGeneralModel model) {
 		super(owner, model)
 		title = "Evento OS - Gestion Servicios"
 	}
-	
+
 	override addFormPanel(Panel panel) {
-		
 	}
-override protected crearTablaGestion(Panel panel) {
+
+	override protected crearTablaGestion(Panel panel) {
 		minWidth = 300
 		this.describeResultadosGrid(
 			new Table<Servicio>(panel, typeof(Servicio)) => [
@@ -146,12 +155,20 @@ override protected crearTablaGestion(Panel panel) {
 			bindContentsToProperty("descripcion")
 		]
 		new Column<Servicio>(table) => [
+			title = "Tarifa"
+			// alignRight     TODO preguntar por que si descomentamos esto desaparecen botones!!!!!
+			// fixedSize = 100
+			bindContentsToProperty("costoServicio")
+		]
+
+		new Column<Servicio>(table) => [
 			title = "Ubicacion"
-			//fixedSize = 100
+			fixedSize = 100
 			bindContentsToProperty("ubicacion")
 		]
+
 	}
-	
+
 }
 
 class GestionDeUsuariosView extends GestionGeneralView {
@@ -160,6 +177,7 @@ class GestionDeUsuariosView extends GestionGeneralView {
 		super(owner, model)
 		title = "Evento OS - Gestion Usuarios"
 	}
+
 	override addFormPanel(Panel panel) {
 	}
 
@@ -176,6 +194,11 @@ class GestionDeUsuariosView extends GestionGeneralView {
 
 	def protected describeResultadosGrid(Table<Usuario> table) {
 		new Column<Usuario>(table) => [
+			title = "Username"
+			fixedSize = 150
+			bindContentsToProperty("nombreUsuario")
+		]
+		new Column<Usuario>(table) => [
 			title = "Nombre"
 			fixedSize = 150
 			bindContentsToProperty("nombreApellido")
@@ -187,6 +210,4 @@ class GestionDeUsuariosView extends GestionGeneralView {
 		]
 	}
 
-
 }
-

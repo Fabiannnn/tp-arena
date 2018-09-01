@@ -26,7 +26,8 @@ class ABMLocacion {
 	}
 
 	def static editarEntidad(Locacion seleccion) {
-		var  locacionEditar= new Locacion
+		
+		var  locacionEditar= seleccion
 		
 		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 		locacionEditar.nombre = seleccion.nombre

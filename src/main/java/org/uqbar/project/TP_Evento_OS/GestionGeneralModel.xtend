@@ -13,6 +13,13 @@ import repositorio.RepositorioServicios
 import repositorio.RepositorioUsuarios
 import servicios.Servicio
 import org.uqbar.commons.model.IModel
+import org.uqbar.arena.widgets.tables.labelprovider.PropertyLabelProvider
+import org.uqbar.arena.bindings.PropertyAdapter
+import org.uqbar.commons.model.annotations.Dependencies
+import javax.swing.text.DateFormatter
+import java.time.format.DateTimeFormatter
+import servicios.TipoDeTarifa
+import servicios.TarifaFija
 
 @Accessors
 @Observable
@@ -26,22 +33,23 @@ class GestionGeneralModel {
 	}
 
 	def dispatch getEliminarSeleccionDelRepositorio(Locacion seleccion) {
-		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as Repositorio
+		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as Repositorio<Locacion>
 		RepoLocaciones.delete(seleccion)
 		ObservableUtils.firePropertyChanged(this, "locacionesDelRepo")
 	}
 
 	def dispatch getEliminarSeleccionDelRepositorio(Usuario seleccion) {
-		val RepoUsuarios = ApplicationContext.instance.getSingleton(typeof(Usuario)) as Repositorio
+		val RepoUsuarios = ApplicationContext.instance.getSingleton(typeof(Usuario)) as Repositorio<Usuario>
 		RepoUsuarios.delete(seleccion)
 		ObservableUtils.firePropertyChanged(this, "usuariosDelRepo")
 	}
 
 	def dispatch getEliminarSeleccionDelRepositorio(Servicio seleccion) {
-		val RepoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as Repositorio
+		val RepoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as Repositorio<Servicio>
 		RepoServicios.delete(seleccion)
 		ObservableUtils.firePropertyChanged(this, "serviciosDelRepo")
 	}
+
 	def getLocacionesDelRepo() {
 		getRepoLocaciones.elementos
 	}
@@ -65,11 +73,10 @@ class GestionGeneralModel {
 	def getRepoServicios() {
 		ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepositorioServicios
 	}
-	
-	def getActualizar() { //  TODO falta Modelar
-		
+
+	def getActualizar() { // TODO falta Modelar
 	}
-	
+
 //def dispatch editarSeleccion(Locacion Seleccion){
 //	new ABL_Locacion(owner, new ABMLocacion()).open
 //	ABL_Locacion.setLocacionSeleccionada()
@@ -80,11 +87,19 @@ class GestionGeneralModel {
 //	//ABL_Locacion.setLocacionSeleccionada()
 //}	
 	def setLocacionSeleccionada(ABL_Locacion locacion, Locacion locacion2) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
-	
-	
 
+//@Dependencies("TipoDeUsuario")
+//def getEsTipoDeUsuario(Usuario unUsuario){
+//	return unUsuario.tipoDeUsuario
+//}
+def  getnCostoServicio(Servicio servicio){
+	if (servicio.tipoDeTarifa instanceof TarifaFija){ (servicio.costoFijo +" TF "+ servicio.costoMinimo)
+}
+else {(servicio.costoPorHora+" TPH "+ servicio.costoMinimo) }
+
+
+}
 }
 //	def getActualizar() {
 //		jsonLocacion.deserializarJson('''[

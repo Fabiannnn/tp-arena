@@ -38,9 +38,11 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 
 	override createMainTemplate(Panel mainPanel) {
 		this.title = "Event OS-Dashboard"
+		mainPanel.width = 1000
 		mainPanel.layout = new ColumnLayout(2)
 		val Panel PanelIzquierdo = new Panel(mainPanel)
-		PanelIzquierdo.layout = new VerticalLayout
+	PanelIzquierdo.layout = new VerticalLayout
+	PanelIzquierdo.width=400
 		crearPanelEstadistica(PanelIzquierdo)
 		crearPanelDeLocaciones(PanelIzquierdo)
 		val Panel PanelDerecho = new Panel(mainPanel)
@@ -50,42 +52,46 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 	}
 
 	def crearPanelEstadistica(Panel PanelEstadisticas) {
-		
+
 		new Label(PanelEstadisticas) => [
 			text = "Estadísticas:"
-			fontSize = 14
+			fontSize = 16
 			alignLeft
 
 		]
 
 		val Panel PanelColumnas = new Panel(PanelEstadisticas)
-		PanelColumnas.layout = new ColumnLayout(2)
-		new Label(PanelColumnas).setText("Eventos Totales:").alignLeft.width = 200
+	PanelColumnas.layout = new ColumnLayout(2)
+		PanelColumnas.width=250		
+		
+		
+		new Label(PanelColumnas).setText("Eventos Totales:")
+		
 		new Label(PanelColumnas) => [
 			value <=> "eventosTotales"
 		]
 
-		new Label(PanelColumnas).setText("Eventos último mes:").alignLeft.width = 200
+		new Label(PanelColumnas).setText("Eventos último mes:")
 		new Label(PanelColumnas) => [
 			value <=> "eventosUltimoMes"
 		]
 
-		new Label(PanelColumnas).setText("Eventos exitosos:").alignLeft.width = 200
+		new Label(PanelColumnas).setText("Eventos exitosos:")
 		new Label(PanelColumnas) => [
 			value <=> "eventosExitosos"
 		]
 
-		new Label(PanelColumnas).setText("Eventos fracasados:").alignLeft.width = 200
+		new Label(PanelColumnas).setText("Eventos fracasados:")
 		new Label(PanelColumnas) => [
 			value <=> "eventosFracasados"
 		]
 
-		new Label(PanelColumnas).setText("Entradas vendidas:").alignLeft.width = 200
+		new Label(PanelColumnas).setText("Entradas vendidas:")
 		new Label(PanelColumnas) => [
 			value <=> "entradasVendidas"
 		]
 
-		new Label(PanelColumnas).setText("Invitaciones enviadas:").alignLeft.width = 200
+		new Label(PanelColumnas).setText("Invitaciones enviadas:")
 		new Label(PanelColumnas) => [
 			value <=> "invitacionesEnviadas"
 		]
@@ -143,7 +149,7 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 		new Button(PanelDeUsuarios) => [
 			caption = "Gestión de Usuarios"
 			width = 100
-		 onClick [ | new GestionDeUsuariosView(owner, new GestionGeneralModel()).open] 
+			onClick [|new GestionDeUsuariosView(owner, new GestionGeneralModel()).open]
 		]
 	}
 
@@ -164,14 +170,14 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 			new Column<Servicio>(it) => [
 				title = "Tarifa"
 				fixedSize = 100
-				bindContentsToProperty("costoFijo") // Falta Modelar
+				bindContentsToProperty("costoServicio") 
 			]
 		]
 		new Button(PanelDeServicios) => [
 			caption = "Gestión de Servicios"
 			width = 100
-				
-		onClick [ | new GestionDeServiciosView(owner, new GestionGeneralModel()).open]  
+
+			onClick [|new GestionDeServiciosView(owner, new GestionGeneralModel()).open]
 		]
 
 	}
