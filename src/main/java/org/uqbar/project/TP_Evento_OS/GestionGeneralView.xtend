@@ -15,7 +15,6 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import servicios.Servicio
-
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import transformer.TipoDeUsuarioTransformer
 import org.uqbar.arena.bindings.PropertyAdapter
@@ -63,15 +62,15 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 			setWidth = 150
 			onClick [|modelObject.getEliminarSeleccion()]
 		]
-		var agregar = new Button(actionsPanel) => [
-			caption = "Agregar"
-			setWidth = 150
-			onClick [|new ABL_base(owner, new ABMLocacion()).open]
-		]
+//		var agregar = new Button(actionsPanel) => [
+//			caption = "Agregar"
+//			setWidth = 150
+//		onClick [|new ABL_base(owner, new ABMLocacion()).open]
+//		]
 		var actualizar = new Button(actionsPanel) => [
 			caption = "Update Masivo"
 			setWidth = 10
-			onClick [|modelObject.getActualizar()]
+		// onClick [|modelObject.getActualizar()]
 		]
 		/*Deshabilitado de Botones hasta tener elemento seleccionado */
 		var seleccionTabla = new NotNullObservable("entidadSeleccionada")
@@ -121,6 +120,24 @@ class GestionDeLocacionesView extends GestionGeneralView {
 			bindContentsToProperty("punto")
 		]
 	}
+
+	override void crearBotoneraGestion(Panel panel) {
+		super.crearBotoneraGestion(panel)
+		var agregar = new Button(panel) => [
+			caption = "Agregar"
+			setWidth = 150
+			onClick([|this.crearLocacion])
+		]
+	}
+
+	def crearLocacion() {
+		val locacion = new Locacion
+		new ABM_Locacion_View(this, locacion) => [
+			onAccept[this.modelObject.crearLocacion(locacion)]
+			open
+		]
+	}
+
 //	def void EditarSeleccion(Locacion seleccion) { //  TODO falta Modelar
 //		var ventanaEdicion =  new ABL_base(owner, new ABMLocacion())
 //		ABMLocacion.editarEntidad(seleccion)
@@ -169,6 +186,23 @@ class GestionDeServiciosView extends GestionGeneralView {
 
 	}
 
+	override void crearBotoneraGestion(Panel panel) {
+		super.crearBotoneraGestion(panel)
+		var agregar = new Button(panel) => [
+			caption = "Agregar"
+			setWidth = 150
+			onClick([|this.crearServicio])
+		]
+	}
+
+	def crearServicio() {
+		val servicio = new Servicio
+		new ABM_Servicio_View(this, servicio) => [
+			onAccept[this.modelObject.crearServicio(servicio)]
+			open
+		]
+	}
+
 }
 
 class GestionDeUsuariosView extends GestionGeneralView {
@@ -207,6 +241,22 @@ class GestionDeUsuariosView extends GestionGeneralView {
 			title = "Mail"
 			fixedSize = 150
 			bindContentsToProperty("email")
+		]
+	}
+
+	override void crearBotoneraGestion(Panel panel) {
+		super.crearBotoneraGestion(panel)
+		var agregar = new Button(panel) => [
+			caption = "Agregar"
+			setWidth = 150
+			onClick([|this.crearUsuario])]
+	}
+
+	def crearUsuario() {
+		val usuario = new Usuario
+		new ABM_Usuario_View(this, usuario) => [
+			onAccept[this.modelObject.crearUsuario(usuario)]
+			open
 		]
 	}
 

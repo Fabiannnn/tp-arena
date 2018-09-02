@@ -62,24 +62,31 @@ class DashboardModel {
 
 	}
 
-	def getLocacionesPopulares() {//modelar comportamiento
-		getRepoLocaciones.elementos
+	def getLocacionesPopulares() { // modelar comportamiento
+			getRepoLocaciones.elementos
+	//	ordenarLocaciones().take(5).last
 	}
 
-	def getUsuariosActivos() {//modelar comportamiento
+	def ordenarLocaciones() {
+		getRepoLocaciones.elementos.sortBy[id]
+	}
+
+	def getUsuariosActivos() { // modelar comportamiento
 		getRepoUsuarios.elementos
 	}
 
-	def getServiciosNuevos() {//modelar comportamiento
+	def getServiciosNuevos() { // modelar comportamiento
 		getRepoServicios.elementos
 	}
 
 	def getRepoLocaciones() {
 		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 	}
+
 	def getRepoUsuarios() {
 		ApplicationContext.instance.getSingleton(typeof(Usuario)) as RepositorioUsuarios
 	}
+
 	def getRepoServicios() {
 		ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepositorioServicios
 	}

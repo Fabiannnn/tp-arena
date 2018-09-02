@@ -20,6 +20,7 @@ import javax.swing.text.DateFormatter
 import java.time.format.DateTimeFormatter
 import servicios.TipoDeTarifa
 import servicios.TarifaFija
+import java.time.LocalDate
 
 @Accessors
 @Observable
@@ -93,13 +94,27 @@ class GestionGeneralModel {
 //def getEsTipoDeUsuario(Usuario unUsuario){
 //	return unUsuario.tipoDeUsuario
 //}
-def  getnCostoServicio(Servicio servicio){
-	if (servicio.tipoDeTarifa instanceof TarifaFija){ (servicio.costoFijo +" TF "+ servicio.costoMinimo)
-}
-else {(servicio.costoPorHora+" TPH "+ servicio.costoMinimo) }
+	def getCostoServicio(Servicio servicio) {
+		if (servicio.tipoDeTarifa instanceof TarifaFija) {
+			(servicio.costoFijo + " TF " + servicio.costoMinimo)
+		} else {
+			(servicio.costoPorHora + " TPH " + servicio.costoMinimo)
+		}
 
+	}
 
+	def crearLocacion(eventos.Locacion locacion) {
+		repoLocaciones.agregarElemento(locacion)
+	}
+
+	def crearServicio(servicios.Servicio servicio) {
+		repoServicios.agregarElemento(servicio)
+	}
+	def crearUsuario(eventos.Usuario usuario) {
+		repoUsuarios.agregarElemento(usuario)
+	
 }
+
 }
 //	def getActualizar() {
 //		jsonLocacion.deserializarJson('''[

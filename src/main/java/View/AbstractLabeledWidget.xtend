@@ -1,13 +1,11 @@
 package View
 
-
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Container
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.Widget
-import org.uqbar.arena.layout.VerticalLayout
 
 @Accessors
 abstract class AbstractLabeledWidget extends Panel {
@@ -16,13 +14,12 @@ abstract class AbstractLabeledWidget extends Panel {
 	
 	new(Container container) {
 		super(container)
-		layout = new VerticalLayout
+		layout = new HorizontalLayout
 		label = new Label(this)
-		label.width = 200
-		label.alignLeft
+		label.width = 150
 		createWidget(this) 
 	}
-		
+	
 	def AbstractLabeledWidget setText(String text){ 
 		label.text = text
 		this
@@ -32,5 +29,4 @@ abstract class AbstractLabeledWidget extends Panel {
 	
 	abstract def AbstractLabeledWidget bindValueToProperty(String property)
 		
-}
-	
+}	
