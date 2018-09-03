@@ -1,13 +1,9 @@
 package org.uqbar.project.TP_Evento_OS
 
-import org.uqbar.arena.windows.Dialog
-import org.uqbar.arena.windows.WindowOwner
-import org.uqbar.arena.widgets.Panel
 import eventos.Locacion
-import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.uqbar.commons.model.annotations.Observable
 import org.uqbar.commons.applicationContext.ApplicationContext
+import org.uqbar.commons.model.annotations.Observable
 import repositorio.RepositorioLocaciones
 
 @Accessors
@@ -18,7 +14,8 @@ class ABMLocacion {
 	Locacion locacionModelo
 
 	def repoLocaciones() {
-		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+		// val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 	}
 
 	def getLocacionNueva() {
@@ -26,10 +23,9 @@ class ABMLocacion {
 	}
 
 	def static editarEntidad(Locacion seleccion) {
-		
-		var  locacionEditar= seleccion
-		
-		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+		// val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+		var locacionEditar = seleccion
 		locacionEditar.nombre = seleccion.nombre
 	}
 

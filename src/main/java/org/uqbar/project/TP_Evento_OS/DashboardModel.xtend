@@ -74,17 +74,21 @@ class DashboardModel {
 		getRepoUsuarios.eventosPorLocacionTotal(elem)
 	}
 
+	def ordenarLocaciones() {
+	getRepoLocaciones.elementos.sortBy[id].reverse
+	}
+
 	def getUsuariosActivos() { // modelar comportamiento
 		getRepoUsuarios.elementos
 	}
+
 
 	def getServiciosNuevos() { // modelar comportamiento TODO hecho
 		if (getRepoLocaciones.elementos.size > 5) {
 		(getRepoServicios.elementos.sortBy[id].reverse).subList(0, 5) }else {
 			(getRepoServicios.elementos.sortBy[id].reverse)
-		}
+		}}
 
-	}
 
 	def getRepoLocaciones() {
 		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones

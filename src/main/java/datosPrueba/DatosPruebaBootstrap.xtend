@@ -1,25 +1,21 @@
 package datosPrueba
 
+import eventos.EventoAbierto
+import eventos.EventoCerrado
+import eventos.Invitacion
+import eventos.Locacion
+import eventos.Usuario
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Period
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.junit.Before
+import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
+import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.geodds.Point
 import repositorio.RepositorioLocaciones
 import repositorio.RepositorioServicios
 import repositorio.RepositorioUsuarios
-import eventos.EventoCerrado
-import eventos.Locacion
-import eventos.Usuario
-import eventos.UsuarioFree
-import eventos.EventoAbierto
-import eventos.Evento
-import eventos.Entrada
-import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
-import org.uqbar.commons.applicationContext.ApplicationContext
 import servicios.Servicio
-import eventos.Invitacion
 
 @Accessors
 class DatosPruebaBootstrap extends CollectionBasedBootstrap {
@@ -138,16 +134,15 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
 			capacidadMaxima = 50
 		]
-		val reunionGrande = new EventoCerrado => [
-			nombre = "Reunion++ "
-			organizador = usuario1
-			locacion = salon_SM
-			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
-			capacidadMaxima = 20
-		]
-
+//		val reunionGrande = new EventoCerrado => [
+//			nombre = "Reunion++ "
+//			organizador = usuario1
+//			locacion = salon_SM
+//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
+//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
+//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+//			capacidadMaxima = 20
+//		]
 		val primerEvento = new EventoCerrado => [
 			nombre = "Reunion Proyecto"
 			organizador = unUsuario
@@ -166,25 +161,24 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
 			capacidadMaxima = 10
 		]
-		val tercerEvento = new EventoCerrado => [
-			nombre = "Reunion Proyecto"
-			organizador = unUsuario
-			locacion = salon_SM
-			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
-			capacidadMaxima = 10
-		]
-		val cuartoEvento = new EventoCerrado => [
-			nombre = "Reunion Proyecto"
-			locacion = salon_SM
-			organizador = usuario1
-			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(8))
-			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(9))
-			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(7))
-			capacidadMaxima = 50
-		]
-
+//		val tercerEvento = new EventoCerrado => [
+//			nombre = "Reunion Proyecto"
+//			organizador = unUsuario
+//			locacion = salon_SM
+//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
+//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
+//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+//			capacidadMaxima = 10
+//		]
+//		val cuartoEvento = new EventoCerrado => [
+//			nombre = "Reunion Proyecto"
+//			locacion = salon_SM
+//			organizador = usuario1
+//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(8))
+//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(9))
+//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(7))
+//			capacidadMaxima = 50
+//		]
 		val quintoEvento = new EventoCerrado => [
 			nombre = "Reunion Proyecto"
 			organizador = usuario1

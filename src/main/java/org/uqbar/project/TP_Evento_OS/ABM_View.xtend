@@ -1,20 +1,15 @@
 package org.uqbar.project.TP_Evento_OS
 
-import org.uqbar.arena.aop.windows.TransactionalDialog
-import org.uqbar.arena.windows.WindowOwner
-import org.uqbar.arena.layout.ColumnLayout
-import org.uqbar.arena.widgets.Panel
-import org.uqbar.arena.widgets.Button
 import View.LabeledTextBox
-import org.uqbar.arena.widgets.Label
-import org.uqbar.arena.widgets.TextBox
 import eventos.Entidad
 import eventos.Locacion
-import repositorio.RepositorioLocaciones
 import eventos.Usuario
+import org.uqbar.arena.aop.windows.TransactionalDialog
+import org.uqbar.arena.layout.ColumnLayout
+import org.uqbar.arena.widgets.Button
+import org.uqbar.arena.widgets.Panel
+import org.uqbar.arena.windows.WindowOwner
 import servicios.Servicio
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 
 abstract class ABM_View extends TransactionalDialog<Entidad> { //abstract 
 	new(WindowOwner owner, Entidad model) {
@@ -58,12 +53,12 @@ class ABM_Locacion_View extends ABM_View {
 		new LabeledTextBox(locacionesEditPanel).setText("Nombre:").bindValueToProperty("nombre")
 		new LabeledTextBox(locacionesEditPanel).setText("Superficie:").bindValueToProperty("superficie")
 		new LabeledTextBox(locacionesEditPanel).setText("Coordenada x").bindValueToProperty("punto.x")
-			new LabeledTextBox(locacionesEditPanel).setText("Coordenada y").bindValueToProperty("punto.y")
+		new LabeledTextBox(locacionesEditPanel).setText("Coordenada y").bindValueToProperty("punto.y")
 	}
 
-	def setLocacionSeleccionada(Locacion seleccion) {
-		locacionSeleccionada = seleccion
-	}
+//	def setLocacionSeleccionada(Locacion seleccion) {
+//		locacionSeleccionada = seleccion
+//	}
 
 }
 
@@ -86,10 +81,6 @@ class ABM_Usuario_View extends ABM_View {
 
 	}
 
-	def setLocacionSeleccionada(Locacion seleccion) {
-		locacionSeleccionada = seleccion
-	}
-
 }
 
 class ABM_Servicio_View extends ABM_View {
@@ -103,7 +94,7 @@ class ABM_Servicio_View extends ABM_View {
 
 	override crearPanelEntidad(Panel panelEntidad) {
 		var serviciosEditPanel = new Panel(panelEntidad)
-		serviciosEditPanel.layout= new ColumnLayout(2)
+		serviciosEditPanel.layout = new ColumnLayout(2)
 		new LabeledTextBox(serviciosEditPanel).setText("Nombre:").bindValueToProperty("nombre")
 		new LabeledTextBox(serviciosEditPanel).setText("Tipo de Servicio:").bindValueToProperty("tipoDeServicio")
 		new LabeledTextBox(serviciosEditPanel).setText("Tipo de Tarifa:").bindValueToProperty("tipoDeTarifa")
@@ -114,10 +105,6 @@ class ABM_Servicio_View extends ABM_View {
 		new LabeledTextBox(serviciosEditPanel).setText("Costo Fijo:").bindValueToProperty("costoPorPersona")
 		new LabeledTextBox(serviciosEditPanel).setText("Costo Fijo:").bindValueToProperty("costoPorKm")
 		new LabeledTextBox(serviciosEditPanel).setText("Costo Fijo:").bindValueToProperty("ubicacion")
-	}
-
-	def setLocacionSeleccionada(Locacion seleccion) {
-		locacionSeleccionada = seleccion
 	}
 
 }

@@ -1,26 +1,22 @@
 package org.uqbar.project.TP_Evento_OS
 
-import org.uqbar.arena.Application
 import datosPrueba.DatosPruebaBootstrap
-import repositorio.RepositorioLocaciones
+import org.uqbar.arena.Application
 
-class EventosApp  extends Application{
-	
-	new(DatosPruebaBootstrap bootstrap){
+class EventosApp extends Application {
+
+	new(DatosPruebaBootstrap bootstrap) {
 		super(bootstrap)
-	
+
 	}
-	
-		def static void main(String[] args) {
+
+	def static void main(String[] args) {
 		new EventosApp(new DatosPruebaBootstrap).start
 	}
-	
-	
+
 	override protected createMainWindow() {
-	
-		new DashboardView2(this, new DashboardModel)		
+
+		new DashboardView2(this, new DashboardModel)
 	}
-	
 
 }
-
