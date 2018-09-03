@@ -2,8 +2,6 @@ package org.uqbar.project.TP_Evento_OS
 
 import eventos.Locacion
 import eventos.Usuario
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.ColumnLayout
@@ -15,15 +13,8 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import servicios.Servicio
+
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import transformer.TipoDeUsuarioTransformer
-import org.uqbar.arena.bindings.PropertyAdapter
-import eventos.TipoDeUsuario
-import eventos.UsuarioProfesional
-import java.util.Date
-import transformer.LocalDateTransformer
-import java.time.format.DateTimeFormatter
-import javax.swing.text.DateFormatter
 
 @Accessors
 abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
@@ -246,10 +237,7 @@ class GestionDeUsuariosView extends GestionGeneralView {
 
 	override void crearBotoneraGestion(Panel panel) {
 		super.crearBotoneraGestion(panel)
-		var agregar = new Button(panel) => [
-			caption = "Agregar"
-			setWidth = 150
-			onClick([|this.crearUsuario])]
+		var agregar = new Button(panel) => [caption = "Agregar" setWidth = 150 onClick([|this.crearUsuario])]
 	}
 
 	def crearUsuario() {

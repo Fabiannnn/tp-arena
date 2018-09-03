@@ -1,25 +1,21 @@
 package datosPrueba
 
+import eventos.EventoAbierto
+import eventos.EventoCerrado
+import eventos.Invitacion
+import eventos.Locacion
+import eventos.Usuario
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Period
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.junit.Before
+import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
+import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.geodds.Point
 import repositorio.RepositorioLocaciones
 import repositorio.RepositorioServicios
 import repositorio.RepositorioUsuarios
-import eventos.EventoCerrado
-import eventos.Locacion
-import eventos.Usuario
-import eventos.UsuarioFree
-import eventos.EventoAbierto
-import eventos.Evento
-import eventos.Entrada
-import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
-import org.uqbar.commons.applicationContext.ApplicationContext
 import servicios.Servicio
-import eventos.Invitacion
 
 @Accessors
 class DatosPruebaBootstrap extends CollectionBasedBootstrap {

@@ -13,7 +13,6 @@ import repositorio.RepositorioServicios
 import repositorio.RepositorioUsuarios
 import servicios.Servicio
 
-
 @Accessors
 @Observable
 class DashboardModel {
@@ -70,13 +69,12 @@ class DashboardModel {
 //	def ordenarLocaciones() {
 //	getRepoLocaciones.elementos.sortBy[id].reverse
 //	}
-
 	def getUsuariosActivos() { // modelar comportamiento
 		getRepoUsuarios.elementos
 	}
 
 	def getServiciosNuevos() { // modelar comportamiento 
-		(getRepoServicios.elementos.sortBy[id].reverse).subList(0,2)
+		(getRepoServicios.elementos.sortBy[id].reverse).subList(0, 2)
 	}
 
 	def getRepoLocaciones() {

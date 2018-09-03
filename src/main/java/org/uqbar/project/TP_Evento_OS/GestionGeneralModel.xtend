@@ -12,15 +12,7 @@ import repositorio.RepositorioLocaciones
 import repositorio.RepositorioServicios
 import repositorio.RepositorioUsuarios
 import servicios.Servicio
-import org.uqbar.commons.model.IModel
-import org.uqbar.arena.widgets.tables.labelprovider.PropertyLabelProvider
-import org.uqbar.arena.bindings.PropertyAdapter
-import org.uqbar.commons.model.annotations.Dependencies
-import javax.swing.text.DateFormatter
-import java.time.format.DateTimeFormatter
-import servicios.TipoDeTarifa
 import servicios.TarifaFija
-import java.time.LocalDate
 
 @Accessors
 @Observable
@@ -103,17 +95,18 @@ class GestionGeneralModel {
 
 	}
 
-	def crearLocacion(eventos.Locacion locacion) {
+	def crearLocacion(Locacion locacion) {
 		repoLocaciones.agregarElemento(locacion)
 	}
 
-	def crearServicio(servicios.Servicio servicio) {
+	def crearServicio(Servicio servicio) {
 		repoServicios.agregarElemento(servicio)
 	}
-	def crearUsuario(eventos.Usuario usuario) {
+
+	def crearUsuario(Usuario usuario) {
 		repoUsuarios.agregarElemento(usuario)
-	
-}
+
+	}
 
 }
 //	def getActualizar() {

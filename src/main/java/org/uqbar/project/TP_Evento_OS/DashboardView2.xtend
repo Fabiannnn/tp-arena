@@ -1,6 +1,7 @@
 package org.uqbar.project.TP_Evento_OS
 
 import eventos.Locacion
+import eventos.Usuario
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.VerticalLayout
@@ -11,13 +12,9 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
-import repositorio.RepositorioServicios
-import repositorio.RepositorioUsuarios
+import servicios.Servicio
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import repositorio.RepositorioLocaciones
-import eventos.Usuario
-import servicios.Servicio
 
 @Accessors
 class DashboardView2 extends SimpleWindow<DashboardModel> {
@@ -41,8 +38,8 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 		mainPanel.width = 1000
 		mainPanel.layout = new ColumnLayout(2)
 		val Panel PanelIzquierdo = new Panel(mainPanel)
-	PanelIzquierdo.layout = new VerticalLayout
-	PanelIzquierdo.width=400
+		PanelIzquierdo.layout = new VerticalLayout
+		PanelIzquierdo.width = 400
 		crearPanelEstadistica(PanelIzquierdo)
 		crearPanelDeLocaciones(PanelIzquierdo)
 		val Panel PanelDerecho = new Panel(mainPanel)
@@ -61,12 +58,11 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 		]
 
 		val Panel PanelColumnas = new Panel(PanelEstadisticas)
-	PanelColumnas.layout = new ColumnLayout(2)
-		PanelColumnas.width=250		
-		
-		
+		PanelColumnas.layout = new ColumnLayout(2)
+		PanelColumnas.width = 250
+
 		new Label(PanelColumnas).setText("Eventos Totales:")
-		
+
 		new Label(PanelColumnas) => [
 			value <=> "eventosTotales"
 		]
@@ -170,7 +166,7 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 			new Column<Servicio>(it) => [
 				title = "Tarifa"
 				fixedSize = 100
-				bindContentsToProperty("costoServicio") 
+				bindContentsToProperty("costoServicio")
 			]
 		]
 		new Button(PanelDeServicios) => [

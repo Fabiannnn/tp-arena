@@ -13,23 +13,23 @@ class LocalDateTransformer implements ValueTransformer<LocalDate, String> {
 
 	override viewToModel(String valueFromView) {
 		try {
-			if (StringUtils.isBlank(valueFromView)) null else LocalDate.parse(valueFromView, formatter)
+			if(StringUtils.isBlank(valueFromView)) null else LocalDate.parse(valueFromView, formatter)
 		} catch (DateTimeParseException e) {
 			// TODO: i18n
 			throw new UserException("Debe ingresar una fecha en formato: " + this.pattern)
 		}
 	}
-	
+
 	override getModelType() {
 		typeof(LocalDate)
 	}
-	
+
 	override getViewType() {
 		typeof(String)
 	}
-	
+
 	override modelToView(LocalDate valueFromModel) {
-		if (valueFromModel === null) return null else valueFromModel.format(formatter)
+		if(valueFromModel === null) return null else valueFromModel.format(formatter)
 	}
-	
+
 }
