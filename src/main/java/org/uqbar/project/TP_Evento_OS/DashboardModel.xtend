@@ -13,6 +13,7 @@ import repositorio.RepositorioServicios
 import repositorio.RepositorioUsuarios
 import servicios.Servicio
 
+
 @Accessors
 @Observable
 class DashboardModel {
@@ -62,21 +63,20 @@ class DashboardModel {
 
 	}
 
-	def getLocacionesPopulares() { // modelar comportamiento
-			getRepoLocaciones.elementos
-	//	ordenarLocaciones().take(5).last
+	def getLocacionesPopulares() { // modelar comportamiento HECHO
+		getRepoLocaciones.elementos
 	}
 
-	def ordenarLocaciones() {
-		getRepoLocaciones.elementos.sortBy[id]
-	}
+//	def ordenarLocaciones() {
+//	getRepoLocaciones.elementos.sortBy[id].reverse
+//	}
 
 	def getUsuariosActivos() { // modelar comportamiento
 		getRepoUsuarios.elementos
 	}
 
-	def getServiciosNuevos() { // modelar comportamiento
-		getRepoServicios.elementos
+	def getServiciosNuevos() { // modelar comportamiento 
+		(getRepoServicios.elementos.sortBy[id].reverse).subList(0,2)
 	}
 
 	def getRepoLocaciones() {
