@@ -58,7 +58,12 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 //			setWidth = 150
 //		onClick [|new ABL_base(owner, new ABMLocacion()).open]
 //		]
-		var actualizar = new Button(actionsPanel) => [
+//		var actualizar = new Button(actionsPanel) => [
+//			caption = "Update Masivo"
+//			setWidth = 10
+//		// onClick [|modelObject.getActualizar()]
+//		]
+		new Button(actionsPanel) => [
 			caption = "Update Masivo"
 			setWidth = 10
 		// onClick [|modelObject.getActualizar()]
@@ -114,7 +119,12 @@ class GestionDeLocacionesView extends GestionGeneralView {
 
 	override void crearBotoneraGestion(Panel panel) {
 		super.crearBotoneraGestion(panel)
-		var agregar = new Button(panel) => [
+//		var agregar = new Button(panel) => [
+//			caption = "Agregar"
+//			setWidth = 150
+//			onClick([|this.crearLocacion])
+//		]
+		new Button(panel) => [
 			caption = "Agregar"
 			setWidth = 150
 			onClick([|this.crearLocacion])
@@ -179,7 +189,12 @@ class GestionDeServiciosView extends GestionGeneralView {
 
 	override void crearBotoneraGestion(Panel panel) {
 		super.crearBotoneraGestion(panel)
-		var agregar = new Button(panel) => [
+//		var agregar = new Button(panel) => [
+//			caption = "Agregar"
+//			setWidth = 150
+//			onClick([|this.crearServicio])
+//		]
+		new Button(panel) => [
 			caption = "Agregar"
 			setWidth = 150
 			onClick([|this.crearServicio])
@@ -237,7 +252,8 @@ class GestionDeUsuariosView extends GestionGeneralView {
 
 	override void crearBotoneraGestion(Panel panel) {
 		super.crearBotoneraGestion(panel)
-		var agregar = new Button(panel) => [caption = "Agregar" setWidth = 150 onClick([|this.crearUsuario])]
+		// var agregar = new Button(panel) => [caption = "Agregar" setWidth = 150 onClick([|this.crearUsuario])]
+		new Button(panel) => [caption = "Agregar" setWidth = 150 onClick([|this.crearUsuario])]
 	}
 
 	def crearUsuario() {

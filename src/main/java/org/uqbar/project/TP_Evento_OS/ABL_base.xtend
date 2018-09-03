@@ -1,7 +1,6 @@
 package org.uqbar.project.TP_Evento_OS
 
 import View.LabeledTextBox
-import eventos.Locacion
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.widgets.Button
@@ -41,7 +40,7 @@ class ABL_base extends TransactionalDialog<ABMLocacion> { //abstract
 }
 
 class ABL_Locacion extends ABL_base {
-	Locacion locacionSeleccionada
+	//Locacion locacionSeleccionada
 
 	new(WindowOwner owner, ABMLocacion model) {
 		super(owner, model)
@@ -53,7 +52,7 @@ class ABL_Locacion extends ABL_base {
 		new LabeledTextBox(locacionesEditPanel).setText("Nombre:").bindValueToProperty("nombreModelo")
 	}
 
-	def setLocacionSeleccionada(Locacion seleccion) {
-		locacionSeleccionada = seleccion
-	}
+//	def setLocacionSeleccionada(Locacion seleccion) {
+//		locacionSeleccionada = seleccion
+//	}
 }

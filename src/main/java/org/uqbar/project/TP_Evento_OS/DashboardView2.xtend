@@ -4,7 +4,7 @@ import eventos.Locacion
 import eventos.Usuario
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.layout.ColumnLayout
-import org.uqbar.arena.layout.VerticalLayout
+import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
@@ -21,7 +21,7 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 
 	new(WindowOwner owner, DashboardModel model) {
 		super(owner, model)
-		title = "Evento OS "
+		title = "Evento OS"
 
 	}
 
@@ -35,87 +35,125 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 
 	override createMainTemplate(Panel mainPanel) {
 		this.title = "Event OS-Dashboard"
-		mainPanel.width = 1000
-		mainPanel.layout = new ColumnLayout(2)
+		mainPanel.layout = new HorizontalLayout
 		val Panel PanelIzquierdo = new Panel(mainPanel)
-		PanelIzquierdo.layout = new VerticalLayout
-		PanelIzquierdo.width = 400
+		val Panel PanelDerecho = new Panel(mainPanel)
 		crearPanelEstadistica(PanelIzquierdo)
 		crearPanelDeLocaciones(PanelIzquierdo)
-		val Panel PanelDerecho = new Panel(mainPanel)
 		crearPanelDeUsuarios(PanelDerecho)
 		crearPanelDeServicios(PanelDerecho)
-
 	}
 
 	def crearPanelEstadistica(Panel PanelEstadisticas) {
 
 		new Label(PanelEstadisticas) => [
 			text = "Estadísticas:"
-			fontSize = 16
+			fontSize = 14
 			alignLeft
-
 		]
 
 		val Panel PanelColumnas = new Panel(PanelEstadisticas)
 		PanelColumnas.layout = new ColumnLayout(2)
-		PanelColumnas.width = 250
 
-		new Label(PanelColumnas).setText("Eventos Totales:")
-
+		// new Label(PanelColumnas).setText("Eventos Totales:").height = 30
 		new Label(PanelColumnas) => [
+			height = 35
+			fontSize = 10
+			setText = "Eventos Totales:"
+		]
+		new Label(PanelColumnas) => [
+			height = 35
+			fontSize = 10
 			value <=> "eventosTotales"
 		]
 
-		new Label(PanelColumnas).setText("Eventos último mes:")
+		// new Label(PanelColumnas).setText("Eventos último mes:").height = 30
 		new Label(PanelColumnas) => [
+			height = 33
+			fontSize = 10
+			setText = "Eventos último mes:"
+		]
+		new Label(PanelColumnas) => [
+			height = 33
+			fontSize = 10
 			value <=> "eventosUltimoMes"
 		]
 
-		new Label(PanelColumnas).setText("Eventos exitosos:")
+		// new Label(PanelColumnas).setText("Eventos exitosos:").height = 30
 		new Label(PanelColumnas) => [
+			height = 33
+			fontSize = 10
+			setText = "Eventos exitosos:"
+		]
+		new Label(PanelColumnas) => [
+			height = 33
+			fontSize = 10
 			value <=> "eventosExitosos"
 		]
 
-		new Label(PanelColumnas).setText("Eventos fracasados:")
+		// new Label(PanelColumnas).setText("Eventos fracasados:").height = 30
 		new Label(PanelColumnas) => [
+			height = 33
+			fontSize = 10
+			setText = "Eventos fracasados:"
+		]
+		new Label(PanelColumnas) => [
+			height = 33
+			fontSize = 10
 			value <=> "eventosFracasados"
 		]
 
-		new Label(PanelColumnas).setText("Entradas vendidas:")
+		// new Label(PanelColumnas).setText("Entradas vendidas:").height = 30
 		new Label(PanelColumnas) => [
+			height = 33
+			fontSize = 10
+			setText = "Entradas vendidas:"
+		]
+		new Label(PanelColumnas) => [
+			height = 33
+			fontSize = 10
 			value <=> "entradasVendidas"
 		]
 
-		new Label(PanelColumnas).setText("Invitaciones enviadas:")
+		// new Label(PanelColumnas).setText("Invitaciones enviadas:").height = 30
 		new Label(PanelColumnas) => [
+			height = 35
+			fontSize = 10
+			setText = "Invitaciones enviadas:"
+		]
+		new Label(PanelColumnas) => [
+			height = 35
+			fontSize = 10
 			value <=> "invitacionesEnviadas"
 		]
-
 	}
 
 	def crearPanelDeLocaciones(Panel PanelDeLocaciones) {
+
 		new Label(PanelDeLocaciones) => [
-			it.text = "Locaciones más polulares:"
+			it.text = "Locaciones más populares:"
 			it.fontSize = 14
+			it.alignLeft
 		]
-		val table = new Table<Locacion>(PanelDeLocaciones, typeof(Locacion)) => [
+
+		new Table<Locacion>(PanelDeLocaciones, typeof(Locacion)) => [
 			numberVisibleRows = 10
 			items <=> "locacionesPopulares"
 			new Column<Locacion>(it) => [
 				title = "Nombre"
-				fixedSize = 250
+				// fixedSize = 150 
 				bindContentsToProperty("nombre")
 			]
 			new Column<Locacion>(it) => [
 				title = "Capacidad"
-				fixedSize = 100
+				// fixedSize = 150
 				bindContentsToProperty("capacidadMaxima")
 			]
 		]
+
 		new Button(PanelDeLocaciones) => [
 			caption = "Gestión de Locaciones"
-			setWidth = 100
+			// setWidth = 150
 			onClick [|new GestionDeLocacionesView(owner, new GestionGeneralModel()).open]
 		]
 	}
@@ -127,24 +165,24 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 			it.alignLeft
 		]
 
-		val tablaUsuarios = new Table<Usuario>(PanelDeUsuarios, typeof(Usuario)) => [
+		new Table<Usuario>(PanelDeUsuarios, typeof(Usuario)) => [
 			numberVisibleRows = 10
 			items <=> "usuariosActivos"
-
 			new Column<Usuario>(it) => [
 				title = "Username"
-				fixedSize = 100
+				// fixedSize = 100
 				bindContentsToProperty("nombreUsuario")
 			]
 			new Column<Usuario>(it) => [
 				title = "Nombre y Apellido"
-				fixedSize = 250
+				// fixedSize = 250
 				bindContentsToProperty("nombreApellido")
 			]
 		]
+
 		new Button(PanelDeUsuarios) => [
 			caption = "Gestión de Usuarios"
-			width = 100
+			// width = 100
 			onClick [|new GestionDeUsuariosView(owner, new GestionGeneralModel()).open]
 		]
 	}
@@ -153,26 +191,27 @@ class DashboardView2 extends SimpleWindow<DashboardModel> {
 		new Label(PanelDeServicios) => [
 			it.text = "Últimos Servicios:"
 			it.fontSize = 14
+			it.alignLeft
 		]
 
-		val tablaServicios = new Table<Servicio>(PanelDeServicios, typeof(Servicio)) => [
+		new Table<Servicio>(PanelDeServicios, typeof(Servicio)) => [
 			numberVisibleRows = 10
 			items <=> "serviciosNuevos"
 			new Column<Servicio>(it) => [
 				title = "Nombre"
-				fixedSize = 250
+				// fixedSize = 250
 				bindContentsToProperty("descripcion")
 			]
 			new Column<Servicio>(it) => [
 				title = "Tarifa"
-				fixedSize = 100
+				// fixedSize = 100
 				bindContentsToProperty("costoServicio")
 			]
 		]
+
 		new Button(PanelDeServicios) => [
 			caption = "Gestión de Servicios"
-			width = 100
-
+			// width = 100
 			onClick [|new GestionDeServiciosView(owner, new GestionGeneralModel()).open]
 		]
 

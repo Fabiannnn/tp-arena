@@ -14,7 +14,8 @@ class ABMLocacion {
 	Locacion locacionModelo
 
 	def repoLocaciones() {
-		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+		// val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 	}
 
 	def getLocacionNueva() {
@@ -22,10 +23,9 @@ class ABMLocacion {
 	}
 
 	def static editarEntidad(Locacion seleccion) {
-
+		// val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 		var locacionEditar = seleccion
-
-		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
 		locacionEditar.nombre = seleccion.nombre
 	}
 

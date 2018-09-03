@@ -56,9 +56,9 @@ class ABM_Locacion_View extends ABM_View {
 		new LabeledTextBox(locacionesEditPanel).setText("Coordenada y").bindValueToProperty("punto.y")
 	}
 
-	def setLocacionSeleccionada(Locacion seleccion) {
-		locacionSeleccionada = seleccion
-	}
+//	def setLocacionSeleccionada(Locacion seleccion) {
+//		locacionSeleccionada = seleccion
+//	}
 
 }
 

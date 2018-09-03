@@ -134,16 +134,15 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
 			capacidadMaxima = 50
 		]
-		val reunionGrande = new EventoCerrado => [
-			nombre = "Reunion++ "
-			organizador = usuario1
-			locacion = salon_SM
-			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
-			capacidadMaxima = 20
-		]
-
+//		val reunionGrande = new EventoCerrado => [
+//			nombre = "Reunion++ "
+//			organizador = usuario1
+//			locacion = salon_SM
+//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
+//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
+//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+//			capacidadMaxima = 20
+//		]
 		val primerEvento = new EventoCerrado => [
 			nombre = "Reunion Proyecto"
 			organizador = unUsuario
@@ -162,25 +161,24 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
 			capacidadMaxima = 10
 		]
-		val tercerEvento = new EventoCerrado => [
-			nombre = "Reunion Proyecto"
-			organizador = unUsuario
-			locacion = salon_SM
-			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
-			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
-			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
-			capacidadMaxima = 10
-		]
-		val cuartoEvento = new EventoCerrado => [
-			nombre = "Reunion Proyecto"
-			locacion = salon_SM
-			organizador = usuario1
-			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(8))
-			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(9))
-			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(7))
-			capacidadMaxima = 50
-		]
-
+//		val tercerEvento = new EventoCerrado => [
+//			nombre = "Reunion Proyecto"
+//			organizador = unUsuario
+//			locacion = salon_SM
+//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(3))
+//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(4))
+//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(2))
+//			capacidadMaxima = 10
+//		]
+//		val cuartoEvento = new EventoCerrado => [
+//			nombre = "Reunion Proyecto"
+//			locacion = salon_SM
+//			organizador = usuario1
+//			fechaDeInicio = LocalDateTime.now().plus(Period.ofDays(8))
+//			fechaFinalizacion = LocalDateTime.now().plus(Period.ofDays(9))
+//			fechaLimiteConfirmacion = LocalDate.now().plus(Period.ofDays(7))
+//			capacidadMaxima = 50
+//		]
 		val quintoEvento = new EventoCerrado => [
 			nombre = "Reunion Proyecto"
 			organizador = usuario1
