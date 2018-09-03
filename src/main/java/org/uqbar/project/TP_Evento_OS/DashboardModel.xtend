@@ -13,7 +13,6 @@ import repositorio.RepositorioServicios
 import repositorio.RepositorioUsuarios
 import servicios.Servicio
 
-
 @Accessors
 @Observable
 class DashboardModel {
@@ -63,20 +62,28 @@ class DashboardModel {
 
 	}
 
-	def getLocacionesPopulares() { // modelar comportamiento HECHO
-		getRepoLocaciones.elementos
+	def getLocacionesPopulares() { // modelar comportamiento TODO HECHO  NO anda el sublist 5 sera por que no hay 5 locaciones
+		if (getRepoLocaciones.elementos.size > 5) {
+			(getRepoLocaciones.elementos.sortBy[elem|locacionesPopulares(elem)]).subList(0, 5)
+		} else {
+			(getRepoLocaciones.elementos.sortBy[elem|locacionesPopulares(elem)])
+		}
 	}
 
-//	def ordenarLocaciones() {
-//	getRepoLocaciones.elementos.sortBy[id].reverse
-//	}
+	def int locacionesPopulares(Locacion elem) {
+		getRepoUsuarios.eventosPorLocacionTotal(elem)
+	}
 
 	def getUsuariosActivos() { // modelar comportamiento
 		getRepoUsuarios.elementos
 	}
 
-	def getServiciosNuevos() { // modelar comportamiento 
-		(getRepoServicios.elementos.sortBy[id].reverse).subList(0,2)
+	def getServiciosNuevos() { // modelar comportamiento TODO hecho
+		if (getRepoLocaciones.elementos.size > 5) {
+		(getRepoServicios.elementos.sortBy[id].reverse).subList(0, 5) }else {
+			(getRepoServicios.elementos.sortBy[id].reverse)
+		}
+
 	}
 
 	def getRepoLocaciones() {
