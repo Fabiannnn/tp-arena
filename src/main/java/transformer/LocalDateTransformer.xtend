@@ -17,7 +17,6 @@ class LocalDateTransformer implements ValueTransformer<LocalDate, String> {
 		try {
 			if(StringUtils.isBlank(valueFromView)) null else LocalDate.parse(valueFromView, formatter)
 		} catch (DateTimeParseException e) {
-			// TODO: i18n
 			throw new UserException("Debe ingresar una fecha en formato: " + this.pattern)
 		}
 	}

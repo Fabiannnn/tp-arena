@@ -9,24 +9,24 @@ import repositorio.RepositorioLocaciones
 @Accessors
 @Observable
 class ABMLocacion {
-
-	String nombreModelo
-	Locacion locacionModelo
-
-	def repoLocaciones() {
-		// val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
-		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
-	}
-
-	def getLocacionNueva() {
-		repoLocaciones()
-	}
-
-	def static editarEntidad(Locacion seleccion) {
-		// val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
-		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
-		var locacionEditar = seleccion
-		locacionEditar.nombre = seleccion.nombre
-	}
+//
+//	String nombreModelo
+//	Locacion locacionModelo
+//
+//	def repoLocaciones() {
+//		// val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+//		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+//	}
+//
+//	def getLocacionNueva() {
+//		repoLocaciones()
+//	}
+//
+//	def static editarEntidad(Locacion seleccion) {
+//		// val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+//		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones
+//		var locacionEditar = seleccion
+//		locacionEditar.nombre = seleccion.nombre
+//	}
 
 }

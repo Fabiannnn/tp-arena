@@ -120,72 +120,19 @@ class GestionGeneralModel {
 
 	def crearLocacion(Locacion locacion) {
 		repoLocaciones.agregarElemento(locacion)
+		ObservableUtils.firePropertyChanged(this, "locacionesDelRepo")
 	}
 
 	def crearServicio(Servicio servicio) {
 		repoServicios.agregarElemento(servicio)
+		ObservableUtils.firePropertyChanged(this, "serviciosDelRepo")
 	}
 
 	def crearUsuario(Usuario usuario) {
 		repoUsuarios.agregarElemento(usuario)
+		ObservableUtils.firePropertyChanged(this, "usuariosDelRepo")
 
 	}
 
 }
-//	def getActualizar() {
-//		jsonLocacion.deserializarJson('''[
-//		   {
-//		      "x":-34.603759,
-//		      "y":-58.381586,
-//		      "nombre":"Salón El Abierto"
-//		   },
-//		   {
-//		      "x":-44.603759,
-//		      "y":-68.381586,
-//		      "nombre":"Estadio Obras"
-//		   }
-//		]''', repoLocaciones)
-//
-//	}
-//	jsonText =  '''[
-//		   {
-//		      "x":-44.603759,
-//		      "y":-68.31586,
-//		      "nombre":"Salón El Abierto"
-//		   },
-//		   {
-//		      "x":-44.689759,
-//		      "y":-68.381586,
-//		      "nombre":"mi Salón"
-//		   };
-//		   {
-//		      "x":-34.603759,
-//		      "y":-58.381586,
-//		      "nombre":"Salón M&M"
-//		   },
-//		   {
-//		      "x":-44.603759,
-//		      "y":-28.381586,
-//		      "nombre":"Estadio Obras"
-//		   },
-//		   {
-//		      "x":-34.603759,
-//		      "y":-58.381586,
-//		      "nombre":"Salón El Abierto"
-//		   },
-//		   {
-//		      "x":-34.572224,
-//		      "y":-58.535651,
-//		      "nombre":"Estadio Obras2"
-//		   },
-//		   {
-//		      "x":-84.603759,
-//		      "y":-88.388986,
-//		      "nombre":"Salón El Abierto Otro Lugar"
-//		   },
-//		   {
-//		      "x":-34.572224,
-//		      "y":-58.535651,
-//		      "nombre":"Estadio Obras Modificado"
-//		   }
-//		]'''
+

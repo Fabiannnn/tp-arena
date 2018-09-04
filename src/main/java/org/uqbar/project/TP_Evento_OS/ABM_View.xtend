@@ -161,7 +161,7 @@ class ABM_Servicio_View extends ABM_View {
 	override crearPanelEntidad(Panel panelEntidad) {
 		var serviciosEditPanel = new Panel(panelEntidad)
 		serviciosEditPanel.layout = new ColumnLayout(2)
-		new LabeledTextBox(serviciosEditPanel).setText("Nombre:").bindValueToProperty("nombre")
+		new LabeledTextBox(serviciosEditPanel).setText("Nombre:").bindValueToProperty("descripcion")
 		new LabeledTextBox(serviciosEditPanel).setText("Tipo de Servicio:").bindValueToProperty("tipoDeServicio")
 		new LabeledTextBox(serviciosEditPanel).setText("Tipo de Tarifa:").bindValueToProperty("tipoDeTarifa")
 		new LabeledTextBox(serviciosEditPanel).setText("Costo Fijo:").bindValueToProperty("costoFijo")

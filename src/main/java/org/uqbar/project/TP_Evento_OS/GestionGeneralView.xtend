@@ -16,6 +16,7 @@ import servicios.Servicio
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import org.uqbar.arena.windows.ErrorsPanel
+import transformer.LocalDateTransformer
 
 @Accessors
 abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
@@ -269,13 +270,18 @@ class GestionDeUsuariosView extends GestionGeneralView {
 			fixedSize = 200
 			bindContentsToProperty("email")
 		]
+//		new Column<Usuario>(table) => [//TODO es para ver si lo carga no lo pide aca lo tomo bien!!!!
+//			title = "Fecha Nac"
+//			fixedSize = 200
+//			bindContentsToProperty("fechaNacimiento")
+//		]
 	}
 
 	override void crearBotoneraGestion(Panel panel) {
 		super.crearBotoneraGestion(panel)
 		// var agregar = new Button(panel) => [caption = "Agregar" setWidth = 150 onClick([|this.crearUsuario])]
 		new Button(panel) => [caption = "Agregar" setWidth = 150 onClick([|this.crearUsuario])]
-				new Button(panel) => [
+		new Button(panel) => [
 			caption = "Update Masivo"
 			setWidth = 10
 			onClick [|modelObject.getActualizarUsuario()]
