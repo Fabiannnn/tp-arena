@@ -17,6 +17,9 @@ import servicios.Servicio
 @Accessors
 @Observable
 class DashboardModel {
+	// ********************************************************
+	// ** Acciones
+	// ********************************************************
 
 	def getEventosTotales() {
 		repoUsuarios.elementos.fold(0.0)[acum, user|acum + user.eventosOrganizados.size()]
@@ -105,6 +108,10 @@ class DashboardModel {
 			(getRepoServicios.elementos.sortBy[id].reverse)
 		}}
 
+
+	// ********************************************************
+	// ** Repositorios
+	// ********************************************************
 
 	def getRepoLocaciones() {
 		ApplicationContext.instance.getSingleton(typeof(Locacion)) as RepositorioLocaciones

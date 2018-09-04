@@ -102,8 +102,7 @@ class GestionGeneralModel {
 //	new ABL_Locacion(owner, new ABMLocacion()).open
 //	//ABL_Locacion.setLocacionSeleccionada()
 //}	
-	def setLocacionSeleccionada(ABL_Locacion locacion, Locacion locacion2) {
-	}
+
 
 //@Dependencies("TipoDeUsuario")
 //def getEsTipoDeUsuario(Usuario unUsuario){
