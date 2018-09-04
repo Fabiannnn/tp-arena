@@ -15,6 +15,7 @@ import org.uqbar.arena.windows.WindowOwner
 import servicios.Servicio
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import org.uqbar.arena.windows.ErrorsPanel
 
 @Accessors
 abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
@@ -24,14 +25,16 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 		this.delegate.errorViewer = this
 	}
 
+	override ErrorsPanel createErrorsPanel(Panel mainPanel) { return new ErrorsPanel(mainPanel, "", 0) }
+
 	override protected createFormPanel(Panel mainPanel) {
 		val form = new Panel(mainPanel)
 		form.layout = new ColumnLayout(2)
 		val Panel PanelIzquierdo = new Panel(form)
-		PanelIzquierdo.width = 700
+		PanelIzquierdo.width = 800
 		crearTablaGestion(PanelIzquierdo)
 		val Panel PanelDerecho = new Panel(form)
-		PanelDerecho.width = 700
+		PanelDerecho.width = 300
 		crearBotoneraGestion(PanelDerecho)
 	}
 
@@ -39,13 +42,20 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 
 	def protected crearTablaGestion(Panel panel) {}
 
+//	def crearUsuario() {
+//		val usuario = new Usuario
+//		new ABM_Usuario_View(this, usuario) => [
+//			onAccept[this.modelObject.crearUsuario(usuario)]
+//			open
+//		]
+//	}
 	def void crearBotoneraGestion(Panel panel) {
 		var actionsPanel = new Panel(panel)
 		actionsPanel.layout = new VerticalLayout
 		var edit = new Button(actionsPanel) => [
 			caption = "Editar"
 			setWidth = 150
-//			onClick [|  modelObject.editarSeleccion("entidadSeleccionada") ]
+		// onClick [|  modelObject.editarSeleccion("entidadSeleccionada") ]
 		]
 
 		var eliminar = new Button(actionsPanel) => [
@@ -63,11 +73,11 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 //			setWidth = 10
 //		// onClick [|modelObject.getActualizar()]
 //		]
-		new Button(actionsPanel) => [
-			caption = "Update Masivo"
-			setWidth = 10
-		// onClick [|modelObject.getActualizar()]
-		]
+//		new Button(actionsPanel) => [
+//			caption = "Update Masivo"
+//			setWidth = 10
+//		// onClick [|modelObject.getActualizar()]
+//		]
 		/*Deshabilitado de Botones hasta tener elemento seleccionado */
 		var seleccionTabla = new NotNullObservable("entidadSeleccionada")
 		edit.bindEnabled(seleccionTabla)
@@ -89,7 +99,7 @@ class GestionDeLocacionesView extends GestionGeneralView {
 	}
 
 	override protected crearTablaGestion(Panel panel) {
-		minWidth = 300
+		minWidth = 1200
 		this.describeResultadosGrid(
 			new Table<Locacion>(panel, typeof(Locacion)) => [
 				numberVisibleRows = 10
@@ -102,17 +112,17 @@ class GestionDeLocacionesView extends GestionGeneralView {
 	def protected describeResultadosGrid(Table<Locacion> table) {
 		new Column<Locacion>(table) => [
 			title = "Nombre"
-			// fixedSize = 150
+			// fixedSize = 130
 			bindContentsToProperty("nombre")
 		]
 		new Column<Locacion>(table) => [
 			title = "Superficie"
-			// fixedSize = 150
+			// fixedSize = 50
 			bindContentsToProperty("superficie")
 		]
 		new Column<Locacion>(table) => [
 			title = "Ubicacion"
-			fixedSize = 150
+			fixedSize = 100
 			bindContentsToProperty("punto")
 		]
 	}
@@ -128,6 +138,11 @@ class GestionDeLocacionesView extends GestionGeneralView {
 			caption = "Agregar"
 			setWidth = 150
 			onClick([|this.crearLocacion])
+		]
+		new Button(panel) => [
+			caption = "Update Masivo"
+			setWidth = 10
+			onClick [|modelObject.getActualizarLocacion()]
 		]
 	}
 
@@ -156,7 +171,7 @@ class GestionDeServiciosView extends GestionGeneralView {
 	}
 
 	override protected crearTablaGestion(Panel panel) {
-		minWidth = 300
+		minWidth = 750
 		this.describeResultadosGrid(
 			new Table<Servicio>(panel, typeof(Servicio)) => [
 				numberVisibleRows = 10
@@ -181,7 +196,7 @@ class GestionDeServiciosView extends GestionGeneralView {
 
 		new Column<Servicio>(table) => [
 			title = "Ubicacion"
-			fixedSize = 100
+			fixedSize = 150
 			bindContentsToProperty("ubicacion")
 		]
 
@@ -199,6 +214,11 @@ class GestionDeServiciosView extends GestionGeneralView {
 			setWidth = 150
 			onClick([|this.crearServicio])
 		]
+		new Button(panel) => [
+			caption = "Update Masivo"
+			setWidth = 10
+			onClick [|modelObject.getActualizarServicio()]
+		]
 	}
 
 	def crearServicio() {
@@ -206,6 +226,7 @@ class GestionDeServiciosView extends GestionGeneralView {
 		new ABM_Servicio_View(this, servicio) => [
 			onAccept[this.modelObject.crearServicio(servicio)]
 			open
+
 		]
 	}
 
@@ -222,7 +243,7 @@ class GestionDeUsuariosView extends GestionGeneralView {
 	}
 
 	override protected crearTablaGestion(Panel panel) {
-		minWidth = 300
+		minWidth = 750
 		this.describeResultadosGrid(
 			new Table<Usuario>(panel, typeof(Usuario)) => [
 				numberVisibleRows = 10
@@ -245,7 +266,7 @@ class GestionDeUsuariosView extends GestionGeneralView {
 		]
 		new Column<Usuario>(table) => [
 			title = "Mail"
-			fixedSize = 150
+			fixedSize = 200
 			bindContentsToProperty("email")
 		]
 	}
@@ -254,6 +275,11 @@ class GestionDeUsuariosView extends GestionGeneralView {
 		super.crearBotoneraGestion(panel)
 		// var agregar = new Button(panel) => [caption = "Agregar" setWidth = 150 onClick([|this.crearUsuario])]
 		new Button(panel) => [caption = "Agregar" setWidth = 150 onClick([|this.crearUsuario])]
+				new Button(panel) => [
+			caption = "Update Masivo"
+			setWidth = 10
+			onClick [|modelObject.getActualizarUsuario()]
+		]
 	}
 
 	def crearUsuario() {

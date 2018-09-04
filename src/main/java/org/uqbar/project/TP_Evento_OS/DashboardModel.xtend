@@ -5,6 +5,7 @@ import eventos.Locacion
 import eventos.Usuario
 import java.time.LocalDateTime
 import java.time.Period
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.applicationContext.ApplicationContext
 import org.uqbar.commons.model.annotations.Observable
@@ -64,9 +65,9 @@ class DashboardModel {
 
 	def getLocacionesPopulares() { // modelar comportamiento TODO HECHO  NO anda el sublist 5 sera por que no hay 5 locaciones
 		if (getRepoLocaciones.elementos.size > 5) {
-			(getRepoLocaciones.elementos.sortBy[elem|locacionesPopulares(elem)]).subList(0, 5)
+			(getRepoLocaciones.elementos.sortBy[elem|locacionesPopulares(elem)].reverse).subList(0, 5)
 		} else {
-			(getRepoLocaciones.elementos.sortBy[elem|locacionesPopulares(elem)])
+			(getRepoLocaciones.elementos.sortBy[elem|locacionesPopulares(elem)].reverse)
 		}
 	}
 
@@ -74,12 +75,27 @@ class DashboardModel {
 		getRepoUsuarios.eventosPorLocacionTotal(elem)
 	}
 
-	def ordenarLocaciones() {
-	getRepoLocaciones.elementos.sortBy[id].reverse
-	}
+//	def ordenarLocaciones() {
+//	getRepoLocaciones.elementos.sortBy[id].reverse
+//	}
 
 	def getUsuariosActivos() { // modelar comportamiento
-		getRepoUsuarios.elementos
+		if (getRepoLocaciones.elementos.size > 5) {
+		actividadUsuarios().subList(0,5)}else{
+			actividadUsuarios()
+		}
+	}
+	
+	protected def List<Usuario> actividadUsuarios() {
+		getRepoUsuarios.elementos.sortBy[elem|actividadDeUsuario(elem)].reverse
+	}
+	
+	def actividadDeUsuario(Usuario _usuario) {
+		_usuario.eventosOrganizadosPor().size +  _usuario.entradasCompradas().size + invitacionesAceptadas(_usuario)
+	}
+	
+	protected def int invitacionesAceptadas(Usuario _usuario) {
+		_usuario.invitacionesRecibidas.filter[elem| elem.estaAceptada() === true].size
 	}
 
 

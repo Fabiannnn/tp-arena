@@ -13,6 +13,12 @@ import repositorio.RepositorioServicios
 import repositorio.RepositorioUsuarios
 import servicios.Servicio
 import servicios.TarifaFija
+import Jsons.DatosActualizarLocacion
+import jsons.JsonLocacion
+import Jsons.DatosActualizarServicios
+import jsons.JsonServicio
+import jsons.JsonUsuario
+import Jsons.DatosActualizarUsuarios
 
 @Accessors
 @Observable
@@ -67,12 +73,29 @@ class GestionGeneralModel {
 		ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepositorioServicios
 	}
 
-	def getActualizar() { // TODO falta Modelar
+	def getActualizarLocacion() {
+		var datosAct = new DatosActualizarLocacion
+		var jsonLocacion = new JsonLocacion
+		jsonLocacion.deserializarJson(datosAct.actualizarJsonLocacion, getRepoLocaciones)
+		ObservableUtils.firePropertyChanged(this, "locacionesDelRepo")
 	}
 
-//def dispatch editarSeleccion(Locacion Seleccion){
-//	new ABL_Locacion(owner, new ABMLocacion()).open
-//	ABL_Locacion.setLocacionSeleccionada()
+	def getActualizarServicio() {
+		var datosAct = new DatosActualizarServicios
+		var jsonServicio = new JsonServicio
+		jsonServicio.deserializarJson(datosAct.actualizarJsonServicio, repoServicios)
+		ObservableUtils.firePropertyChanged(this, "serviciosDelRepo")
+	}
+		def getActualizarUsuario() {
+		var datosAct = new DatosActualizarUsuarios
+		var jsonUsuario = new JsonUsuario
+		jsonUsuario.deserializarJson(datosAct.actualizarJsonUsuario, repoUsuarios)
+		ObservableUtils.firePropertyChanged(this, "usuariosDelRepo")
+	}
+
+//def  editarSeleccion(Locacion seleccion){
+//	new ABM_Locacion_View(, seleccion).open
+//	ABM_Modelo.editarEntidad(seleccion)
 //}
 //
 //def dispatch editarSeleccion(Usuario Seleccion){

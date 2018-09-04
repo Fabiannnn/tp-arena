@@ -8,8 +8,17 @@ import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Panel
+import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.windows.WindowOwner
 import servicios.Servicio
+import org.uqbar.arena.widgets.NumericField
+import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import org.uqbar.arena.widgets.TextBox
+import org.uqbar.geodds.Point
+import transformer.LocalDateTransformer
+import View.LabeledSelector
+import org.uqbar.arena.widgets.Selector
+import eventos.TipoDeUsuario
 
 abstract class ABM_View extends TransactionalDialog<Entidad> { //abstract 
 	new(WindowOwner owner, Entidad model) {
@@ -48,18 +57,42 @@ class ABM_Locacion_View extends ABM_View {
 	override protected createFormPanel(Panel mainPanel) {
 	}
 
+//	Point unPunto
 	override crearPanelEntidad(Panel panelEntidad) {
+
 		var locacionesEditPanel = new Panel(panelEntidad)
-		new LabeledTextBox(locacionesEditPanel).setText("Nombre:").bindValueToProperty("nombre")
-		new LabeledTextBox(locacionesEditPanel).setText("Superficie:").bindValueToProperty("superficie")
-		new LabeledTextBox(locacionesEditPanel).setText("Coordenada x").bindValueToProperty("punto.x")
-		new LabeledTextBox(locacionesEditPanel).setText("Coordenada y").bindValueToProperty("punto.y")
+
+		new Label(locacionesEditPanel).setText("Nombre:")
+
+		new TextBox(locacionesEditPanel) => [
+			value <=> "nombre"
+			width = 120
+		]
+
+		new Label(locacionesEditPanel).text = "Superficie:"
+		new NumericField(locacionesEditPanel) => [
+			value <=> "superficie"
+			width = 20
+		]
+		new Label(locacionesEditPanel).text = "Coordenada x::"
+		new NumericField(locacionesEditPanel) => [
+			value <=> "punto.x"
+			width = 20
+		]
+		new Label(locacionesEditPanel).text = "Coordenada y:"
+		new NumericField(locacionesEditPanel) => [
+			value <=> "punto.y"
+			width = 20
+		]
+
+//		 new LabeledTextBox(locacionesEditPanel).setText("Superficie:").bindValueToProperty("superficie")
+//		new LabeledTextBox(locacionesEditPanel).setText("Coordenada x").bindValueToProperty("punto.x")
+//		new LabeledTextBox(locacionesEditPanel).setText("Coordenada y").bindValueToProperty("punto.y")
 	}
 
 //	def setLocacionSeleccionada(Locacion seleccion) {
 //		locacionSeleccionada = seleccion
 //	}
-
 }
 
 class ABM_Usuario_View extends ABM_View {
@@ -73,12 +106,45 @@ class ABM_Usuario_View extends ABM_View {
 
 	override crearPanelEntidad(Panel panelEntidad) {
 		var usuarioEditPanel = new Panel(panelEntidad)
-		new LabeledTextBox(usuarioEditPanel).setText("UserName").bindValueToProperty("nombreUsuario")
-		new LabeledTextBox(usuarioEditPanel).setText("Nombre:").bindValueToProperty("nombreApellido")
-		new LabeledTextBox(usuarioEditPanel).setText("mail:").bindValueToProperty("email")
-		new LabeledTextBox(usuarioEditPanel).setText("Tipo de Usuario:").bindValueToProperty("tipoDeUsuario")
-		new LabeledTextBox(usuarioEditPanel).setText("Fecha de Nacimiento:").bindValueToProperty("fechaNacimiento")
+		new Label(usuarioEditPanel).text = "UserName:"
 
+		new TextBox(usuarioEditPanel) => [
+			value <=> "nombreUsuario"
+			width = 120
+		]
+		new Label(usuarioEditPanel).text = "Nombre:"
+		new TextBox(usuarioEditPanel) => [
+			value <=> "nombreApellido"
+			width = 120
+		]
+		new Label(usuarioEditPanel).text = "mail:"
+		new TextBox(usuarioEditPanel) => [
+			value <=> "email"
+			width = 120
+		]
+		new Label(usuarioEditPanel).text = "Tipo De Usuario:"//TODO anulado tipo de usuario
+		new Selector(usuarioEditPanel) => [
+//			(items <=> ("tiposDeUsuarios"))
+//			value <=> ("tipoDeUsuario")
+		]
+
+//		new Label(usuarioEditPanel).text = "Tipo de Usuario:"
+//		new TextBox(usuarioEditPanel) => [
+//			value <=> "tiposDeUsuarios"
+//			width = 120
+//		]
+
+		new Label(usuarioEditPanel).text = "Fecha de Nacimiento:"
+		new TextBox(usuarioEditPanel) => [
+			(value <=> "fechaNacimiento").transformer = new LocalDateTransformer
+			width = 20
+		]
+
+//		new LabeledTextBox(usuarioEditPanel).setText("UserName").bindValueToProperty("nombreUsuario")
+//		new LabeledTextBox(usuarioEditPanel).setText("Nombre:").bindValueToProperty("nombreApellido")
+//		new LabeledTextBox(usuarioEditPanel).setText("mail:").bindValueToProperty("email")
+//		new LabeledTextBox(usuarioEditPanel).setText("Tipo de Usuario:").bindValueToProperty("tipoDeUsuario")
+//		new LabeledTextBox(usuarioEditPanel).setText("Fecha de Nacimiento:").bindValueToProperty("fechaNacimiento")
 	}
 
 }
