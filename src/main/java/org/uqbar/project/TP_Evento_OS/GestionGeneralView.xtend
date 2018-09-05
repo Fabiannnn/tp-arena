@@ -1,7 +1,10 @@
 package org.uqbar.project.TP_Evento_OS
 
 import eventos.Locacion
+import eventos.TipoDeUsuario
 import eventos.Usuario
+import eventos.UsuarioAmateur
+import eventos.UsuarioFree
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.ColumnLayout
@@ -11,12 +14,12 @@ import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
+import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.windows.WindowOwner
 import servicios.Servicio
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import org.uqbar.arena.windows.ErrorsPanel
-import transformer.LocalDateTransformer
+import transformer.TipoDeUsuarioTransformer
 
 @Accessors
 abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
@@ -26,7 +29,7 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 		this.delegate.errorViewer = this
 	}
 
-	override ErrorsPanel createErrorsPanel(Panel mainPanel) { return new ErrorsPanel(mainPanel, "", 0) }
+	override ErrorsPanel createErrorsPanel(Panel mainPanel) { return new ErrorsPanel(mainPanel, "Panel de error", 3) }
 
 	override protected createFormPanel(Panel mainPanel) {
 		val form = new Panel(mainPanel)
@@ -190,8 +193,8 @@ class GestionDeServiciosView extends GestionGeneralView {
 		]
 		new Column<Servicio>(table) => [
 			title = "Tarifa"
-			// alignRight     TODO preguntar por que si descomentamos esto desaparecen botones!!!!!
-			// fixedSize = 100
+//			 alignRight    // TODO preguntar por que si descomentamos esto desaparecen botones!!!!!
+//			 fixedSize = 100
 			bindContentsToProperty("costoServicio")
 		]
 
@@ -270,11 +273,22 @@ class GestionDeUsuariosView extends GestionGeneralView {
 			fixedSize = 200
 			bindContentsToProperty("email")
 		]
-//		new Column<Usuario>(table) => [//TODO es para ver si lo carga no lo pide aca lo tomo bien!!!!
-//			title = "Fecha Nac"
-//			fixedSize = 200
-//			bindContentsToProperty("fechaNacimiento")
-//		]
+		new Column<Usuario>(table) => [//TODO es para ver si lo carga no lo pide aca lo tomo bien!!!!
+			title = "Fecha Nac"
+			fixedSize = 200
+			bindContentsToProperty("fechaNacimiento")
+		]
+				
+		new Column<Usuario>(table) => [//TODO es para ver si lo carga no lo pide aca lo tomo bien!!!!
+			title = "Tipo De Usuario"
+			fixedSize = 200
+			bindContentsToProperty("tipoDeUsuario").transformer = [TipoDeUsuario valueFromModel | if(valueFromModel instanceof UsuarioFree ){
+				return " No tan Free"
+				} else if (valueFromModel instanceof UsuarioAmateur){
+				return "Amateur"		} else 		{
+			return "Profesional"	}]
+		]
+		
 	}
 
 	override void crearBotoneraGestion(Panel panel) {

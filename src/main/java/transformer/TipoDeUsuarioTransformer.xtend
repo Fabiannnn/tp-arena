@@ -2,6 +2,8 @@ package transformer
 
 import org.uqbar.arena.bindings.ValueTransformer
 import eventos.TipoDeUsuario
+import eventos.UsuarioAmateur
+import eventos.UsuarioFree
 
 class TipoDeUsuarioTransformer implements ValueTransformer<TipoDeUsuario, String> {
 
@@ -14,13 +16,12 @@ class TipoDeUsuarioTransformer implements ValueTransformer<TipoDeUsuario, String
 	}
 
 	override modelToView(TipoDeUsuario valueFromModel) {
-//		if(valueFromModel == "UsuarioFree" ){
-//		return " No tan Free"
-//		} else if (valueFromModel == UsuarioAmateur){
-//		return "Amateur"
-//		} else 
-//		if (valueFromModel){
-//			return true	}
+		if(valueFromModel instanceof UsuarioFree ){
+		return " No tan Free"
+		} else if (valueFromModel instanceof UsuarioAmateur){
+		return "Amateur"
+		} else 
+		{return "Profesional"	}
 	}
 
 	override viewToModel(String valueFromView) {

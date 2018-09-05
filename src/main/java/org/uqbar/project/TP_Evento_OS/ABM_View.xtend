@@ -21,6 +21,9 @@ import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import transformer.LocalDateTransformer
 import org.uqbar.arena.layout.HorizontalLayout
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.uqbar.arena.bindings.PropertyAdapter
+import transformer.TipoDeUsuarioTransformer
+import org.uqbar.arena.windows.ErrorsPanel
 
 abstract class ABM_View extends TransactionalDialog<Entidad> { //abstract 
 	new(WindowOwner owner, Entidad model) {
@@ -31,7 +34,9 @@ abstract class ABM_View extends TransactionalDialog<Entidad> { //abstract
 		"Evento OS - Creación"
 	}
 
+	override ErrorsPanel createErrorsPanel(Panel mainPanel) { return new ErrorsPanel(mainPanel, "Panel de error", 3) }
 	override createMainTemplate(Panel mainPanel) {
+			
 		mainPanel.layout = new ColumnLayout(2)
 		this.title = tituloDefault
 		crearPanelEntidad(mainPanel)
@@ -123,18 +128,14 @@ class ABM_Usuario_View extends ABM_View {
 		]
 		new Label(panelEntidad).text = "Tipo De Usuario:" // TODO anulado tipo de usuario
 		new Selector(panelEntidad) => [
-			(items <=> ("tiposDeUsuarios"))
+			(items <=> ("tiposDeUsuarios")).adapter = new PropertyAdapter(TipoDeUsuario, "nom")//.transformer= new TipoDeUsuarioTransformer
 			value <=> ("tipoDeUsuario")
 		]
 
 //	def getTiposDeUsuarios() { TODO esto agregue en clase usuario tp 1 idem para tarifa y tipodeservicio
 //		#[UsuarioFree, UsuarioAmateur,UsuarioProfesional]
 //	}
-//		new Label(panelEntidad).text = "Tipo de Usuario:"
-//		new TextBox(panelEntidad) => [
-//			value <=> "tiposDeUsuarios"
-//			width = 200
-//		]
+
 		new Label(panelEntidad).text = "Fecha de Nacimiento:"
 		new TextBox(panelEntidad) => [
 			(value <=> "fechaNacimiento").transformer = new LocalDateTransformer
@@ -175,7 +176,8 @@ class ABM_Servicio_View extends ABM_View {
 			setText = "Tipo de Tarifa:"
 		]
 		new Selector(panelEntidad) => [
-			items <=> "tiposDeTarifas"
+			allowNull(false)
+			(items <=> "tiposDeTarifas")
 			value <=> "tiposDeTarifas"
 			width = 200
 		]
