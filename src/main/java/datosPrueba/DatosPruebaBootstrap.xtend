@@ -203,7 +203,7 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 		usuario4.organizarEventoCerrado(primerEventoCe3)
 		usuario4.organizarEventoCerrado(segundoEventoCe4)
 		usuario1.organizarEventoCerrado(quintoEventoCe5)
-				usuario1.organizarEventoAbierto(reunionGrandeAb3)
+		usuario1.organizarEventoAbierto(reunionGrandeAb3)
 		val repoServicios = ApplicationContext.instance.getSingleton(typeof(Servicio)) as RepositorioServicios
 		val servicioCatering = new Servicio => [
 			ubicacion = new Point(34.910067, 45) // distancia a reunion chica aproximada 10 km

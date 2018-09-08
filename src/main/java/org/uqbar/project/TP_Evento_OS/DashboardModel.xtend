@@ -17,6 +17,7 @@ import servicios.Servicio
 @Accessors
 @Observable
 class DashboardModel {
+
 	// ********************************************************
 	// ** Acciones
 	// ********************************************************
@@ -63,10 +64,9 @@ class DashboardModel {
 	def getInvitacionesEnviadas() {
 
 		repoUsuarios.elementos.fold(0.0)[acum, elemento|acum + elemento.invitaciones.size()]
-
 	}
 
-	def getLocacionesPopulares() { // modelar comportamiento TODO HECHO  NO anda el sublist 5 sera por que no hay 5 locaciones
+	def getLocacionesPopulares() {
 		if (getRepoLocaciones.elementos.size > 5) {
 			(getRepoLocaciones.elementos.sortBy[elem|locacionesPopulares(elem)].reverse).subList(0, 5)
 		} else {
@@ -78,36 +78,33 @@ class DashboardModel {
 		getRepoUsuarios.eventosPorLocacionTotal(elem)
 	}
 
-//	def ordenarLocaciones() {
-//	getRepoLocaciones.elementos.sortBy[id].reverse
-//	}
-
-	def getUsuariosActivos() { // modelar comportamiento
+	def getUsuariosActivos() {
 		if (getRepoLocaciones.elementos.size > 5) {
-		actividadUsuarios().subList(0,5)}else{
+			actividadUsuarios().subList(0, 5)
+		} else {
 			actividadUsuarios()
 		}
 	}
-	
+
 	protected def List<Usuario> actividadUsuarios() {
 		getRepoUsuarios.elementos.sortBy[elem|actividadDeUsuario(elem)].reverse
 	}
-	
+
 	def actividadDeUsuario(Usuario _usuario) {
-		_usuario.eventosOrganizadosPor().size +  _usuario.entradasCompradas().size + invitacionesAceptadas(_usuario)
+		_usuario.eventosOrganizadosPor().size + _usuario.entradasCompradas().size + invitacionesAceptadas(_usuario)
 	}
-	
+
 	protected def int invitacionesAceptadas(Usuario _usuario) {
-		_usuario.invitacionesRecibidas.filter[elem| elem.estaAceptada() === true].size
+		_usuario.invitacionesRecibidas.filter[elem|elem.estaAceptada() === true].size
 	}
 
-
-	def getServiciosNuevos() { // modelar comportamiento TODO hecho
+	def getServiciosNuevos() {
 		if (getRepoLocaciones.elementos.size > 5) {
-		(getRepoServicios.elementos.sortBy[id].reverse).subList(0, 5) }else {
+			(getRepoServicios.elementos.sortBy[id].reverse).subList(0, 5)
+		} else {
 			(getRepoServicios.elementos.sortBy[id].reverse)
-		}}
-
+		}
+	}
 
 	// ********************************************************
 	// ** Repositorios

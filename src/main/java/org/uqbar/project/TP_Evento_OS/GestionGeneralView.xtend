@@ -17,28 +17,32 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.windows.WindowOwner
 import servicios.Servicio
-
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import transformer.TipoDeUsuarioTransformer
+import java.awt.Event
+import eventos.Entidad
 
 @Accessors
-abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
+abstract class GestionGeneralView extends Dialog<GestionGeneralModel<Entidad>> {
 
 	new(WindowOwner owner, GestionGeneralModel model) {
 		super(owner, model)
 		this.delegate.errorViewer = this
 	}
 
-	override ErrorsPanel createErrorsPanel(Panel mainPanel) { return new ErrorsPanel(mainPanel, "Panel de error", 3) }
+//	override ErrorsPanel createErrorsPanel(Panel mainPanel) { new ErrorsPanel(mainPanel, "Panel de error", 1) }
+	def tituloDefault() {
+		"Gestor"
+	}
 
 	override protected createFormPanel(Panel mainPanel) {
+
 		val form = new Panel(mainPanel)
 		form.layout = new ColumnLayout(2)
+
 		val Panel PanelIzquierdo = new Panel(form)
-		PanelIzquierdo.width = 800
 		crearTablaGestion(PanelIzquierdo)
+
 		val Panel PanelDerecho = new Panel(form)
-		PanelDerecho.width = 300
 		crearBotoneraGestion(PanelDerecho)
 	}
 
@@ -46,119 +50,100 @@ abstract class GestionGeneralView extends Dialog<GestionGeneralModel> {
 
 	def protected crearTablaGestion(Panel panel) {}
 
-//	def crearUsuario() {
-//		val usuario = new Usuario
-//		new ABM_Usuario_View(this, usuario) => [
-//			onAccept[this.modelObject.crearUsuario(usuario)]
-//			open
-//		]
-//	}
+	def crearColumna(Table  tabla, String titulo, String propiedad) {
+		new Column<Entidad>(tabla) => [
+			title = titulo
+			fixedSize = 150
+			bindContentsToProperty(propiedad)
+		]
+	}
+
+	def crearColumna(Table tabla, String titulo, String propiedad, int fSize) {
+		new Column<Entidad>(tabla) => [
+			title = titulo
+			fixedSize = fSize
+			bindContentsToProperty(propiedad)
+		]
+	}
+
 	def void crearBotoneraGestion(Panel panel) {
+
 		var actionsPanel = new Panel(panel)
 		actionsPanel.layout = new VerticalLayout
+
 		var edit = new Button(actionsPanel) => [
 			caption = "Editar"
-			setWidth = 150
+			setWidth = 100
 		// onClick [|  modelObject.editarSeleccion("entidadSeleccionada") ]
 		]
 
 		var eliminar = new Button(actionsPanel) => [
 			caption = "Eliminar"
-			setWidth = 150
+			setWidth = 100
 			onClick [|modelObject.getEliminarSeleccion()]
 		]
-//		var agregar = new Button(actionsPanel) => [
-//			caption = "Agregar"
-//			setWidth = 150
-//		onClick [|new ABL_base(owner, new ABMLocacion()).open]
-//		]
-//		var actualizar = new Button(actionsPanel) => [
-//			caption = "Update Masivo"
-//			setWidth = 10
-//		// onClick [|modelObject.getActualizar()]
-//		]
-//		new Button(actionsPanel) => [
-//			caption = "Update Masivo"
-//			setWidth = 10
-//		// onClick [|modelObject.getActualizar()]
-//		]
-		/*Deshabilitado de Botones hasta tener elemento seleccionado */
+/*Deshabilitado de Botones hasta tener elemento Seleccionado*/
 		var seleccionTabla = new NotNullObservable("entidadSeleccionada")
 		edit.bindEnabled(seleccionTabla)
 		eliminar.bindEnabled(seleccionTabla)
-//		
-//		agregar.bindVisible(seleccionTabla)
-//		actualizar.bindVisible(seleccionTabla)
 	}
 }
-
+@Accessors
 class GestionDeLocacionesView extends GestionGeneralView {
 
-	new(WindowOwner owner, GestionGeneralModel model) {
+	new(WindowOwner owner, GestionLocacionModel model) {
 		super(owner, model)
-		title = "Evento OS - Gestion Locaciones"
+			//	title = "EventOS - Gestion de Locaciones"
+
+	}
+	override tituloDefault(){
+				"EventOS - Gestion de Locaciones"
 	}
 
-	override addFormPanel(Panel panel) {
-	}
+	override addFormPanel(Panel panel) {}
 
 	override protected crearTablaGestion(Panel panel) {
-		minWidth = 1200
 		this.describeResultadosGrid(
 			new Table<Locacion>(panel, typeof(Locacion)) => [
-				numberVisibleRows = 10
-				items <=> "locacionesDelRepo"
+				numberVisibleRows = 7
+				items <=> "elementosDelRepo"
 				value <=> "entidadSeleccionada"
 			]
 		)
 	}
 
-	def protected describeResultadosGrid(Table<Locacion> table) {
-		new Column<Locacion>(table) => [
-			title = "Nombre"
-			// fixedSize = 130
-			bindContentsToProperty("nombre")
-		]
-		new Column<Locacion>(table) => [
-			title = "Superficie"
-			// fixedSize = 50
-			bindContentsToProperty("superficie")
-		]
-		new Column<Locacion>(table) => [
-			title = "Ubicacion"
-			fixedSize = 100
-			bindContentsToProperty("punto")
-		]
+	def protected describeResultadosGrid(Table table) {
+		crearColumna(table, "Nombre", "nombre")
+		crearColumna(table, "Superficie", "superficie")
+		crearColumna(table, "Ubicacion", "punto")
 	}
 
 	override void crearBotoneraGestion(Panel panel) {
+
 		super.crearBotoneraGestion(panel)
-//		var agregar = new Button(panel) => [
-//			caption = "Agregar"
-//			setWidth = 150
-//			onClick([|this.crearLocacion])
-//		]
+
 		new Button(panel) => [
 			caption = "Agregar"
-			setWidth = 150
+			setWidth = 100
 			onClick([|this.crearLocacion])
 		]
+
 		new Button(panel) => [
 			caption = "Update Masivo"
-			setWidth = 10
-			onClick [|modelObject.getActualizarLocacion()]
+			setWidth = 100
+			onClick [|modelObject.getActualizar()]
 		]
 	}
 
 	def crearLocacion() {
 		val locacion = new Locacion
 		new ABM_Locacion_View(this, locacion) => [
-			onAccept[this.modelObject.crearLocacion(locacion)]
+			onAccept[this.modelObject.crearElemento(locacion)]
 			open
 		]
 	}
 
-//	def void EditarSeleccion(Locacion seleccion) { //  TODO falta Modelar
+//	deef void EditarSeleccion(Locacion seleccion) { //  TODO falta Modelar
 //		var ventanaEdicion =  new ABL_base(owner, new ABMLocacion())
 //		ABMLocacion.editarEntidad(seleccion)
 //	}
@@ -168,144 +153,108 @@ class GestionDeServiciosView extends GestionGeneralView {
 
 	new(WindowOwner owner, GestionGeneralModel model) {
 		super(owner, model)
-		title = "Evento OS - Gestion Servicios"
+		title = "EventOS - Gestion de Servicios"
 	}
 
-	override addFormPanel(Panel panel) {
-	}
+	override addFormPanel(Panel panel) {}
 
 	override protected crearTablaGestion(Panel panel) {
-		minWidth = 750
 		this.describeResultadosGrid(
 			new Table<Servicio>(panel, typeof(Servicio)) => [
-				numberVisibleRows = 10
-				items <=> "serviciosDelRepo"
+				numberVisibleRows = 7
+				items <=> "elementosDelRepo"
 				value <=> "entidadSeleccionada"
 			]
 		)
 	}
 
-	def protected describeResultadosGrid(Table<Servicio> table) {
-		new Column<Servicio>(table) => [
-			title = "Nombre"
-			fixedSize = 150
-			bindContentsToProperty("descripcion")
-		]
-		new Column<Servicio>(table) => [
-			title = "Tarifa"
-//			 alignRight    // TODO preguntar por que si descomentamos esto desaparecen botones!!!!!
-//			 fixedSize = 100
-			bindContentsToProperty("costoServicio")
-		]
-
-		new Column<Servicio>(table) => [
-			title = "Ubicacion"
-			fixedSize = 150
-			bindContentsToProperty("ubicacion")
-		]
-
+	def protected describeResultadosGrid(Table  table) {
+		crearColumna(table, "Nombre", "descripcion")
+		crearColumna(table, "Tarifa", "costoServicio")
+		crearColumna(table, "Ubicacion", "ubicacion")
 	}
 
 	override void crearBotoneraGestion(Panel panel) {
+
 		super.crearBotoneraGestion(panel)
-//		var agregar = new Button(panel) => [
-//			caption = "Agregar"
-//			setWidth = 150
-//			onClick([|this.crearServicio])
-//		]
+
 		new Button(panel) => [
 			caption = "Agregar"
-			setWidth = 150
+			setWidth = 100
 			onClick([|this.crearServicio])
 		]
+
 		new Button(panel) => [
 			caption = "Update Masivo"
-			setWidth = 10
-			onClick [|modelObject.getActualizarServicio()]
+			setWidth = 100
+			onClick [|modelObject.getActualizar()]
 		]
 	}
 
 	def crearServicio() {
 		val servicio = new Servicio
 		new ABM_Servicio_View(this, servicio) => [
-			onAccept[this.modelObject.crearServicio(servicio)]
+			onAccept[this.modelObject.crearElemento(servicio)]
 			open
-
 		]
 	}
-
 }
 
 class GestionDeUsuariosView extends GestionGeneralView {
 
-	new(WindowOwner owner, GestionGeneralModel model) {
+	new(WindowOwner owner, GestionUsuarioModel model) {
 		super(owner, model)
-		title = "Evento OS - Gestion Usuarios"
+		title = "EventOS - Gestion de Usuarios"
 	}
 
-	override addFormPanel(Panel panel) {
-	}
+	override addFormPanel(Panel panel) {}
 
 	override protected crearTablaGestion(Panel panel) {
-		minWidth = 750
 		this.describeResultadosGrid(
 			new Table<Usuario>(panel, typeof(Usuario)) => [
-				numberVisibleRows = 10
-				items <=> "usuariosDelRepo"
+				numberVisibleRows = 7
+				items <=> "elementosDelRepo"
 				value <=> "entidadSeleccionada"
 			]
 		)
 	}
 
-	def protected describeResultadosGrid(Table<Usuario> table) {
-		new Column<Usuario>(table) => [
-			title = "Username"
-			fixedSize = 150
-			bindContentsToProperty("nombreUsuario")
-		]
-		new Column<Usuario>(table) => [
-			title = "Nombre"
-			fixedSize = 150
-			bindContentsToProperty("nombreApellido")
-		]
-		new Column<Usuario>(table) => [
-			title = "Mail"
-			fixedSize = 200
-			bindContentsToProperty("email")
-		]
-		new Column<Usuario>(table) => [//TODO es para ver si lo carga no lo pide aca lo tomo bien!!!!
-			title = "Fecha Nac"
-			fixedSize = 200
-			bindContentsToProperty("fechaNacimiento")
-		]
-				
-		new Column<Usuario>(table) => [//TODO es para ver si lo carga no lo pide aca lo tomo bien!!!!
-			title = "Tipo De Usuario"
-			fixedSize = 200
-			bindContentsToProperty("tipoDeUsuario").transformer = [TipoDeUsuario valueFromModel | if(valueFromModel instanceof UsuarioFree ){
-				return " No tan Free"
-				} else if (valueFromModel instanceof UsuarioAmateur){
-				return "Amateur"		} else 		{
-			return "Profesional"	}]
-		]
-		
+	def protected describeResultadosGrid(Table table) {
+
+		crearColumna(table, "Username", "nombreUsuario", 100)
+		crearColumna(table, "Nombre", "nombreApellido", 100)
+		crearColumna(table, "Mail", "email", 100)
+		crearColumna(table, "Fecha Nac", "fechaNacimiento", 100)
+
+//		new Column<Usuario>(table) => [//TODO es para ver si lo carga no lo pide aca lo tomo bien!!!!
+//			title = "Tipo De Usuario"
+//			fixedSize = 200
+//			bindContentsToProperty("tipoDeUsuario").transformer = [TipoDeUsuario valueFromModel | if(valueFromModel instanceof UsuarioFree ){"Free"} else if (valueFromModel instanceof UsuarioAmateur){"Amateur"} else {"Profesional"}]
+//		]
 	}
 
 	override void crearBotoneraGestion(Panel panel) {
+
 		super.crearBotoneraGestion(panel)
-		// var agregar = new Button(panel) => [caption = "Agregar" setWidth = 150 onClick([|this.crearUsuario])]
-		new Button(panel) => [caption = "Agregar" setWidth = 150 onClick([|this.crearUsuario])]
+
+		new Button(panel) => [
+			caption = "Agregar"
+			setWidth = 100
+			onClick([|this.crearUsuario])
+		]
+
 		new Button(panel) => [
 			caption = "Update Masivo"
-			setWidth = 10
-			onClick [|modelObject.getActualizarUsuario()]
+			setWidth = 100
+			onClick [|modelObject.getActualizar()]
 		]
+
 	}
 
 	def crearUsuario() {
 		val usuario = new Usuario
 		new ABM_Usuario_View(this, usuario) => [
-			onAccept[this.modelObject.crearUsuario(usuario)]
+			onAccept[this.modelObject.crearElemento(usuario)]
 			open
 		]
 	}
