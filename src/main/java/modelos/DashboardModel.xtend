@@ -1,4 +1,4 @@
-package org.uqbar.project.TP_Evento_OS
+package modelos
 
 import eventos.Evento
 import eventos.Locacion

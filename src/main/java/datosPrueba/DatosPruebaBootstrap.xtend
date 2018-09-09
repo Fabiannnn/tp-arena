@@ -24,6 +24,7 @@ class DatosPruebaBootstrap extends CollectionBasedBootstrap {
 		ApplicationContext.instance.configureSingleton(typeof(Locacion), new RepositorioLocaciones)
 		ApplicationContext.instance.configureSingleton(typeof(Usuario), new RepositorioUsuarios)
 		ApplicationContext.instance.configureSingleton(typeof(Servicio), new RepositorioServicios)
+
 	}
 
 	override run() {

@@ -1,4 +1,4 @@
-package View
+package view
 
 import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.Container

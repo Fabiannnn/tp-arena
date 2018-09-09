@@ -1,4 +1,4 @@
-package View
+package view
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.layout.HorizontalLayout

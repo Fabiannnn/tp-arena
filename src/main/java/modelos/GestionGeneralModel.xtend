@@ -1,4 +1,4 @@
-package org.uqbar.project.TP_Evento_OS
+package modelos
 
 import eventos.Entidad
 import eventos.Locacion
@@ -24,7 +24,6 @@ abstract class GestionGeneralModel<T extends Entidad> {
 	def dispatch getEliminarSeleccionDelRepositorio(Locacion seleccion) {
 		val RepoLocaciones = ApplicationContext.instance.getSingleton(typeof(Locacion)) as Repositorio<Locacion>
 		RepoLocaciones.delete(seleccion)
-
 	}
 
 	def dispatch getEliminarSeleccionDelRepositorio(Usuario seleccion) {
@@ -43,6 +42,12 @@ abstract class GestionGeneralModel<T extends Entidad> {
 
 	def getElementosDelRepo() {
 		getRepo.elementos
+	}
+
+	def getEditar() {
+		getRepo.update(entidadSeleccionada)
+		ObservableUtils.firePropertyChanged(this, "elementosDelRepo")
+
 	}
 
 	def void crearElemento(T elemento) {}

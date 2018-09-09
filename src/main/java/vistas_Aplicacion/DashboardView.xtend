@@ -1,4 +1,4 @@
-package org.uqbar.project.TP_Evento_OS
+package vistas_Aplicacion
 
 import eventos.Locacion
 import eventos.Usuario
@@ -14,6 +14,10 @@ import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import servicios.Servicio
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import modelos.DashboardModel
+import modelos.GestionLocacionModel
+import modelos.GestionServicioModel
+import modelos.GestionUsuarioModel
 
 @Accessors
 class DashboardView extends SimpleWindow<DashboardModel> {

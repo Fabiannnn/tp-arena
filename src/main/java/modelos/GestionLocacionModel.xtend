@@ -1,4 +1,4 @@
-package org.uqbar.project.TP_Evento_OS
+package modelos
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.model.annotations.Observable
@@ -28,4 +28,7 @@ class GestionLocacionModel extends GestionGeneralModel<Locacion> {
 		jsonLocacion.deserializarJson(datosAct.actualizarJsonLocacion, getRepo)
 		ObservableUtils.firePropertyChanged(this, "elementosDelRepo")
 	}
+
+
+
 }

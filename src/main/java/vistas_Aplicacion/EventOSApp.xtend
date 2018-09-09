@@ -1,7 +1,8 @@
-package org.uqbar.project.TP_Evento_OS
+package vistas_Aplicacion
 
 import datosPrueba.DatosPruebaBootstrap
 import org.uqbar.arena.Application
+import modelos.DashboardModel
 
 class EventOSApp extends Application {
 
