@@ -6,15 +6,19 @@ import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.WindowOwner
-import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import eventos.Entidad
-import org.uqbar.commons.model.utils.ObservableUtils
+import view.DashboardView
 import viewABM.ABMUsuarioView
 
+import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import org.uqbar.commons.model.utils.ObservableUtils
+import eventos.Entidad
+import org.eclipse.xtend.lib.annotations.Accessors
+
+@Accessors
 class GestionDeUsuariosView extends GestionGeneralView<Usuario> {
 
-	new(WindowOwner owner, GestionUsuarioModel model) {
-		super(owner, model)
+	new(WindowOwner owner, GestionUsuarioModel model, DashboardView dashboard) {
+		super(owner, model, dashboard)
 		title = "EventOS - Gestion de Usuarios"
 	}
 
@@ -31,7 +35,6 @@ class GestionDeUsuariosView extends GestionGeneralView<Usuario> {
 	}
 
 	def protected describeResultadosGrid(Table<Usuario> table) {
-//		crearColumna(table, "Id", "id")
 		crearColumna(table, "Username", "nombreUsuario", 100)
 		crearColumna(table, "Nombre", "nombreApellido", 100)
 		crearColumna(table, "Mail", "email", 100)
@@ -51,25 +54,23 @@ class GestionDeUsuariosView extends GestionGeneralView<Usuario> {
 		new Button(panel) => [
 			caption = "Update Masivo"
 			setWidth = 100
-			onClick [|modelObject.getActualizar()]
+			onClick [|modelObject.getActualizar(); super.ventanaMadre.actualizarTablas()]
 		]
-
 	}
 
 	def crearUsuario() {
 		val usuario = new Usuario
-		new ABMUsuarioView(this, usuario) => [
-			onAccept[this.modelObject.crearElemento(usuario)]
+		new ABMUsuarioView(this, usuario, ventanaMadre) => [
+			onAccept[this.modelObject.crearElemento(usuario); super.ventanaMadre.actualizarTablas()]
 			open
 		]
 	}
 
 	override EditarSeleccion() {
-		new ABMUsuarioView(this, modelObject.entidadSeleccionada as Usuario) => [
+		new ABMUsuarioView(this, modelObject.entidadSeleccionada as Usuario, ventanaMadre) => [
 			onAccept[this.modelObject.getEditar()]
 			open
 		]
-//		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "id")
 		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "nombreUsuario")
 		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "nombreApellido")
 		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "email")
@@ -79,5 +80,5 @@ class GestionDeUsuariosView extends GestionGeneralView<Usuario> {
 	def actualizarPropiedadEnVista(Entidad entidad, String propiedad) {
 		ObservableUtils.firePropertyChanged(entidad, propiedad)
 	}
-	
+
 }

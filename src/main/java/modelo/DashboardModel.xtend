@@ -78,7 +78,7 @@ class DashboardModel {
 	}
 
 	def getUsuariosActivos() {
-		if (getRepoLocaciones.elementos.size > 5) {
+		if (getRepoUsuarios.elementos.size > 5) {
 			actividadUsuarios().subList(0, 5)
 		} else {
 			actividadUsuarios()
@@ -98,7 +98,7 @@ class DashboardModel {
 	}
 
 	def getServiciosNuevos() {
-		if (getRepoLocaciones.elementos.size > 5) {
+		if (getRepoServicios.elementos.size > 5) {
 			(getRepoServicios.elementos.sortBy[id].reverse).subList(0, 5)
 		} else {
 			(getRepoServicios.elementos.sortBy[id].reverse)
@@ -123,5 +123,5 @@ class DashboardModel {
 	def getElementosRepoLocaciones() {
 		getRepoLocaciones
 	}
-	
+
 }

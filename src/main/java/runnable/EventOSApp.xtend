@@ -9,7 +9,6 @@ class EventOSApp extends Application {
 
 	new(BootstrapUI bootstrapUI) {
 		super(bootstrapUI)
-
 	}
 
 	def static void main(String[] args) {

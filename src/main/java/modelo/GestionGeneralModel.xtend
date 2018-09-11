@@ -42,5 +42,5 @@ abstract class GestionGeneralModel<T extends Entidad> {
 	}
 
 	abstract def void getActualizar()
-	
+
 }

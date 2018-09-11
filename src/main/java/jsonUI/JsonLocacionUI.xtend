@@ -5,7 +5,7 @@ class JsonLocacionUI {
 	String jsonText
 
 	def actualizarJsonLocacion() {
-		
+
 		jsonText = '''[
 		   {
 		      "x":-44,
@@ -43,7 +43,7 @@ class JsonLocacionUI {
 		      "nombre":"Del Json"
 		   }
 		]'''
-		
+
 	}
-	
+
 }

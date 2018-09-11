@@ -12,13 +12,17 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
+import view.DashboardView
 
 @Accessors
 abstract class GestionGeneralView<T extends Entidad> extends Dialog<GestionGeneralModel<T>> {
 
-	new(WindowOwner owner, GestionGeneralModel<T> model) {
+	DashboardView ventanaMadre
+
+	new(WindowOwner owner, GestionGeneralModel<T> model, DashboardView dashboard) {
 		super(owner, model)
 		this.delegate.errorViewer = this
+		ventanaMadre = dashboard
 	}
 
 	def tituloDefault() {
@@ -61,14 +65,15 @@ abstract class GestionGeneralView<T extends Entidad> extends Dialog<GestionGener
 		var edit = new Button(actionsPanel) => [
 			caption = "Editar"
 			setWidth = 100
-			onClick [|this.EditarSeleccion()]
-
+			onClick [|this.EditarSeleccion()
+				this.ventanaMadre.actualizarTablas()
+			]
 		]
 
 		var eliminar = new Button(actionsPanel) => [
 			caption = "Eliminar"
 			setWidth = 100
-			onClick [|modelObject.getEliminarSeleccion()]
+			onClick [|modelObject.getEliminarSeleccion(); this.ventanaMadre.actualizarTablas()]
 		]
 
 		var seleccionTabla = new NotNullObservable("entidadSeleccionada")

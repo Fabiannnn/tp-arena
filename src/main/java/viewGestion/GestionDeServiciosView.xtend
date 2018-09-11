@@ -11,12 +11,13 @@ import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import org.uqbar.commons.model.utils.ObservableUtils
 import eventos.Entidad
 import viewABM.ABMServicioView
+import view.DashboardView
 
 @Accessors
 class GestionDeServiciosView extends GestionGeneralView<Servicio> {
 
-	new(WindowOwner owner, GestionServicioModel model) {
-		super(owner, model)
+	new(WindowOwner owner, GestionServicioModel model, DashboardView dashboard) {
+		super(owner, model, dashboard)
 		title = "EventOS - Gestion de Servicios"
 	}
 
@@ -33,10 +34,9 @@ class GestionDeServiciosView extends GestionGeneralView<Servicio> {
 	}
 
 	def protected describeResultadosGrid(Table<Servicio> table) {
-//		crearColumna(table, "Id", "id")
 		crearColumna(table, "Nombre", "descripcion")
 		crearColumna(table, "Tarifa", "costoServicio")
-		crearColumna(table, "Ubicacion", "ubicacion")
+		crearColumna(table, "Ubicacion", "punto")
 	}
 
 	override void crearBotoneraGestion(Panel panel) {
@@ -52,27 +52,26 @@ class GestionDeServiciosView extends GestionGeneralView<Servicio> {
 		new Button(panel) => [
 			caption = "Update Masivo"
 			setWidth = 100
-			onClick [|modelObject.getActualizar()]
+			onClick [|modelObject.getActualizar(); super.ventanaMadre.actualizarTablas()]
 		]
 	}
 
 	def crearServicio() {
 		val servicio = new Servicio
-		new ABMServicioView(this, servicio) => [
-			onAccept[this.modelObject.crearElemento(servicio)]
+		new ABMServicioView(this, servicio, ventanaMadre) => [
+			onAccept[this.modelObject.crearElemento(servicio); super.ventanaMadre.actualizarTablas()]
 			open
 		]
 	}
 
 	override EditarSeleccion() {
-		new ABMServicioView(this, modelObject.entidadSeleccionada as Servicio) => [
+		new ABMServicioView(this, modelObject.entidadSeleccionada as Servicio, ventanaMadre) => [
 			onAccept[this.modelObject.getEditar()]
 			open
 		]
-//		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "id")
 		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "descripcion")
 		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "costoServicio")
-		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "ubicacion")
+		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "punto")
 	}
 
 	def actualizarPropiedadEnVista(Entidad entidad, String propiedad) {

@@ -11,14 +11,14 @@ import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import org.uqbar.commons.model.utils.ObservableUtils
 import eventos.Entidad
 import viewABM.ABMLocacionView
+import view.DashboardView
 
 @Accessors
 class GestionDeLocacionesView extends GestionGeneralView<Locacion> {
 
-	new(WindowOwner owner, GestionLocacionModel model) {
-		super(owner, model)
-		title = "EventOS - Gestion de Locaciones"
-
+	new(WindowOwner owner, GestionLocacionModel model, DashboardView dashboard) {
+		super(owner, model, dashboard)
+		this.delegate.errorViewer = this
 	}
 
 	override addFormPanel(Panel panel) {}
@@ -34,7 +34,6 @@ class GestionDeLocacionesView extends GestionGeneralView<Locacion> {
 	}
 
 	def protected describeResultadosGrid(Table<Locacion> table) {
-		crearColumna(table, "Id", "id")
 		crearColumna(table, "Nombre", "nombre")
 		crearColumna(table, "Superficie", "superficie")
 		crearColumna(table, "Ubicacion", "punto")
@@ -53,24 +52,23 @@ class GestionDeLocacionesView extends GestionGeneralView<Locacion> {
 		new Button(panel) => [
 			caption = "Update Masivo"
 			setWidth = 100
-			onClick [|modelObject.getActualizar()]
+			onClick [|modelObject.getActualizar(); super.ventanaMadre.actualizarTablas()]
 		]
 	}
 
 	def crearLocacion() {
 		val locacion = new Locacion
-		new ABMLocacionView(this, locacion) => [
-			onAccept[this.modelObject.crearElemento(locacion)]
+		new ABMLocacionView(this, locacion, ventanaMadre) => [
+			onAccept[this.modelObject.crearElemento(locacion); super.ventanaMadre.actualizarTablas()]
 			open
 		]
 	}
 
 	override EditarSeleccion() {
-		new ABMLocacionView(this, modelObject.entidadSeleccionada) => [
+		new ABMLocacionView(this, modelObject.entidadSeleccionada, ventanaMadre) => [
 			onAccept[this.modelObject.getEditar()]
 			open
 		]
-		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "id")
 		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "nombre")
 		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "superficie")
 		actualizarPropiedadEnVista(modelObject.entidadSeleccionada, "punto")
@@ -78,7 +76,6 @@ class GestionDeLocacionesView extends GestionGeneralView<Locacion> {
 
 	def actualizarPropiedadEnVista(Entidad entidad, String propiedad) {
 		ObservableUtils.firePropertyChanged(entidad, propiedad)
-		
 	}
 
 }

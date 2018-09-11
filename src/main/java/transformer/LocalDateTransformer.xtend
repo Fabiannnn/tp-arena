@@ -10,9 +10,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
 class LocalDateTransformer implements ValueTransformer<LocalDate, String> {
-	
+
 	String pattern = "dd/MM/yyyy"
-	
+
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern)
 
 	override viewToModel(String valueFromView) {

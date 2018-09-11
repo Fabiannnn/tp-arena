@@ -16,11 +16,13 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.commons.model.utils.ObservableUtils
 import servicios.Servicio
-import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import viewGestion.GestionDeLocacionesView
-import viewGestion.GestionDeUsuariosView
 import viewGestion.GestionDeServiciosView
+import viewGestion.GestionDeUsuariosView
+
+import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
 @Accessors
 class DashboardView extends SimpleWindow<DashboardModel> {
@@ -70,11 +72,6 @@ class DashboardView extends SimpleWindow<DashboardModel> {
 		]
 	}
 
-	def crearColumna(Table<?> tabla, String titulo, String propiedad) {
-		this.crearColumna(tabla,titulo,propiedad,150)
-
-	}
-
 	def crearColumna(Table<?> tabla, String titulo, String propiedad, int fSize) {
 		new Column(tabla) => [
 			title = titulo
@@ -106,14 +103,13 @@ class DashboardView extends SimpleWindow<DashboardModel> {
 		new Table<Locacion>(PanelLocaciones, typeof(Locacion)) => [
 			numberVisibleRows = 10
 			items <=> "locacionesPopulares"
-
-			crearColumna(it, "Nombre", "nombre")
-			crearColumna(it, "Capacidad", "capacidadMaxima")
+			crearColumna(it, "Nombre", "nombre", 150)
+			crearColumna(it, "Capacidad", "capacidadMaxima", 150)
 		]
 
 		new Button(PanelLocaciones) => [
 			caption = "Gestión de Locaciones"
-			onClick [|new GestionDeLocacionesView(owner, new GestionLocacionModel()).open]
+			onClick [|new GestionDeLocacionesView(owner, new GestionLocacionModel(), this).open]
 		]
 	}
 
@@ -124,15 +120,18 @@ class DashboardView extends SimpleWindow<DashboardModel> {
 		new Table<Usuario>(PanelUsuarios, typeof(Usuario)) => [
 			numberVisibleRows = 10
 			items <=> "usuariosActivos"
-
-			crearColumna(it, "Username", "nombreUsuario")
-			crearColumna(it, "Nombre y Apellido", "nombreApellido")
+			crearColumna(it, "Username", "nombreUsuario", 150)
+			crearColumna(it, "Nombre y Apellido", "nombreApellido", 150)
 		]
+		
+		ObservableUtils.firePropertyChanged(modelObject, "usuariosActivos")
 
 		new Button(PanelUsuarios) => [
 			caption = "Gestión de Usuarios"
-			onClick [|new GestionDeUsuariosView(owner, new GestionUsuarioModel()).open]
+			onClick [|new GestionDeUsuariosView(owner, new GestionUsuarioModel(), this).open]
 		]
+		
+		crearLabelTitulo(PanelUsuarios, "")
 	}
 
 	def crearPanelServicios(Panel PanelServicios) {
@@ -142,16 +141,23 @@ class DashboardView extends SimpleWindow<DashboardModel> {
 		new Table<Servicio>(PanelServicios, typeof(Servicio)) => [
 			numberVisibleRows = 10
 			items <=> "serviciosNuevos"
-
-			crearColumna(it, "Nombre", "descripcion")
-			crearColumna(it, "Tarifa", "costoServicio")
+			crearColumna(it, "Nombre", "descripcion", 150)
+			crearColumna(it, "Tarifa", "costoServicio", 150)
 		]
 
 		new Button(PanelServicios) => [
 			caption = "Gestión de Servicios"
-			onClick [|new GestionDeServiciosView(owner, new GestionServicioModel()).open]
+			onClick [|new GestionDeServiciosView(owner, new GestionServicioModel(), this).open]
 		]
 
+		crearLabelTitulo(PanelServicios, "")
+
 	}
-	
+
+	def actualizarTablas() {
+		ObservableUtils.firePropertyChanged(modelObject, "usuariosActivos")
+		ObservableUtils.firePropertyChanged(modelObject, "locacionesPopulares")
+		ObservableUtils.firePropertyChanged(modelObject, "serviciosNuevos")
+	}
+
 }

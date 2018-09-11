@@ -4,12 +4,15 @@ import eventos.TipoDeUsuario
 import eventos.Usuario
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.arena.bindings.PropertyAdapter
+import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.windows.WindowOwner
 import transformer.LocalDateTransformer
+import view.DashboardView
+
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
 @Accessors
@@ -19,40 +22,41 @@ class ABMUsuarioView extends ABMView<Usuario> {
 		"EventOS - Creación de Usuarios"
 	}
 
-	new(WindowOwner owner, Usuario model) {
-		super(owner, model)
+	new(WindowOwner owner, Usuario model, DashboardView dashboard) {
+		super(owner, model, dashboard)
 	}
 
-	override crearPanelEntidad(Panel panelEntidad) {
+	override createFormPanel(Panel mainPanel) {
 
-		new Label(panelEntidad) => [setText = "Username:"]
-		crearTextBox(panelEntidad, "nombreUsuario")
+		val form = new Panel(mainPanel).layout = new ColumnLayout(2)
 
-		new Label(panelEntidad) => [setText = "Nombre:"]
-		crearTextBox(panelEntidad, "nombreApellido")
+		new Label(form) => [setText = "Username:"]
+		crearTextBox(form, "nombreUsuario")
 
-		new Label(panelEntidad) => [setText = "Mail:"]
-		crearTextBox(panelEntidad, "email")
+		new Label(form) => [setText = "Nombre:"]
+		crearTextBox(form, "nombreApellido")
 
-		new Label(panelEntidad) => [setText = "Tipo de Usuario:"]
-		new Selector(panelEntidad) => [
-			(items <=> ("tiposDeUsuarios")).adapter = new PropertyAdapter(TipoDeUsuario, "nom") // .transformer= new TipoDeUsuarioTransformer
+		new Label(form) => [setText = "Mail:"]
+		crearTextBox(form, "email")
+
+		new Label(form) => [setText = "Tipo de Usuario:"]
+		new Selector(form) => [
+			(items <=> ("tiposDeUsuarios")).adapter = new PropertyAdapter(TipoDeUsuario, "nom")
 			value <=> ("tipoDeUsuario")
-
 		]
 
-		new Label(panelEntidad) => [setText = "Fecha de Nacimiento:"]
-		new TextBox(panelEntidad) => [
+		new Label(form) => [setText = "Fecha de Nacimiento:"]
+		new TextBox(form) => [
 			(value <=> "fechaNacimiento").transformer = new LocalDateTransformer
 			width = 150
 		]
 
-		new Label(panelEntidad) => [setText = "Coordenada x:"]
-		crearNumericField(panelEntidad, "coordenadas.x")
+		new Label(form) => [setText = "Coordenada x:"]
+		crearNumericField(form, "puntoX")
 
-		new Label(panelEntidad) => [setText = "Coordenada y:"]
-		crearNumericField(panelEntidad, "coordenadas.y")
-		
+		new Label(form) => [setText = "Coordenada y:"]
+		crearNumericField(form, "puntoY")
+
 	}
-	
+
 }

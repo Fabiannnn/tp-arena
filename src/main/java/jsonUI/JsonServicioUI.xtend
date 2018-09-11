@@ -5,7 +5,7 @@ class JsonServicioUI {
 	String jsonText
 
 	def actualizarJsonServicio() {
-		
+
 		jsonText = '''[
 		   {
 		      "descripcion":"Catering Food Party",

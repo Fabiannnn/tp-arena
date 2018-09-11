@@ -5,7 +5,7 @@ class JsonUsuarioUI {
 	String jsonText
 
 	def actualizarJsonUsuario() {
-		
+
 		jsonText = '''[  
 		   {  
 		      "nombreUsuario":"lucas_capo",
